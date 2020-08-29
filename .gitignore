@@ -1,5 +1,9 @@
 .idea
-
+graphstyle.txt
+math.json
+bar.json
+noise.json
+pie.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
