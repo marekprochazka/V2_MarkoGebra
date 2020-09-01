@@ -7,7 +7,7 @@ from math import floor
 from tkinter import filedialog
 from PIL import Image
 import json
-from numpy import sin,cos,tan,pi
+from numpy import sin, cos, tan, pi
 import matplotlib as mp
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import matplotlib.animation as anim
@@ -22,10 +22,10 @@ import webbrowser
 from Static.constants import *
 from Globals.calculated import *
 from Globals.variables import *
-from GUI.pages.noise import Noise
+from GUI.base import Base
+
 
 mp.use("TkAgg")
-
 with open("graphstyle.txt", "r") as style:
     st.use(style)
 
@@ -33,22 +33,8 @@ with open("graphstyle.txt", "r") as style:
 
 import numpy as np
 
-
-
-
-
-
-
 # f = plt.figure(figsize=(4.5, 4.5), dpi=100)
-f = Figure(figsize=(4.5, 4.5), dpi=100)
-a = f.add_subplot(111)
-
-a.grid(color='k', linestyle='-', linewidth=0.1)
-a.set_axisbelow(True)
-
-a.set_ylim(-10, 10)
-lim1 = 30
-lim2 = -30
+from Graphing.setup import *
 
 
 class GraphAnimation:
@@ -95,115 +81,17 @@ class GraphAnimation:
                 a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
 
 
-class MarkoGebra(Tk):
+class MarkoGebra(Base):
     def __init__(self):
-        Tk.__init__(self)
-        Tk.wm_title(self, "MarkoGebra")
-        Tk.minsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
-        Tk.maxsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
-
-        self.input_frames = (Mathematical, Pie, Bar, Noise)
-
-        self.SetupContainer = t.Frame(self, width=MAX_WIDTH * .4, height=MAX_HEIGHT)
-
-        self.SetupContainer.pack(side="top", fill="both", expand=True)
-
-        self.SetupContainer.grid_rowconfigure(0, weight=1)
-        self.SetupContainer.grid_columnconfigure(0, weight=1)
-
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.draw()
-        canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 470, y=MAX_HEIGHT - 470)
-
-        self.hint = t.Button(self,command=lambda :self.openHelp(),text="Nápověda")
-        self.hint.place(bordermode=OUTSIDE,x=MAX_WIDTH*.94,width=MAX_WIDTH*.06,y=0,height=MAX_HEIGHT*.04)
-
-        # TODO settings
-        self.settings_container = Frame(self)
-        self.settings_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .55, y=MAX_HEIGHT * .22, width=MAX_WIDTH * .14,
-                                      height=MAX_HEIGHT * .8)
-
-        self.InfoLabel = t.Label(self.settings_container, text="Nastavení mřížky", font=fonts()["LARGE_FONT"])
-        self.InfoLabel.grid(row=0, column=0, pady=15)
-
-        self.Col_button = t.Button(self.settings_container, text="Změnit barvu", command=lambda: self.colorize_grid())
-        self.Col_button.grid(row=1, column=0, sticky="we", pady=15)
-
-        self.size_label = t.Label(self.settings_container, text="Velikost mřížky")
-        self.size_label.grid(row=2, column=0, sticky="we")
-
-        self.grid_size = Scale(self.settings_container, activebackground="aqua", bd=0, from_=0, to=50,
-                               orient=HORIZONTAL, sliderlength=22)
-        self.grid_size.set(1)
-        self.grid_size.grid(row=3, column=0, sticky="we")
-        self.grid_size.bind("<ButtonRelease-1>",
-                            lambda event: self.size_grid(self.grid_size.get() / 10))
-
-        self.line_label = t.Label(self.settings_container, text="Druh mřížky")
-        self.line_label.grid(row=4, column=0, sticky="we", pady=15)
-
-        self.cbb_convertion = ["-", "--", "-.", ":", ""]
-        self.cbb_line = t.Combobox(self.settings_container, values=["'-'", "'--'", "'-.'", "':'", "' '"],
-                                   state="readonly")
-        self.cbb_line.current(0)
-        self.cbb_line.bind('<<ComboboxSelected>>',
-                           lambda event: self.line_grid(self.cbb_convertion[self.cbb_line.current()]))
-        self.cbb_line.grid(row=5, column=0, sticky="we")
-
-        self.settings_container.grid_columnconfigure(0, weight=2)
-        self.save_but = t.Button(self.settings_container, text="uložit jako orázek", command=lambda: self.saver())
-        self.save_but.grid(row=6, column=0, sticky="we")
-        self.deleteAll_button  =t.Button(self.settings_container,text="Smazat vše",command=lambda: self.delete_all())
-        self.deleteAll_button.grid(row=7,column=0,sticky="we")
-        # Combobox - 2
-        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
-                               state="readonly")
-        self.CBB2.bind('<<ComboboxSelected>>',
-                       lambda event: self.show_Setup_Frame(self.input_frames[self.CBB2.current()]))
-        self.CBB2.current(0)
-        self.CBB2.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
-                        x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
-
-        """
-        {{ relative input part }}
-        """
-
-        # TODO scrollable table part
-        self.Table_container = t.Frame(self)
-        self.canvas = Canvas(self.Table_container)
-        self.scrollbar = t.Scrollbar(self.Table_container, orient="vertical", command=self.canvas.yview)
-        self.scrollable_frame = t.Frame(self.canvas)
-        self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.update_table()
-        for i in range(50):
-            Frame(self.scrollable_frame).pack()
-
-        self.Table_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
-                                   height=MAX_HEIGHT * .3)
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.scrollbar.pack(side="right", fill="y")
-
-        # open console button
-        self.console = t.Button(self, text="Konzole", command=lambda: self.console_controller())
-        self.console.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .95, height=MAX_HEIGHT * .05,
-                           width=MAX_WIDTH * .4)
-
-        # Frame-changing part 😉
-
-        self.SetupFrames = {}
-
-        self._frame = None
-        self.show_Setup_Frame(cont=Mathematical)
+        Base.__init__(self)
 
     def on_exit(self):
         self.show_Setup_Frame()
         self.destroy()
 
     def openHelp(self):
-        webbrowser.open(url="https://gist.github.com/RandomResourceWeb/93e887facdb98937ab5d260d1a0df270",new=1)
-        webbrowser.open(url="D:\Věci\Programování\Dlohodoba_prace_main_2020\web\index.html",new=1)
+        webbrowser.open(url="https://gist.github.com/RandomResourceWeb/93e887facdb98937ab5d260d1a0df270", new=1)
+        webbrowser.open(url="D:\Věci\Programování\Dlohodoba_prace_main_2020\web\index.html", new=1)
 
     @staticmethod
     def __callback():
@@ -394,19 +282,18 @@ class MarkoGebra(Tk):
                 entry1.delete(0, END)
                 entry2.delete(0, END)
 
-    def add_plot_from_function(self, function:str, line="solid", color="blue", size="1", error=None, entry=None):
+    def add_plot_from_function(self, function: str, line="solid", color="blue", size="1", error=None, entry=None):
         global coordinates_plot, coordinates_all_list
         is_all_fine = True
         for char in function:
             if char not in FUNCTION_ALLOWED_MARKS:
                 is_all_fine = False
 
-
         if is_all_fine:
-            function = function.replace("s","sin")
-            function = function.replace("c","cos")
-            function = function.replace("t","tan")
-            function = function.replace("p","pi")
+            function = function.replace("s", "sin")
+            function = function.replace("c", "cos")
+            function = function.replace("t", "tan")
+            function = function.replace("p", "pi")
             x = np.arange(lim2, lim1, 0.5)
             y = function
 
@@ -913,9 +800,8 @@ class MarkoGebra(Tk):
         global coordinates_plot
         if to_animate == 1:
             if coordinates_all_list[index][0][0] == "f(x)":
-                for indx,val in enumerate(coordinates_plot):
+                for indx, val in enumerate(coordinates_plot):
                     if val[1] == coordinates_all_list[index][0][1]:
-
                         del coordinates_plot[indx]
                         del coordinates_all_list[index]
                         self.update_table()
@@ -1092,15 +978,6 @@ class MarkoGebra(Tk):
             self.update_table()
         else:
             raise SyntaxError
-
-
-
-
-
-
-
-
-
 
 
 aniObj = GraphAnimation()
