@@ -21,10 +21,9 @@ import webbrowser
 
 from Static.constants import *
 from Globals.calculated import *
-from Globals.variables import *
+from Globals.variables import Variables as V
 from GUI.base import Base
-
-
+from Utils.delete_all import DeleteAll
 mp.use("TkAgg")
 with open("graphstyle.txt", "r") as style:
     st.use(style)
@@ -39,52 +38,52 @@ from Graphing.setup import *
 
 class GraphAnimation:
     def Go(self, i):
-        if to_animate == 1:
+        if V.to_animate == 1:
             self.animate_graphs()
-        elif to_animate == 2:
+        elif V.to_animate == 2:
             self.animate_pie()
-        elif to_animate == 3:
+        elif V.to_animate == 3:
             self.animate_bar()
-        elif to_animate == 4:
+        elif V.to_animate == 4:
             self.animate_noise()
 
     def animate_graphs(i):
         a.clear()
         a.axis("equal")
 
-        for coord in coordinates_scatter:
+        for coord in V.coordinates_scatter:
             a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
-        for coord in coordinates_plot:
-            x = np.arange(lim2, lim1, 0.5)
+        for coord in V.coordinates_plot:
+            x = np.arange(2, V.lim1, 0.5)
             y = eval(coord[1])
 
             for limit in range(len(y)):
-                if y[limit] > lim1 or y[limit] < lim2:
+                if y[limit] > V.lim1 or y[limit] < V.lim2:
                     y[limit] = None
             a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
 
     def animate_pie(i):
         a.clear()
-        a.pie(slices, labels=activities, colors=cols, explode=explode, startangle=start_angle)
+        a.pie(V.slices, labels=V.activities, colors=V.cols, explode=V.explode, startangle=V.start_angle)
 
     def animate_bar(self):
         a.clear()
         a.axis("auto")
-        for bar in bars:
+        for bar in V.bars:
             a.bar([str(bar[0])], [int(bar[1])], color=bar[2], width=float(bar[3]))
 
     def animate_noise(self):
         a.clear()
         a.axis("equal")
-        for noise in noises:
+        for noise in V.noises:
             for coord in noise:
                 a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
 
 
-class MarkoGebra(Base):
+class MarkoGebra(Base,DeleteAll):
     def __init__(self):
         Base.__init__(self)
-
+        DeleteAll.__init__(self,main=self)
     def on_exit(self):
         self.show_Setup_Frame()
         self.destroy()
@@ -157,35 +156,34 @@ class MarkoGebra(Base):
         a.axes.get_yaxis().set_visible(True)
 
     def show_Setup_Frame(self, cont=None):
-        global coordinates_all_list, coordinates_scatter, coordinates_plot, to_animate, slices, cols, activities, explode, start_angle, bars, noises, dispersion, number, basic_gen
-        if to_animate == 1:
+        if V.to_animate == 1:
             with(open("math.json", "w")) as save:
                 save.truncate()
-                data = [coordinates_scatter, [x[2:] for x in coordinates_plot]]
+                data = [V.coordinates_scatter, [x[2:] for x in V.coordinates_plot]]
                 json.dump(data, save)
 
-        if to_animate == 2:
+        if V.to_animate == 2:
             with(open("pie.json", "w")) as save:
                 save.truncate()
-                data = [slices, cols, activities, explode]
+                data = [V.slices, V.cols, V.activities, V.explode]
                 json.dump(data, save)
 
-        if to_animate == 3:
+        if V.to_animate == 3:
             with(open("bar.json", "w")) as save:
                 save.truncate()
-                data = [bars, coordinates_all_list]
+                data = [V.bars, V.coordinates_all_list]
                 json.dump(data, save)
 
-        if to_animate == 4:
+        if V.to_animate == 4:
             with(open("noise.json", "w")) as save:
                 save.truncate()
-                data = [noises[1:], coordinates_all_list, dispersion, number]
+                data = [V.noises[1:], V.coordinates_all_list, V.dispersion, V.number]
 
                 json.dump(data, save)
 
         if cont != None:
             new_frame = cont(self.SetupContainer, self)
-            to_animate = GRAPHING_METHOD[new_frame.type]
+            V.to_animate = GRAPHING_METHOD[new_frame.type]
 
             if self._frame is not None:
                 for child in self._frame.winfo_children():
@@ -194,22 +192,22 @@ class MarkoGebra(Base):
             self._frame = new_frame
             self._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
 
-        coordinates_plot = []
-        coordinates_scatter = []
-        slices = []
-        cols = []
-        activities = []
-        explode = []
-        start_angle = 90
-        bars = []
-        noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
-        dispersion = []
-        number = []
-        basic_gen = []
+        V.coordinates_plot = []
+        V.coordinates_scatter = []
+        V.slices = []
+        V.cols = []
+        V.activities = []
+        V.explode = []
+        V.start_angle = 90
+        V.bars = []
+        V.noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
+        V.dispersion = []
+        V.number = []
+        V.basic_gen = []
 
-        coordinates_all_list = []
+        V.coordinates_all_list = []
 
-        if to_animate == 1:
+        if V.to_animate == 1:
             with(open("math.json", "r")) as save:
                 data = json.loads(save.read())
                 if data[0] != []:
@@ -219,7 +217,7 @@ class MarkoGebra(Base):
                     for val in data[1]:
                         self.add_plot_from_function(val[3], val[0], val[1], val[2])
 
-        elif to_animate == 2:
+        elif V.to_animate == 2:
             with(open("pie.json", "r")) as save:
                 data = json.loads(save.read())
                 if data != [[], [], [], []]:
@@ -227,21 +225,21 @@ class MarkoGebra(Base):
                         self.add_pie_data(data=[data[0][index], data[2][index], data[1][index]],
                                           expl=int(data[3][index]))
 
-        elif to_animate == 3:
+        elif V.to_animate == 3:
             with(open("bar.json", "r")) as save:
                 data = json.loads(save.read())
                 if data != [[], []]:
-                    bars = data[0]
-                    coordinates_all_list = data[1]
+                    V.bars = data[0]
+                    V.coordinates_all_list = data[1]
 
-        elif to_animate == 4:
+        elif V.to_animate == 4:
             with(open("noise.json", "r")) as save:
                 data = json.loads(save.read())
                 if data != [[], [], [], []]:
-                    noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]] + data[0]
-                    coordinates_all_list = data[1]
-                    dispersion = data[2]
-                    number = data[3]
+                    V.noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]] + data[0]
+                    V.coordinates_all_list = data[1]
+                    V.dispersion = data[2]
+                    V.number = data[3]
 
         self.update_table()
 
@@ -256,21 +254,20 @@ class MarkoGebra(Base):
         a.grid(linestyle=line)
 
     def add_point_scatter(self, x, y, marker=".", color="blue", size="1", error=None, entry1=None, entry2=None):
-        global coordinates_scatter, coordinates_all_list, lim1, lim2
         try:
             x = int(x)
             y = int(y)
-            if x > lim1:
-                lim1 = x
-            if x < lim2:
-                lim2 = x
-            if y > lim1:
-                lim1 = y
-            if y < lim2:
-                lim2 = y
-            if [x, y] not in coordinates_scatter:
-                coordinates_scatter.append([x, y, marker, color, size])
-                coordinates_all_list.append([[x, y], marker, color, size])
+            if x > V.lim1:
+                V.lim1 = x
+            if x < V.lim2:
+                V.lim2 = x
+            if y > V.lim1:
+                V.lim1 = y
+            if y < V.lim2:
+                V.lim2 = y
+            if [x, y] not in V.coordinates_scatter:
+                V.coordinates_scatter.append([x, y, marker, color, size])
+                V.coordinates_all_list.append([[x, y], marker, color, size])
                 if error != None:
                     error["text"] = ""
                     entry1.delete(0, END)
@@ -283,7 +280,6 @@ class MarkoGebra(Base):
                 entry2.delete(0, END)
 
     def add_plot_from_function(self, function: str, line="solid", color="blue", size="1", error=None, entry=None):
-        global coordinates_plot, coordinates_all_list
         is_all_fine = True
         for char in function:
             if char not in FUNCTION_ALLOWED_MARKS:
@@ -294,17 +290,17 @@ class MarkoGebra(Base):
             function = function.replace("c", "cos")
             function = function.replace("t", "tan")
             function = function.replace("p", "pi")
-            x = np.arange(lim2, lim1, 0.5)
+            x = np.arange(V.lim2, V.lim1, 0.5)
             y = function
 
             checnk = True
-            if len(coordinates_plot) >= 1:
-                for val in coordinates_plot:
+            if len(V.coordinates_plot) >= 1:
+                for val in V.coordinates_plot:
                     if val[1] == y:
                         checnk = False
             if checnk:
-                coordinates_plot.append([x, y, line, color, size, function])
-                coordinates_all_list.append([["f(x)", function], line, color, size])
+                V.coordinates_plot.append([x, y, line, color, size, function])
+                V.coordinates_all_list.append([["f(x)", function], line, color, size])
             if error != None:
                 error["text"] = ""
                 entry.delete(0, END)
@@ -316,19 +312,18 @@ class MarkoGebra(Base):
                 error["text"] = "chyba"
 
     def add_pie_data(self, data, expl=0, entry1=None, entry2=None, cbb=None, error=None):
-        global slices, cols, activities, coordinates_all_list
 
         try:
             float(data[0])
-            slices.append(data[0])
-            activities.append(data[1])
-            cols.append(data[2])
-            explode.append(expl)
+            V.slices.append(data[0])
+            V.activities.append(data[1])
+            V.cols.append(data[2])
+            V.explode.append(expl)
             if entry1 != None:
                 entry1.delete(0, END)
                 entry2.delete(0, END)
                 cbb.set("")
-            coordinates_all_list.append([data[1], data[0], data[2]])
+            V.coordinates_all_list.append([data[1], data[0], data[2]])
             error["text"] = ""
 
             self.update_table()
@@ -345,9 +340,9 @@ class MarkoGebra(Base):
         try:
 
             float(value)
-            bars.append([name, value, color, 0.8])
+            V.bars.append([name, value, color, 0.8])
 
-            coordinates_all_list.append([name, value, color])
+            V.coordinates_all_list.append([name, value, color])
             entry1.delete(0, END)
             entry2.delete(0, END)
             cbb.set("")
@@ -361,23 +356,21 @@ class MarkoGebra(Base):
             cbb.set("")
 
     def create_basic_gen(self, number, dispersion, col):
-        global basic_gen
-        basic_gen = [np.random.rand(number), np.random.rand(number)]
+        V.basic_gen = [np.random.rand(number), np.random.rand(number)]
         self.update_dispersion(dispersion, col)
 
     def update_dispersion(self, dispersion, col):
-        noises[0] = [[floor(basic_gen[0][indx] * dispersion), floor(basic_gen[1][indx] * dispersion), ".", col, 1] for
-                     indx, gn in enumerate(basic_gen[0])]
+        V.noises[0] = [[floor(V.basic_gen[0][indx] * dispersion), floor(V.basic_gen[1][indx] * dispersion), ".", col, 1] for
+                     indx, gn in enumerate(V.basic_gen[0])]
 
     def lock_noise(self, disper, num):
-        noises.append(noises[0])
-        dispersion.append(disper)
-        number.append(num)
-        coordinates_all_list.append([num, disper, noises[-1][0][2], noises[-1][0][3], noises[-1][0][4]])
+        V.noises.append(V.noises[0])
+        V.dispersion.append(disper)
+        V.number.append(num)
+        V.coordinates_all_list.append([num, disper, V.noises[-1][0][2], V.noises[-1][0][3], V.noises[-1][0][4]])
         self.update_table()
 
     def update_table(self):
-        global coordinates_all_list
 
         for child in self.scrollable_frame.winfo_children():
             for child_of_child in child.winfo_children():
@@ -385,20 +378,20 @@ class MarkoGebra(Base):
         counter = 0
         for index, parent in enumerate(self.scrollable_frame.winfo_children()):
             try:
-                if to_animate == 1:
+                if V.to_animate == 1:
                     t.Label(parent,
-                            text=f"{counter}. {coordinates_all_list[index][0][0]}:{coordinates_all_list[index][0][1]}; Značka: {coordinates_all_list[index][1]}; Barva: {coordinates_all_list[index][2]}; Velikost: {coordinates_all_list[index][3]}",
+                            text=f"{counter}. {V.coordinates_all_list[index][0][0]}:{V.coordinates_all_list[index][0][1]}; Značka: {V.coordinates_all_list[index][1]}; Barva: {V.coordinates_all_list[index][2]}; Velikost: {V.coordinates_all_list[index][3]}",
                             font=fonts()["SMALL_FONT"],
                             justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
 
-                elif to_animate == 2 or to_animate == 3:
+                elif V.to_animate == 2 or V.to_animate == 3:
                     t.Label(parent,
-                            text=f"{counter}. Název: {coordinates_all_list[index][0]}; Hodnota: {coordinates_all_list[index][1]}; Barva: {coordinates_all_list[index][2]}",
+                            text=f"{counter}. Název: {V.coordinates_all_list[index][0]}; Hodnota: {V.coordinates_all_list[index][1]}; Barva: {V.coordinates_all_list[index][2]}",
                             font=fonts()["SMALL_FONT"],
                             justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
-                elif to_animate == 4:
+                elif V.to_animate == 4:
                     t.Label(parent,
-                            text=f"{counter}. Množství: {coordinates_all_list[index][0]}; Rozptyl: {coordinates_all_list[index][1]}; Značka: {coordinates_all_list[index][2]}; Barva: {coordinates_all_list[index][3]}; Velikost: {coordinates_all_list[index][4]}",
+                            text=f"{counter}. Množství: {V.coordinates_all_list[index][0]}; Rozptyl: {V.coordinates_all_list[index][1]}; Značka: {V.coordinates_all_list[index][2]}; Barva: {V.coordinates_all_list[index][3]}; Velikost: {V.coordinates_all_list[index][4]}",
                             font=fonts()["SMALL_FONT"],
                             justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
 
@@ -407,38 +400,9 @@ class MarkoGebra(Base):
             except IndexError:
                 pass
 
-    def delete_all(self):
-        global coordinates_all_list
-        if to_animate == 1:
-            global coordinates_scatter, coordinates_plot
-            coordinates_all_list = []
-            coordinates_plot = []
-            coordinates_scatter = []
-            self.update_table()
-        elif to_animate == 2:
-            global slices, cols, activities, explode
-            slices = []
-            cols = []
-            activities = []
-            explode = []
-            coordinates_all_list = []
-            self.update_table()
-        elif to_animate == 3:
-            global bars
-            bars = []
-            coordinates_all_list = []
-            self.update_table()
-        elif to_animate == 4:
-            global noises, dispersion, number, basic_gen
-            coordinates_all_list = []
-            noises = []
-            dispersion = []
-            number = []
-            basic_gen = []
-            self.update_table()
+
 
     def console_controller(self):
-        global coordinates_all_list, coordinates_scatter, coordinates_plot
         top = Toplevel()
         top.config(background="black")
         top.wm_geometry("800x500")
@@ -471,36 +435,34 @@ class MarkoGebra(Base):
 
     def history_move_up(self, entry):
 
-        global history_moves
-        if command_history != []:
-            if history_moves < len(command_history):
-                history_moves += 1
+
+        if V.command_history != []:
+            if V.history_moves < len(V.command_history):
+                V.history_moves += 1
                 entry.delete(0, END)
-                entry.insert(0, command_history[-history_moves])
+                entry.insert(0, V.command_history[-V.history_moves])
 
     def history_move_down(self, entry):
-        global history_moves
-        history_moves -= 1
-        if history_moves > 0:
+        V.history_moves -= 1
+        if V.history_moves > 0:
             entry.delete(0, END)
-            entry.insert(0, command_history[-history_moves])
+            entry.insert(0, V.command_history[-V.history_moves])
         else:
-            history_moves = 1
+            V.history_moves = 1
 
     def command_entered(self, entry, frame, top):
-        global history_moves
-        history_moves = 0
+        V.history_moves = 0
         command = entry.get().split(" ")
-        if command_history != []:
-            if command != command_history[-1]:
-                if command in command_history:
-                    command_history.remove(command)
-                command_history.append(command)
+        if V.command_history != []:
+            if command != V.command_history[-1]:
+                if command in V.command_history:
+                    V.command_history.remove(command)
+                V.command_history.append(command)
         else:
-            command_history.append(command)
+            V.command_history.append(command)
         if command[0] == "del":
             try:
-                if int(command[1]) <= len(coordinates_all_list):
+                if int(command[1]) <= len(V.coordinates_all_list):
                     self.delete_value(int(command[1]))
                     Label(frame, text=f"{' '.join(command)}", bg="black", fg="yellow", font=fonts()["SMALL_FONT"],
                           anchor="w").pack(fill=BOTH)
@@ -524,7 +486,7 @@ class MarkoGebra(Base):
 
         elif command[0] == "col":
             try:
-                if int(command[1]) <= len(coordinates_all_list):
+                if int(command[1]) <= len(V.coordinates_all_list):
                     self.changeColor(int(command[1]), top)
                     Label(frame, text=f"{' '.join(command)}", bg="black", fg="yellow", font=fonts()["SMALL_FONT"],
                           anchor="w").pack(fill=BOTH)
@@ -551,7 +513,7 @@ class MarkoGebra(Base):
 
         elif command[0] == "size":
             try:
-                if int(command[1]) <= len(coordinates_all_list):
+                if int(command[1]) <= len(V.coordinates_all_list):
                     self.changeSize(int(command[1]), command[2])
                     Label(frame, text=f"{' '.join(command)}", bg="black", fg="yellow", font=fonts()["SMALL_FONT"],
                           anchor="w").pack(fill=BOTH)
@@ -588,7 +550,7 @@ class MarkoGebra(Base):
 
         elif command[0] == "mktype":
             try:
-                if int(command[1]) <= len(coordinates_all_list):
+                if int(command[1]) <= len(V.coordinates_all_list):
                     self.changeLine(int(command[1]), command[2])
                     Label(frame, text=f"{' '.join(command)}", bg="black", fg="yellow", font=fonts()["SMALL_FONT"],
                           anchor="w").pack(fill=BOTH)
@@ -647,7 +609,7 @@ class MarkoGebra(Base):
         # pie specials
         elif command[0] == "explode":
             try:
-                if int(command[1]) <= len(coordinates_all_list):
+                if int(command[1]) <= len(V.coordinates_all_list):
                     self.explode(int(command[1]), float(command[2]))
                     Label(frame, text=f"{' '.join(command)}", bg="black", fg="yellow", font=fonts()["SMALL_FONT"],
                           anchor="w").pack(fill=BOTH)
@@ -722,18 +684,7 @@ class MarkoGebra(Base):
             Label(frame, text=f"Body: {'; '.join(POINT_MARKERS)}", bg="black", fg="green", font=fonts()["SMALL_FONT"],
                   anchor="w").pack(
                 fill=BOTH)
-            Label(frame, text=f"Body Extra: {'; '.join(EXTRA_POINT_MARKERS[0:7])},", bg="black", fg="green",
-                  font=fonts()["SMALL_FONT"],
-                  anchor="w").pack(
-                fill=BOTH)
-            Label(frame, text=f"{'; '.join(EXTRA_POINT_MARKERS[7:13])};", bg="black", fg="green",
-                  font=fonts()["SMALL_FONT"],
-                  anchor="w").pack(
-                fill=BOTH)
-            Label(frame, text=f"{'; '.join(EXTRA_POINT_MARKERS[13:])}; ", bg="black", fg="green",
-                  font=fonts()["SMALL_FONT"],
-                  anchor="w").pack(
-                fill=BOTH)
+
             Label(frame, text=f"Funkce: {'; '.join(LINE_MARKERS)} ", bg="black", fg="green", font=fonts()["SMALL_FONT"],
                   anchor="w").pack(
                 fill=BOTH)
@@ -797,76 +748,75 @@ class MarkoGebra(Base):
 
     # DONE
     def delete_value(self, index):
-        global coordinates_plot
-        if to_animate == 1:
-            if coordinates_all_list[index][0][0] == "f(x)":
-                for indx, val in enumerate(coordinates_plot):
-                    if val[1] == coordinates_all_list[index][0][1]:
-                        del coordinates_plot[indx]
-                        del coordinates_all_list[index]
+        if V.to_animate == 1:
+            if V.coordinates_all_list[index][0][0] == "f(x)":
+                for indx, val in enumerate(V.coordinates_plot):
+                    if val[1] == V.coordinates_all_list[index][0][1]:
+                        del V.coordinates_plot[indx]
+                        del V.coordinates_all_list[index]
                         self.update_table()
 
 
 
 
             else:
-                for coord in coordinates_scatter:
-                    if coord[0:2] == coordinates_all_list[index][0]:
-                        coordinates_scatter.remove(coord)
+                for coord in V.coordinates_scatter:
+                    if coord[0:2] == V.coordinates_all_list[index][0]:
+                        V.coordinates_scatter.remove(coord)
 
-                del coordinates_all_list[index]
+                del V.coordinates_all_list[index]
                 self.update_table()
 
-        if to_animate == 2:
-            del coordinates_all_list[index]
-            del slices[index]
-            del cols[index]
-            del activities[index]
-            del explode[index]
+        if V.to_animate == 2:
+            del V.coordinates_all_list[index]
+            del V.slices[index]
+            del V.cols[index]
+            del V.activities[index]
+            del V.explode[index]
             self.update_table()
 
-        if to_animate == 3:
-            del bars[index]
-            del coordinates_all_list[index]
+        if V.to_animate == 3:
+            del V.bars[index]
+            del V.coordinates_all_list[index]
             self.update_table()
 
-        if to_animate == 4:
-            del noises[index + 1]
-            del dispersion[index]
-            del number[index]
-            del coordinates_all_list[index]
+        if V.to_animate == 4:
+            del V.noises[index + 1]
+            del V.dispersion[index]
+            del V.number[index]
+            del V.coordinates_all_list[index]
             self.update_table()
 
     # DONE
     def changeLine(self, index, linetype: str):
-        if to_animate == 1:
-            if coordinates_all_list[index][0][0] == "f(x)":
+        if V.to_animate == 1:
+            if V.coordinates_all_list[index][0][0] == "f(x)":
                 if linetype in LINE_MARKERS:
-                    for indx, val in enumerate(coordinates_plot):
-                        if val[1] == coordinates_all_list[index][0][1]:
-                            coordinates_plot[indx][2] = linetype
-                            coordinates_all_list[index][1] = linetype
+                    for indx, val in enumerate(V.coordinates_plot):
+                        if val[1] == V.coordinates_all_list[index][0][1]:
+                            V.coordinates_plot[indx][2] = linetype
+                            V.coordinates_all_list[index][1] = linetype
                             self.update_table()
                 else:
                     raise SyntaxError
 
             else:
-                if (linetype in EXTRA_POINT_MARKERS + POINT_MARKERS) or ((linetype[0] and linetype[-1]) == "$"):
+                if (linetype in POINT_MARKERS) or ((linetype[0] and linetype[-1]) == "$"):
 
-                    for indx, val in enumerate(coordinates_scatter):
-                        if val[0:2] == coordinates_all_list[index][0]:
-                            coordinates_scatter[indx][2] = linetype
-                            coordinates_all_list[index][1] = linetype
+                    for indx, val in enumerate(V.coordinates_scatter):
+                        if val[0:2] == V.coordinates_all_list[index][0]:
+                            V.coordinates_scatter[indx][2] = linetype
+                            V.coordinates_all_list[index][1] = linetype
 
                     self.update_table()
                 else:
                     raise SyntaxError
 
-        elif to_animate == 4:
-            if (linetype in EXTRA_POINT_MARKERS + POINT_MARKERS) or ((linetype[0] and linetype[-1]) == "$"):
-                for coord in noises[index + 1]:
+        elif V.to_animate == 4:
+            if (linetype in POINT_MARKERS) or ((linetype[0] and linetype[-1]) == "$"):
+                for coord in V.noises[index + 1]:
                     coord[2] = linetype
-                coordinates_all_list[index][2] = linetype
+                V.coordinates_all_list[index][2] = linetype
                 self.update_table()
 
             else:
@@ -876,45 +826,45 @@ class MarkoGebra(Base):
 
     # DONE
     def changeColor(self, index, top):
-        if to_animate == 1:
-            if coordinates_all_list[index][0][0] == "f(x)":
-                for indx, val in enumerate(coordinates_plot):
-                    if val[1] == coordinates_all_list[index][0][1]:
+        if V.to_animate == 1:
+            if V.coordinates_all_list[index][0][0] == "f(x)":
+                for indx, val in enumerate(V.coordinates_plot):
+                    if val[1] == V.coordinates_all_list[index][0][1]:
                         color = col.askcolor()
 
-                        coordinates_plot[indx][3] = color[1]
-                        coordinates_all_list[index][2] = color[1]
+                        V.coordinates_plot[indx][3] = color[1]
+                        V.coordinates_all_list[index][2] = color[1]
                         self.update_table()
                         top.lift()
 
             else:
 
-                for indx, val in enumerate(coordinates_scatter):
-                    if val[0:2] == coordinates_all_list[index][0]:
+                for indx, val in enumerate(V.coordinates_scatter):
+                    if val[0:2] == V.coordinates_all_list[index][0]:
                         color = col.askcolor()
-                        coordinates_scatter[indx][3] = color[1]
-                        coordinates_all_list[index][2] = color[1]
+                        V.coordinates_scatter[indx][3] = color[1]
+                        V.coordinates_all_list[index][2] = color[1]
                         self.update_table()
                         top.lift()
 
 
-        elif to_animate == 2:
+        elif V.to_animate == 2:
             color = col.askcolor()
-            cols[index] = color[1]
-            coordinates_all_list[index][2] = color[1]
+            V.cols[index] = color[1]
+            V.coordinates_all_list[index][2] = color[1]
             self.update_table()
             top.lift()
-        elif to_animate == 3:
+        elif V.to_animate == 3:
             color = col.askcolor()
-            bars[index][2] = color[1]
-            coordinates_all_list[index][2] = color[1]
+            V.bars[index][2] = color[1]
+            V.coordinates_all_list[index][2] = color[1]
             self.update_table()
             top.lift()
-        elif to_animate == 4:
+        elif V.to_animate == 4:
             color = col.askcolor()
-            for coord in noises[index + 1]:
+            for coord in V.noises[index + 1]:
                 coord[3] = color[1]
-            coordinates_all_list[index][3] = color[1]
+            V.coordinates_all_list[index][3] = color[1]
             self.update_table()
             top.lift()
 
@@ -922,31 +872,31 @@ class MarkoGebra(Base):
     def changeSize(self, index, size):
         try:
             float(size)
-            if to_animate == 1:
-                if coordinates_all_list[index][0][0] == "f(x)":
-                    for indx, val in enumerate(coordinates_plot):
-                        if val[1] == coordinates_all_list[index][0][1]:
-                            coordinates_plot[indx][4] = size
-                            coordinates_all_list[index][3] = size
+            if V.to_animate == 1:
+                if V.coordinates_all_list[index][0][0] == "f(x)":
+                    for indx, val in enumerate(V.coordinates_plot):
+                        if val[1] == V.coordinates_all_list[index][0][1]:
+                            V.coordinates_plot[indx][4] = size
+                            V.coordinates_all_list[index][3] = size
                             self.update_table()
 
                 else:
 
-                    for indx, val in enumerate(coordinates_scatter):
-                        if val[0:2] == coordinates_all_list[index][0]:
-                            coordinates_scatter[indx][4] = float(size)
-                            coordinates_all_list[index][3] = size
+                    for indx, val in enumerate(V.coordinates_scatter):
+                        if val[0:2] == V.coordinates_all_list[index][0]:
+                            V.coordinates_scatter[indx][4] = float(size)
+                            V.coordinates_all_list[index][3] = size
 
                     self.update_table()
 
-            elif to_animate == 3:
+            elif V.to_animate == 3:
                 # TODO během po úpravě coord_all přidat úpravu
-                bars[index][3] = size
+                V.bars[index][3] = size
 
-            elif to_animate == 4:
-                for coord in noises[index + 1]:
+            elif V.to_animate == 4:
+                for coord in V.noises[index + 1]:
                     coord[4] = size
-                coordinates_all_list[index][4] = size
+                V.coordinates_all_list[index][4] = size
                 self.update_table()
 
 
@@ -965,15 +915,14 @@ class MarkoGebra(Base):
             raise SyntaxError
 
     def explode(self, index, value):
-        if to_animate == 2:
-            explode[index] = value
+        if V.to_animate == 2:
+            V.explode[index] = value
             self.update_table()
         else:
             raise SyntaxError
 
     def stAngle(self, angle):
-        global start_angle
-        if to_animate == 2:
+        if V.to_animate == 2:
             start_angle = angle
             self.update_table()
         else:

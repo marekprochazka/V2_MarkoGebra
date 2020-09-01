@@ -7,5 +7,6 @@ a.grid(color='k', linestyle='-', linewidth=0.1)
 a.set_axisbelow(True)
 
 a.set_ylim(-10, 10)
+
 lim1 = 30
 lim2 = -30
