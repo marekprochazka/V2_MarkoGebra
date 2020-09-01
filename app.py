@@ -19,31 +19,10 @@ import webbrowser
 #
 
 
-MAX_WIDTH = 1600
-MAX_HEIGHT = 600
-
-FUNCTION_ALLOWED_MARKS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "x", "+", "-", "*", "/", "(", ")","s","c","t","p"]
-
-POINT_MARKERS = ['.', ',', 'o', 'v', '^', '<', '>', '1', '2', '3', '4', '8', 's', 'p', 'P', '*', 'h', 'H', '+', 'x',
-                 'X', 'D', 'd', '|', '_']
-
-LINE_MARKERS = ['-', '--', '-.', ':', 'None', ' ', '', 'solid', 'dashed', 'dashdot', 'dotted']
-
-AVALIBLE_STYLES = ['Solarize_Light2', '_classic_test_patch', 'classic', 'dark_background',
-                   'fivethirtyeight', 'ggplot', 'seaborn', 'seaborn-bright',
-                   'seaborn-dark','seaborn-poster',
-                   'seaborn-ticks', 'seaborn-whitegrid']
-
-GRAPHING_METHOD = {
-    "matematical": 1,
-    "pie": 2,
-    "bar": 3,
-    "noise": 4
-}
-
-TO_ANIMATE = 0
-
-pie_colors = []
+from Static.constants import *
+from Globals.calculated import *
+from Globals.variables import *
+from GUI.pages.noise import Noise
 
 mp.use("TkAgg")
 
@@ -55,31 +34,10 @@ with open("graphstyle.txt", "r") as style:
 import numpy as np
 
 
-def fonts():
-    return {"LARGE_FONT": ("Verdana", 12), "SMALL_FONT": ("Verdana", 9), "TINY_FONT": ('Roboto', 7),
-            "ITALIC_SMALL": ("Verdana", 9, "italic")}
 
 
-COMMAND_HISTORY = []
-HISTORY_MOVES = 0
 
-coordinates_scatter = []
-coordinates_plot = []
-coordinates_all_list = []
 
-slices = []
-cols = []
-activities = []
-explode = []
-start_angle = 90
-
-bars = []
-# [name,value,color]
-
-noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
-dispersion = []
-number = []
-basic_gen = []
 
 # f = plt.figure(figsize=(4.5, 4.5), dpi=100)
 f = Figure(figsize=(4.5, 4.5), dpi=100)
@@ -95,13 +53,13 @@ lim2 = -30
 
 class GraphAnimation:
     def Go(self, i):
-        if TO_ANIMATE == 1:
+        if to_animate == 1:
             self.animate_graphs()
-        elif TO_ANIMATE == 2:
+        elif to_animate == 2:
             self.animate_pie()
-        elif TO_ANIMATE == 3:
+        elif to_animate == 3:
             self.animate_bar()
-        elif TO_ANIMATE == 4:
+        elif to_animate == 4:
             self.animate_noise()
 
     def animate_graphs(i):
@@ -311,26 +269,26 @@ class MarkoGebra(Tk):
         a.axes.get_yaxis().set_visible(True)
 
     def show_Setup_Frame(self, cont=None):
-        global coordinates_all_list, coordinates_scatter, coordinates_plot, TO_ANIMATE, slices, cols, activities, explode, start_angle, bars, noises, dispersion, number, basic_gen
-        if TO_ANIMATE == 1:
+        global coordinates_all_list, coordinates_scatter, coordinates_plot, to_animate, slices, cols, activities, explode, start_angle, bars, noises, dispersion, number, basic_gen
+        if to_animate == 1:
             with(open("math.json", "w")) as save:
                 save.truncate()
                 data = [coordinates_scatter, [x[2:] for x in coordinates_plot]]
                 json.dump(data, save)
 
-        if TO_ANIMATE == 2:
+        if to_animate == 2:
             with(open("pie.json", "w")) as save:
                 save.truncate()
                 data = [slices, cols, activities, explode]
                 json.dump(data, save)
 
-        if TO_ANIMATE == 3:
+        if to_animate == 3:
             with(open("bar.json", "w")) as save:
                 save.truncate()
                 data = [bars, coordinates_all_list]
                 json.dump(data, save)
 
-        if TO_ANIMATE == 4:
+        if to_animate == 4:
             with(open("noise.json", "w")) as save:
                 save.truncate()
                 data = [noises[1:], coordinates_all_list, dispersion, number]
@@ -339,7 +297,7 @@ class MarkoGebra(Tk):
 
         if cont != None:
             new_frame = cont(self.SetupContainer, self)
-            TO_ANIMATE = GRAPHING_METHOD[new_frame.type]
+            to_animate = GRAPHING_METHOD[new_frame.type]
 
             if self._frame is not None:
                 for child in self._frame.winfo_children():
@@ -363,7 +321,7 @@ class MarkoGebra(Tk):
 
         coordinates_all_list = []
 
-        if TO_ANIMATE == 1:
+        if to_animate == 1:
             with(open("math.json", "r")) as save:
                 data = json.loads(save.read())
                 if data[0] != []:
@@ -373,7 +331,7 @@ class MarkoGebra(Tk):
                     for val in data[1]:
                         self.add_plot_from_function(val[3], val[0], val[1], val[2])
 
-        elif TO_ANIMATE == 2:
+        elif to_animate == 2:
             with(open("pie.json", "r")) as save:
                 data = json.loads(save.read())
                 if data != [[], [], [], []]:
@@ -381,14 +339,14 @@ class MarkoGebra(Tk):
                         self.add_pie_data(data=[data[0][index], data[2][index], data[1][index]],
                                           expl=int(data[3][index]))
 
-        elif TO_ANIMATE == 3:
+        elif to_animate == 3:
             with(open("bar.json", "r")) as save:
                 data = json.loads(save.read())
                 if data != [[], []]:
                     bars = data[0]
                     coordinates_all_list = data[1]
 
-        elif TO_ANIMATE == 4:
+        elif to_animate == 4:
             with(open("noise.json", "r")) as save:
                 data = json.loads(save.read())
                 if data != [[], [], [], []]:
@@ -540,18 +498,18 @@ class MarkoGebra(Tk):
         counter = 0
         for index, parent in enumerate(self.scrollable_frame.winfo_children()):
             try:
-                if TO_ANIMATE == 1:
+                if to_animate == 1:
                     t.Label(parent,
                             text=f"{counter}. {coordinates_all_list[index][0][0]}:{coordinates_all_list[index][0][1]}; Značka: {coordinates_all_list[index][1]}; Barva: {coordinates_all_list[index][2]}; Velikost: {coordinates_all_list[index][3]}",
                             font=fonts()["SMALL_FONT"],
                             justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
 
-                elif TO_ANIMATE == 2 or TO_ANIMATE == 3:
+                elif to_animate == 2 or to_animate == 3:
                     t.Label(parent,
                             text=f"{counter}. Název: {coordinates_all_list[index][0]}; Hodnota: {coordinates_all_list[index][1]}; Barva: {coordinates_all_list[index][2]}",
                             font=fonts()["SMALL_FONT"],
                             justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
-                elif TO_ANIMATE == 4:
+                elif to_animate == 4:
                     t.Label(parent,
                             text=f"{counter}. Množství: {coordinates_all_list[index][0]}; Rozptyl: {coordinates_all_list[index][1]}; Značka: {coordinates_all_list[index][2]}; Barva: {coordinates_all_list[index][3]}; Velikost: {coordinates_all_list[index][4]}",
                             font=fonts()["SMALL_FONT"],
@@ -564,13 +522,13 @@ class MarkoGebra(Tk):
 
     def delete_all(self):
         global coordinates_all_list
-        if TO_ANIMATE == 1:
+        if to_animate == 1:
             global coordinates_scatter, coordinates_plot
             coordinates_all_list = []
             coordinates_plot = []
             coordinates_scatter = []
             self.update_table()
-        elif TO_ANIMATE == 2:
+        elif to_animate == 2:
             global slices, cols, activities, explode
             slices = []
             cols = []
@@ -578,12 +536,12 @@ class MarkoGebra(Tk):
             explode = []
             coordinates_all_list = []
             self.update_table()
-        elif TO_ANIMATE == 3:
+        elif to_animate == 3:
             global bars
             bars = []
             coordinates_all_list = []
             self.update_table()
-        elif TO_ANIMATE == 4:
+        elif to_animate == 4:
             global noises, dispersion, number, basic_gen
             coordinates_all_list = []
             noises = []
@@ -626,33 +584,33 @@ class MarkoGebra(Tk):
 
     def history_move_up(self, entry):
 
-        global HISTORY_MOVES
-        if COMMAND_HISTORY != []:
-            if HISTORY_MOVES < len(COMMAND_HISTORY):
-                HISTORY_MOVES += 1
+        global history_moves
+        if command_history != []:
+            if history_moves < len(command_history):
+                history_moves += 1
                 entry.delete(0, END)
-                entry.insert(0, COMMAND_HISTORY[-HISTORY_MOVES])
+                entry.insert(0, command_history[-history_moves])
 
     def history_move_down(self, entry):
-        global HISTORY_MOVES
-        HISTORY_MOVES -= 1
-        if HISTORY_MOVES > 0:
+        global history_moves
+        history_moves -= 1
+        if history_moves > 0:
             entry.delete(0, END)
-            entry.insert(0, COMMAND_HISTORY[-HISTORY_MOVES])
+            entry.insert(0, command_history[-history_moves])
         else:
-            HISTORY_MOVES = 1
+            history_moves = 1
 
     def command_entered(self, entry, frame, top):
-        global HISTORY_MOVES
-        HISTORY_MOVES = 0
+        global history_moves
+        history_moves = 0
         command = entry.get().split(" ")
-        if COMMAND_HISTORY != []:
-            if command != COMMAND_HISTORY[-1]:
-                if command in COMMAND_HISTORY:
-                    COMMAND_HISTORY.remove(command)
-                COMMAND_HISTORY.append(command)
+        if command_history != []:
+            if command != command_history[-1]:
+                if command in command_history:
+                    command_history.remove(command)
+                command_history.append(command)
         else:
-            COMMAND_HISTORY.append(command)
+            command_history.append(command)
         if command[0] == "del":
             try:
                 if int(command[1]) <= len(coordinates_all_list):
@@ -953,7 +911,7 @@ class MarkoGebra(Tk):
     # DONE
     def delete_value(self, index):
         global coordinates_plot
-        if TO_ANIMATE == 1:
+        if to_animate == 1:
             if coordinates_all_list[index][0][0] == "f(x)":
                 for indx,val in enumerate(coordinates_plot):
                     if val[1] == coordinates_all_list[index][0][1]:
@@ -973,7 +931,7 @@ class MarkoGebra(Tk):
                 del coordinates_all_list[index]
                 self.update_table()
 
-        if TO_ANIMATE == 2:
+        if to_animate == 2:
             del coordinates_all_list[index]
             del slices[index]
             del cols[index]
@@ -981,12 +939,12 @@ class MarkoGebra(Tk):
             del explode[index]
             self.update_table()
 
-        if TO_ANIMATE == 3:
+        if to_animate == 3:
             del bars[index]
             del coordinates_all_list[index]
             self.update_table()
 
-        if TO_ANIMATE == 4:
+        if to_animate == 4:
             del noises[index + 1]
             del dispersion[index]
             del number[index]
@@ -995,7 +953,7 @@ class MarkoGebra(Tk):
 
     # DONE
     def changeLine(self, index, linetype: str):
-        if TO_ANIMATE == 1:
+        if to_animate == 1:
             if coordinates_all_list[index][0][0] == "f(x)":
                 if linetype in LINE_MARKERS:
                     for indx, val in enumerate(coordinates_plot):
@@ -1018,7 +976,7 @@ class MarkoGebra(Tk):
                 else:
                     raise SyntaxError
 
-        elif TO_ANIMATE == 4:
+        elif to_animate == 4:
             if (linetype in EXTRA_POINT_MARKERS + POINT_MARKERS) or ((linetype[0] and linetype[-1]) == "$"):
                 for coord in noises[index + 1]:
                     coord[2] = linetype
@@ -1032,7 +990,7 @@ class MarkoGebra(Tk):
 
     # DONE
     def changeColor(self, index, top):
-        if TO_ANIMATE == 1:
+        if to_animate == 1:
             if coordinates_all_list[index][0][0] == "f(x)":
                 for indx, val in enumerate(coordinates_plot):
                     if val[1] == coordinates_all_list[index][0][1]:
@@ -1054,19 +1012,19 @@ class MarkoGebra(Tk):
                         top.lift()
 
 
-        elif TO_ANIMATE == 2:
+        elif to_animate == 2:
             color = col.askcolor()
             cols[index] = color[1]
             coordinates_all_list[index][2] = color[1]
             self.update_table()
             top.lift()
-        elif TO_ANIMATE == 3:
+        elif to_animate == 3:
             color = col.askcolor()
             bars[index][2] = color[1]
             coordinates_all_list[index][2] = color[1]
             self.update_table()
             top.lift()
-        elif TO_ANIMATE == 4:
+        elif to_animate == 4:
             color = col.askcolor()
             for coord in noises[index + 1]:
                 coord[3] = color[1]
@@ -1078,7 +1036,7 @@ class MarkoGebra(Tk):
     def changeSize(self, index, size):
         try:
             float(size)
-            if TO_ANIMATE == 1:
+            if to_animate == 1:
                 if coordinates_all_list[index][0][0] == "f(x)":
                     for indx, val in enumerate(coordinates_plot):
                         if val[1] == coordinates_all_list[index][0][1]:
@@ -1095,11 +1053,11 @@ class MarkoGebra(Tk):
 
                     self.update_table()
 
-            elif TO_ANIMATE == 3:
+            elif to_animate == 3:
                 # TODO během po úpravě coord_all přidat úpravu
                 bars[index][3] = size
 
-            elif TO_ANIMATE == 4:
+            elif to_animate == 4:
                 for coord in noises[index + 1]:
                     coord[4] = size
                 coordinates_all_list[index][4] = size
@@ -1121,7 +1079,7 @@ class MarkoGebra(Tk):
             raise SyntaxError
 
     def explode(self, index, value):
-        if TO_ANIMATE == 2:
+        if to_animate == 2:
             explode[index] = value
             self.update_table()
         else:
@@ -1129,7 +1087,7 @@ class MarkoGebra(Tk):
 
     def stAngle(self, angle):
         global start_angle
-        if TO_ANIMATE == 2:
+        if to_animate == 2:
             start_angle = angle
             self.update_table()
         else:
@@ -1137,158 +1095,12 @@ class MarkoGebra(Tk):
 
 
 
-class Mathematical(Frame):
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        self.type = "matematical"
-        # Scatter
-        # labely
-        self.labelX = t.Label(self, text="X:", font=fonts()["SMALL_FONT"])
-        self.labelY = t.Label(self, text="Y:", font=fonts()["SMALL_FONT"])
-
-        self.labelX.grid(row=0, column=0)
-        self.labelY.grid(row=0, column=2)
-
-        # entryes
-        self.EntryX = t.Entry(self, justify="center")
-        self.EntryY = t.Entry(self, justify="center")
-
-        self.EntryX.grid(row=0, column=1, sticky="we")
-        self.EntryY.grid(row=0, column=3, sticky="we")
-        # place button
-        self.placeButtonScatter = t.Button(self, text="Vložit",
-                                           command=lambda: controller.add_point_scatter(self.EntryX.get(),
-                                                                                        self.EntryY.get(),
-                                                                                        error=self.ErrorWarning,
-                                                                                        entry1=self.EntryX,
-                                                                                        entry2=self.EntryY))
-        self.placeButtonScatter.grid(row=0, column=4, sticky="we")
-
-        # Funkce
-        # labely
-        self.labelFun = t.Label(self, text="f(x):", font=fonts()["SMALL_FONT"])
-        self.labelFun.grid(row=1, column=0)
-
-        # entryes
-        self.EntryFun = t.Entry(self, justify="center")
-
-        self.EntryFun.grid(row=1, column=1, columnspan=3, sticky="we")
-
-        # place button
-        self.placeButtonPlot = t.Button(self, text="Odložit",
-                                        command=lambda: controller.add_plot_from_function(self.EntryFun.get(),
-                                                                                          error=self.ErrorWarning,
-                                                                                          entry=self.EntryFun))
-
-        self.placeButtonPlot.grid(row=1, column=4, sticky="we", pady=20)
-
-        self.ErrorWarning = Label(self, text="", font=fonts()["SMALL_FONT"], fg="red")
-        self.ErrorWarning.grid(row=2, column=2)
-
-        self.grid_columnconfigure(1, weight=3)
-        self.grid_columnconfigure(3, weight=3)
-        self.grid_columnconfigure(4, weight=2)
 
 
-class Pie(Frame):
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        self.type = "pie"
-        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
-        self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
-
-        self.txt1 = t.Label(self, text="Množství:", font=fonts()["SMALL_FONT"])
-        self.txt2 = t.Label(self, text="Název:", font=fonts()["SMALL_FONT"])
-        self.txt3 = t.Label(self, text="Barva:", font=fonts()["SMALL_FONT"])
-
-        self.slice = t.Entry(self, justify="center")
-        self.label = t.Entry(self, justify="center")
-        self.color = t.Combobox(self, values=self.cb_values, state="readonly")
-        self.add_value = t.Button(self, text="Přidat hodnotu", command=lambda: controller.add_pie_data(
-            [self.slice.get(), self.label.get(), self.basic_colors[self.color.current()]], entry1=self.slice,
-            entry2=self.label,
-            cbb=self.color, error=self.errorText))
-
-        self.errorText = Label(self, text="", fg="red")
-        self.errorText.grid(row=4, column=0)
-        self.txt1.grid(row=0, column=0, sticky="we")
-        self.txt2.grid(row=1, column=0, sticky="we")
-        self.txt3.grid(row=2, column=0, sticky="we")
-
-        self.slice.grid(row=0, column=1, sticky="we", padx=20)
-        self.label.grid(row=1, column=1, sticky="we", padx=20)
-        self.color.grid(row=2, column=1, sticky="we", padx=20)
-        self.add_value.grid(row=3, column=1, sticky="we", padx=20)
 
 
-class Bar(Frame):
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        self.type = "bar"
-        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
-        self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
-
-        self.txt1 = t.Label(self, text="Množství:", font=fonts()["SMALL_FONT"])
-        self.txt2 = t.Label(self, text="Název:", font=fonts()["SMALL_FONT"])
-        self.txt3 = t.Label(self, text="Barva:", font=fonts()["SMALL_FONT"])
-
-        self.value = t.Entry(self, justify="center")
-        self.name = t.Entry(self, justify="center")
-        self.color = t.Combobox(self, values=self.cb_values, state="readonly")
-        self.go = t.Button(self, text="Zapsat hodnotu",
-                           command=lambda: controller.add_bar_data(self.name.get(), self.value.get(),
-                                                                   self.basic_colors[self.color.current()], self.name,
-                                                                   self.value, self.color, self.errorText))
-
-        self.errorText = Label(self, text="", fg="red")
-        self.errorText.grid(row=4, column=0)
-
-        self.txt1.grid(row=0, column=0, sticky="we")
-        self.txt2.grid(row=1, column=0, sticky="we")
-        self.txt3.grid(row=2, column=0, sticky="we")
-
-        self.value.grid(row=0, column=1, sticky="we", padx=20)
-        self.name.grid(row=1, column=1, sticky="we", padx=20)
-        self.color.grid(row=2, column=1, sticky="we", padx=20)
-        self.go.grid(row=3, column=1, sticky="we", padx=20)
 
 
-class Noise(Frame):
-    def __init__(self, parent, controller):
-        Frame.__init__(self, parent)
-        self.controller = controller
-        self.type = "noise"
-        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
-        self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
-
-        self.number = Scale(self, activebackground="aqua", bd=0, from_=0, to=100, orient=HORIZONTAL)
-        self.number.grid(row=0, column=0, sticky="we")
-        self.number.bind("<ButtonRelease-1>",
-                         lambda event: controller.create_basic_gen(self.number.get(), self.dispersion.get(),
-                                                                   self.basic_colors[self.color.current()]))
-        self.number_label = t.Label(self, text="Množství", font=fonts()["SMALL_FONT"])
-        self.number_label.grid(row=0, column=1, sticky="nswe", padx=15)
-
-        self.dispersion = Scale(self, activebackground="aqua", bd=0, from_=0, to=100, orient=HORIZONTAL)
-        self.dispersion.grid(row=1, column=0, sticky="we")
-        self.dispersion.bind("<ButtonRelease-1>", lambda event: controller.update_dispersion(self.dispersion.get(),
-                                                                                             self.basic_colors[
-                                                                                                 self.color.current()]))
-        self.dispersion_label = t.Label(self, text="Rozptyl", font=fonts()["SMALL_FONT"])
-        self.dispersion_label.grid(row=1, column=1, sticky="S", padx=15)
-
-        self.color = t.Combobox(self, values=self.cb_values, state="readonly")
-        self.color.grid(row=2, column=0, sticky="we", pady=10)
-        self.color.bind('<<ComboboxSelected>>',
-                        lambda event: controller.update_dispersion(self.dispersion.get(),
-                                                                   self.basic_colors[self.color.current()]))
-
-        self.lock = t.Button(self, text="Uzamknout",
-                             command=lambda: controller.lock_noise(self.dispersion.get(), self.number.get()))
-        self.lock.grid(row=3, column=0, sticky="we")
 
 
 aniObj = GraphAnimation()
