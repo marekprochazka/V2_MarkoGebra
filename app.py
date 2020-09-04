@@ -23,7 +23,7 @@ from Static.constants import *
 from Globals.calculated import *
 from Globals.variables import Variables as V
 from GUI.base import Base
-from Utils import DeleteAll, Saving, ShowFrame, UpdateTable
+from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid
 from Graphing.graph_animation import GraphAnimation
 
 mp.use("TkAgg")
@@ -39,10 +39,10 @@ from Graphing.setup import *
 
 
 
-class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable):
+class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid):
     def __init__(self):
 
-        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable)
+        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable,Grid)
         self.doInherit()
         Base.__init__(self)
 
@@ -61,15 +61,7 @@ class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable):
 
 
 
-    def colorize_grid(self):
-        color = col.askcolor()
-        a.grid(color=color[1])
 
-    def size_grid(self, size):
-        a.grid(linewidth=size)
-
-    def line_grid(self, line):
-        a.grid(linestyle=line)
 
     def add_point_scatter(self, x, y, marker=".", color="blue", size="1", error=None, entry1=None, entry2=None):
         try:
