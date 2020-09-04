@@ -23,7 +23,9 @@ from Static.constants import *
 from Globals.calculated import *
 from Globals.variables import Variables as V
 from GUI.base import Base
-from Utils.delete_all import DeleteAll
+from Utils import DeleteAll, Saving, ShowFrame, UpdateTable
+from Graphing.graph_animation import GraphAnimation
+
 mp.use("TkAgg")
 with open("graphstyle.txt", "r") as style:
     st.use(style)
@@ -36,54 +38,19 @@ import numpy as np
 from Graphing.setup import *
 
 
-class GraphAnimation:
-    def Go(self, i):
-        if V.to_animate == 1:
-            self.animate_graphs()
-        elif V.to_animate == 2:
-            self.animate_pie()
-        elif V.to_animate == 3:
-            self.animate_bar()
-        elif V.to_animate == 4:
-            self.animate_noise()
 
-    def animate_graphs(i):
-        a.clear()
-        a.axis("equal")
-
-        for coord in V.coordinates_scatter:
-            a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
-        for coord in V.coordinates_plot:
-            x = np.arange(2, V.lim1, 0.5)
-            y = eval(coord[1])
-
-            for limit in range(len(y)):
-                if y[limit] > V.lim1 or y[limit] < V.lim2:
-                    y[limit] = None
-            a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
-
-    def animate_pie(i):
-        a.clear()
-        a.pie(V.slices, labels=V.activities, colors=V.cols, explode=V.explode, startangle=V.start_angle)
-
-    def animate_bar(self):
-        a.clear()
-        a.axis("auto")
-        for bar in V.bars:
-            a.bar([str(bar[0])], [int(bar[1])], color=bar[2], width=float(bar[3]))
-
-    def animate_noise(self):
-        a.clear()
-        a.axis("equal")
-        for noise in V.noises:
-            for coord in noise:
-                a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
-
-
-class MarkoGebra(Base,DeleteAll):
+class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable):
     def __init__(self):
+
+        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable)
+        self.doInherit()
         Base.__init__(self)
-        DeleteAll.__init__(self,main=self)
+
+
+    def doInherit(self):
+        for cls in self.to_inherit:
+            cls.__init__(self,main=self)
+
     def on_exit(self):
         self.show_Setup_Frame()
         self.destroy()
@@ -92,156 +59,7 @@ class MarkoGebra(Base,DeleteAll):
         webbrowser.open(url="https://gist.github.com/RandomResourceWeb/93e887facdb98937ab5d260d1a0df270", new=1)
         webbrowser.open(url="D:\Věci\Programování\Dlohodoba_prace_main_2020\web\index.html", new=1)
 
-    @staticmethod
-    def __callback():
-        return
 
-    def exit_top(self, top):
-        a.axes.get_xaxis().set_visible(True)
-        a.axes.get_yaxis().set_visible(True)
-        top.destroy()
-
-    def saver(self):
-        top = Toplevel()
-        top.wm_geometry("400x400")
-        top.wm_title("Uložit graf")
-        top.minsize(400, 400)
-        top.maxsize(400, 400)
-
-        top.protocol("WM_DELETE_WINDOW", self.__callback)
-
-        name_label = t.Label(top, text="Název souboru:")
-        name_label.grid(row=0, column=0, padx=8)
-        name = t.Entry(top)
-        name.grid(row=0, column=1, sticky="we")
-        name_png = t.Label(top, text=".png")
-        name_png.grid(row=0, column=2, sticky="w")
-        direct_button = t.Button(top, text="Umístění", command=lambda: self.find_dir(direct, top))
-        direct_button.grid(row=1, column=0, columnspan=2, sticky="we")
-        direct = t.Label(top, text="")
-        direct.grid(row=1, column=2)
-        is_grid_label = t.Label(top, text="Neukládat s popisem os: ")
-        is_grid_label.grid(row=2, column=0)
-        is_grid = t.Checkbutton(top, command=lambda: self.is_grid_func(is_grid.state()))
-        is_grid.grid(row=2, column=1)
-        send = t.Button(top, text="go", command=lambda: self.save_as_img(direct["text"], name.get(), top))
-        send.grid(row=3, column=0, columnspan=2, sticky="we")
-        go_back = t.Button(top, text="zrušit", command=lambda: self.exit_top(top))
-        go_back.grid(row=3, column=2)
-
-    def find_dir(self, dir_label, top):
-        file = filedialog.askdirectory()
-        if file:
-            dir_label["text"] = file
-        top.lift()
-
-    def is_grid_func(self, state):
-        if "selected" in state:
-            a.axes.get_xaxis().set_visible(False)
-            a.axes.get_yaxis().set_visible(False)
-        else:
-            a.axes.get_xaxis().set_visible(True)
-            a.axes.get_yaxis().set_visible(True)
-
-    def save_as_img(self, file, name, top):
-        w, h = f.canvas.get_width_height()
-        buf = np.frombuffer(f.canvas.tostring_argb(), dtype=np.uint8)
-        buf.shape = (w, h, 4)
-        buf = np.roll(buf, 3, axis=2)
-        w, h, d = buf.shape
-        im = Image.frombytes("RGBA", (w, h), buf.tostring())
-        im.save(f"{file}/{name}.png")
-        top.destroy()
-        a.axes.get_xaxis().set_visible(True)
-        a.axes.get_yaxis().set_visible(True)
-
-    def show_Setup_Frame(self, cont=None):
-        if V.to_animate == 1:
-            with(open("math.json", "w")) as save:
-                save.truncate()
-                data = [V.coordinates_scatter, [x[2:] for x in V.coordinates_plot]]
-                json.dump(data, save)
-
-        if V.to_animate == 2:
-            with(open("pie.json", "w")) as save:
-                save.truncate()
-                data = [V.slices, V.cols, V.activities, V.explode]
-                json.dump(data, save)
-
-        if V.to_animate == 3:
-            with(open("bar.json", "w")) as save:
-                save.truncate()
-                data = [V.bars, V.coordinates_all_list]
-                json.dump(data, save)
-
-        if V.to_animate == 4:
-            with(open("noise.json", "w")) as save:
-                save.truncate()
-                data = [V.noises[1:], V.coordinates_all_list, V.dispersion, V.number]
-
-                json.dump(data, save)
-
-        if cont != None:
-            new_frame = cont(self.SetupContainer, self)
-            V.to_animate = GRAPHING_METHOD[new_frame.type]
-
-            if self._frame is not None:
-                for child in self._frame.winfo_children():
-                    child.destroy()
-                self._frame.destroy()
-            self._frame = new_frame
-            self._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
-
-        V.coordinates_plot = []
-        V.coordinates_scatter = []
-        V.slices = []
-        V.cols = []
-        V.activities = []
-        V.explode = []
-        V.start_angle = 90
-        V.bars = []
-        V.noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
-        V.dispersion = []
-        V.number = []
-        V.basic_gen = []
-
-        V.coordinates_all_list = []
-
-        if V.to_animate == 1:
-            with(open("math.json", "r")) as save:
-                data = json.loads(save.read())
-                if data[0] != []:
-                    for val in data[0]:
-                        self.add_point_scatter(val[0], val[1], val[2], val[3], val[4])
-                if data[0] != []:
-                    for val in data[1]:
-                        self.add_plot_from_function(val[3], val[0], val[1], val[2])
-
-        elif V.to_animate == 2:
-            with(open("pie.json", "r")) as save:
-                data = json.loads(save.read())
-                if data != [[], [], [], []]:
-                    for index in range(len(data[0])):
-                        self.add_pie_data(data=[data[0][index], data[2][index], data[1][index]],
-                                          expl=int(data[3][index]))
-
-        elif V.to_animate == 3:
-            with(open("bar.json", "r")) as save:
-                data = json.loads(save.read())
-                if data != [[], []]:
-                    V.bars = data[0]
-                    V.coordinates_all_list = data[1]
-
-        elif V.to_animate == 4:
-            with(open("noise.json", "r")) as save:
-                data = json.loads(save.read())
-                if data != [[], [], [], []]:
-                    V.noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]] + data[0]
-                    V.coordinates_all_list = data[1]
-                    V.dispersion = data[2]
-                    V.number = data[3]
-
-        self.update_table()
 
     def colorize_grid(self):
         color = col.askcolor()
@@ -370,35 +188,7 @@ class MarkoGebra(Base,DeleteAll):
         V.coordinates_all_list.append([num, disper, V.noises[-1][0][2], V.noises[-1][0][3], V.noises[-1][0][4]])
         self.update_table()
 
-    def update_table(self):
 
-        for child in self.scrollable_frame.winfo_children():
-            for child_of_child in child.winfo_children():
-                child_of_child.destroy()
-        counter = 0
-        for index, parent in enumerate(self.scrollable_frame.winfo_children()):
-            try:
-                if V.to_animate == 1:
-                    t.Label(parent,
-                            text=f"{counter}. {V.coordinates_all_list[index][0][0]}:{V.coordinates_all_list[index][0][1]}; Značka: {V.coordinates_all_list[index][1]}; Barva: {V.coordinates_all_list[index][2]}; Velikost: {V.coordinates_all_list[index][3]}",
-                            font=fonts()["SMALL_FONT"],
-                            justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
-
-                elif V.to_animate == 2 or V.to_animate == 3:
-                    t.Label(parent,
-                            text=f"{counter}. Název: {V.coordinates_all_list[index][0]}; Hodnota: {V.coordinates_all_list[index][1]}; Barva: {V.coordinates_all_list[index][2]}",
-                            font=fonts()["SMALL_FONT"],
-                            justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
-                elif V.to_animate == 4:
-                    t.Label(parent,
-                            text=f"{counter}. Množství: {V.coordinates_all_list[index][0]}; Rozptyl: {V.coordinates_all_list[index][1]}; Značka: {V.coordinates_all_list[index][2]}; Barva: {V.coordinates_all_list[index][3]}; Velikost: {V.coordinates_all_list[index][4]}",
-                            font=fonts()["SMALL_FONT"],
-                            justify=LEFT, anchor="w").grid(row=counter, column=0, sticky="we")
-
-                counter += 1
-
-            except IndexError:
-                pass
 
 
 
@@ -923,7 +713,7 @@ class MarkoGebra(Base,DeleteAll):
 
     def stAngle(self, angle):
         if V.to_animate == 2:
-            start_angle = angle
+            V.start_angle = angle
             self.update_table()
         else:
             raise SyntaxError
