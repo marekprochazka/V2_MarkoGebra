@@ -23,7 +23,7 @@ from Static.constants import *
 from Globals.calculated import *
 from Globals.variables import Variables as V
 from GUI.base import Base
-from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid
+from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update
 from Graphing.graph_animation import GraphAnimation
 
 mp.use("TkAgg")
@@ -39,10 +39,10 @@ from Graphing.setup import *
 
 
 
-class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid):
+class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate):
     def __init__(self):
 
-        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable,Grid)
+        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate)
         self.doInherit()
         Base.__init__(self)
 
@@ -60,125 +60,6 @@ class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid):
         webbrowser.open(url="D:\Věci\Programování\Dlohodoba_prace_main_2020\web\index.html", new=1)
 
 
-
-
-
-    def add_point_scatter(self, x, y, marker=".", color="blue", size="1", error=None, entry1=None, entry2=None):
-        try:
-            x = int(x)
-            y = int(y)
-            if x > V.lim1:
-                V.lim1 = x
-            if x < V.lim2:
-                V.lim2 = x
-            if y > V.lim1:
-                V.lim1 = y
-            if y < V.lim2:
-                V.lim2 = y
-            if [x, y] not in V.coordinates_scatter:
-                V.coordinates_scatter.append([x, y, marker, color, size])
-                V.coordinates_all_list.append([[x, y], marker, color, size])
-                if error != None:
-                    error["text"] = ""
-                    entry1.delete(0, END)
-                    entry2.delete(0, END)
-                    self.update_table()
-        except:
-            if error != None:
-                error["text"] = "chyba"
-                entry1.delete(0, END)
-                entry2.delete(0, END)
-
-    def add_plot_from_function(self, function: str, line="solid", color="blue", size="1", error=None, entry=None):
-        is_all_fine = True
-        for char in function:
-            if char not in FUNCTION_ALLOWED_MARKS:
-                is_all_fine = False
-
-        if is_all_fine:
-            function = function.replace("s", "sin")
-            function = function.replace("c", "cos")
-            function = function.replace("t", "tan")
-            function = function.replace("p", "pi")
-            x = np.arange(V.lim2, V.lim1, 0.5)
-            y = function
-
-            checnk = True
-            if len(V.coordinates_plot) >= 1:
-                for val in V.coordinates_plot:
-                    if val[1] == y:
-                        checnk = False
-            if checnk:
-                V.coordinates_plot.append([x, y, line, color, size, function])
-                V.coordinates_all_list.append([["f(x)", function], line, color, size])
-            if error != None:
-                error["text"] = ""
-                entry.delete(0, END)
-            self.update_table()
-        else:
-            if error != None:
-                entry.delete(0, END)
-
-                error["text"] = "chyba"
-
-    def add_pie_data(self, data, expl=0, entry1=None, entry2=None, cbb=None, error=None):
-
-        try:
-            float(data[0])
-            V.slices.append(data[0])
-            V.activities.append(data[1])
-            V.cols.append(data[2])
-            V.explode.append(expl)
-            if entry1 != None:
-                entry1.delete(0, END)
-                entry2.delete(0, END)
-                cbb.set("")
-            V.coordinates_all_list.append([data[1], data[0], data[2]])
-            error["text"] = ""
-
-            self.update_table()
-        except:
-            if entry1 != None:
-                entry1.delete(0, END)
-                entry2.delete(0, END)
-                error["text"] = "Chyba"
-                cbb.set("")
-            else:
-                pass
-
-    def add_bar_data(self, name, value, color, entry1, entry2, cbb, error):
-        try:
-
-            float(value)
-            V.bars.append([name, value, color, 0.8])
-
-            V.coordinates_all_list.append([name, value, color])
-            entry1.delete(0, END)
-            entry2.delete(0, END)
-            cbb.set("")
-            error["text"] = ""
-
-            self.update_table()
-        except:
-            entry1.delete(0, END)
-            entry2.delete(0, END)
-            error["text"] = "Chyba"
-            cbb.set("")
-
-    def create_basic_gen(self, number, dispersion, col):
-        V.basic_gen = [np.random.rand(number), np.random.rand(number)]
-        self.update_dispersion(dispersion, col)
-
-    def update_dispersion(self, dispersion, col):
-        V.noises[0] = [[floor(V.basic_gen[0][indx] * dispersion), floor(V.basic_gen[1][indx] * dispersion), ".", col, 1] for
-                     indx, gn in enumerate(V.basic_gen[0])]
-
-    def lock_noise(self, disper, num):
-        V.noises.append(V.noises[0])
-        V.dispersion.append(disper)
-        V.number.append(num)
-        V.coordinates_all_list.append([num, disper, V.noises[-1][0][2], V.noises[-1][0][3], V.noises[-1][0][4]])
-        self.update_table()
 
 
 
