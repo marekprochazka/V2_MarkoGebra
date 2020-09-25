@@ -1,3 +1,4 @@
+import numpy
 class Variables:
 
     to_animate = 0
@@ -7,6 +8,8 @@ class Variables:
     command_history = []
     history_moves = 0
 
+
+    new_math = {"SC":numpy.empty((0,1))}
     coordinates_scatter = []
     coordinates_plot = []
     coordinates_all_list = []
