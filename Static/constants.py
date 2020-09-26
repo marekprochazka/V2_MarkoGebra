@@ -1,4 +1,4 @@
-from Globals.variables import Variables as V
+
 MAX_WIDTH = 1600
 MAX_HEIGHT = 600
 
@@ -19,8 +19,4 @@ GRAPHING_METHOD = {
     "pie": 2,
     "bar": 3,
     "noise": 4
-}
-
-GRAPHING_METHOD_OBJECTS = {
-    1:V.new_math,
 }
