@@ -1,4 +1,4 @@
-
+import numpy as np
 class Variables:
 
     to_animate = 0
@@ -8,7 +8,7 @@ class Variables:
     command_history = []
     history_moves = 0
 
-
+    cache = dict
 
     coordinates_scatter = []
     coordinates_plot = []

@@ -20,3 +20,7 @@ GRAPHING_METHOD = {
     "bar": 3,
     "noise": 4
 }
+
+UPDATE = "UPDATE"
+CREATE = "CREATE"
+DELETE = "DELETE"
