@@ -36,7 +36,7 @@ class ShowFrame:
 
         if cont != None:
             new_frame = cont(self.main.SetupContainer, self.main)
-            V.to_animate = GRAPHING_METHOD[new_frame.type]
+            V.to_animate = GRAPHING_METHOD[new_frame.old_type]
 
             if self.main._frame is not None:
                 for child in self.main._frame.winfo_children():

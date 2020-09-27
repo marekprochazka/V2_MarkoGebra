@@ -1,12 +1,15 @@
 from tkinter import Frame, Label
 from tkinter import ttk as t
 from Globals.calculated import fonts
+from Static.constants import PIE
 
 class Pie(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         self.controller = controller
-        self.type = "pie"
+        self.type = PIE
+        self.old_type = "pie" #TODO delete after Data update
+
         self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
         self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
 

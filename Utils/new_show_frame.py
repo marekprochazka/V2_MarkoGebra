@@ -14,9 +14,25 @@ class ShowFrame:
         # SAVING PREVIOUS
         if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
 
-tst = ShowFrame("aaaa")
-V.to_animate = MATH
-V.changes_cache.append({ACTION:CREATE,DATA:(1,2,":-)","red",7),ID:generate_uuid(),TYPE:SCATTER})
-V.changes_cache.append({ACTION:CREATE,DATA:("x**2","solid","red",2),ID:generate_uuid(),TYPE:FUNCTION})
-print((V.changes_cache))
-tst.show_Setup_Frame()
+        #CHANGE to_animate TO ACTUAL FRAME
+        if cont != None:
+            new_frame = cont(self.main.SetupContainer, self.main)
+            V.to_animate = GRAPHING_METHOD[new_frame.type]
+
+            #TODO uncomment after GUI connection
+
+            # if self.main._frame is not None:
+            #     for child in self.main._frame.winfo_children():
+            #         child.destroy()
+            #     self.main._frame.destroy()
+            # self.main._frame = new_frame
+            # self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
+
+
+# TESTING
+# tst = ShowFrame("aaaa")
+# V.to_animate = MATH
+# V.changes_cache.append({ACTION:CREATE,DATA:(1,2,":-)","red",7),ID:generate_uuid(),TYPE:SCATTER})
+# V.changes_cache.append({ACTION:CREATE,DATA:("x**2","solid","red",2),ID:generate_uuid(),TYPE:FUNCTION})
+# print((V.changes_cache))
+# tst.show_Setup_Frame()
