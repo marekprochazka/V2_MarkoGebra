@@ -1,9 +1,11 @@
 import sqlite3
-from Static.constants import DELETE,CREATE,UPDATE,ACTION,DATA,ID,TYPE,FUNCTION,SCATTER
-from Utils.uuid import generate_uuid, format_existing_uuid
-import uuid
+from Static.constants import DELETE,CREATE,UPDATE,ACTION,DATA,ID,TYPE,FUNCTION,SCATTER, MATH, PIE, BAR
+from Data.path import get_path
 
-conn = sqlite3.connect("data.db")
+from Utils.uuid import generate_uuid, format_existing_uuid
+
+
+conn = sqlite3.connect(get_path()+"\data.db")
 c = conn.cursor()
 
 def get_table(name):
@@ -77,6 +79,8 @@ def update_bar(changes):
     conn.commit()
 
 
+UPDATE_FUNCTIONS = {MATH:update_math,BAR:update_bar,PIE:update_pie}
+
 # changes = [{ACTION: CREATE,DATA:(3,3,"aa",7,"pink"),ID:(str(uuid.uuid4()),),TYPE:SCATTER},{ACTION:CREATE,DATA:("y**2","- -","red",8),ID:(str(uuid.uuid4()),),TYPE:FUNCTION}]
 # update_math(changes)
 
@@ -92,4 +96,4 @@ def update_bar(changes):
 #
 # update_bar(changes)
 
-delete_all_from_table("bar")
+# delete_all_from_table("bar")
