@@ -1,5 +1,7 @@
 import sqlite3
-from Static.constants import DELETE,CREATE,UPDATE
+from Static.constants import DELETE,CREATE,UPDATE,ACTION,DATA,ID,TYPE,FUNCTION,SCATTER
+from Utils.uuid import generate_uuid, format_existing_uuid
+import uuid
 
 conn = sqlite3.connect("data.db")
 c = conn.cursor()
@@ -8,34 +10,80 @@ def get_table(name):
     c.execute("SELECT * FROM ?",name)
     return c.fetchall()
 
-def update_scatter(changes):
+def update_math(changes):
     for change in changes:
-        if change["action"] == CREATE:
-            c.execute("""   INSERT INTO scatter(x,y,marker,size,color) 
+        if change[TYPE] == SCATTER:
+            if change[ACTION] == CREATE:
+                c.execute("""   INSERT INTO scatter 
+                                VALUES (?,?,?,?,?,?)"""
+                          ,change[ID] + change[DATA])
+
+            elif change[ACTION] == UPDATE:
+                c.execute("""   UPDATE scatter 
+                                SET x=?,y=?,marker=?,size=?,color=?
+                                WHERE id=?"""
+                          ,change[DATA] + change[ID])
+            elif change[ACTION] == DELETE:
+                c.execute("DELETE FROM scatter WHERE id=?",change[ID])
+        elif change[TYPE] == FUNCTION:
+            if change[ACTION] == CREATE:
+                c.execute("""   INSERT INTO function
+                                VALUES (?,?,?,?,?)"""
+                          , change[ID] + change[DATA])
+            elif change[ACTION] == UPDATE:
+                c.execute("""   UPDATE function
+                                SET func=?,line=?,color=?,size=?
+                                WHERE id=?"""
+                          , change[DATA] + change[ID])
+            elif change[ACTION] == DELETE:
+                c.execute("DELETE FROM function WHERE id=?", change[ID])
+
+    conn.commit()
+
+
+
+def update_pie(changes):
+    for change in changes:
+        if change[ACTION] == CREATE:
+            c.execute("""   INSERT INTO pie
                             VALUES (?,?,?,?,?)"""
-                      ,change["data"])
-
-        elif change["action"] == UPDATE:
-            c.execute("""   UPDATE scatter 
-                            SET x=?,y=?,marker=?,size=?,color=?
+                      ,change[ID] + change[DATA])
+        elif change[ACTION] == UPDATE:
+            c.execute("""   UPDATE pie
+                            SET slice=?,activity=?,color=?,explode=?
                             WHERE id=?"""
-                      ,change["data"] + change["id"])
-        elif change["action"] == DELETE:
-            c.execute("DELETE FROM scatter WHERE id=?",change["id"])
+                      ,change[DATA] + change[ID])
+        elif change[ACTION] == DELETE:
+            c.execute("DELETE FROM pie WHERE id=?",change[ID])
     conn.commit()
 
-def update_func(values):
-    c.executemany("INSERT INTO function(func,line,color,size) VALUES (?,?,?,?)",values)
+def update_bar(changes):
+    for change in changes:
+        if change[ACTION] == CREATE:
+            c.execute("""   INSERT INTO bar
+                            VALUES (?,?,?,?)"""
+                      ,change[ID] + change[DATA])
+        elif change[ACTION] == UPDATE:
+            c.execute("""   UPDATE bar
+                            SET name=?,value=?,color=?
+                            WHERE id=?"""
+                      ,change[DATA] + change[ID])
+        elif change[ACTION] == DELETE:
+            c.execute("DELETE FROM bar WHERE id=?",change[ID])
     conn.commit()
 
-def update_pie(values):
-    c.executemany("INSERT INTO pie(slice,activity,color,explode) VALUES (?,?,?,?)",values)
-    conn.commit()
 
-def update_bar(values):
-    c.executemany("INSERT INTO bar(name,value,color) VALUES (?,?,?)",values)
-    conn.commit()
+# changes = [{ACTION: CREATE,DATA:(3,3,"aa",7,"pink"),ID:(str(uuid.uuid4()),),TYPE:SCATTER},{ACTION:CREATE,DATA:("y**2","- -","red",8),ID:(str(uuid.uuid4()),),TYPE:FUNCTION}]
+# update_math(changes)
 
+# changes = [{ACTION:UPDATE,DATA:(8,"asdfasdf","rred",17),ID:format_existing_uuid("a67cbec5-5e7e-4563-b310-0a23467b2057")},
+#            {ACTION:CREATE,DATA:(7,"jksdhfg","pnk",11),ID:generate_uuid()},
+#            {ACTION:DELETE,ID:format_existing_uuid("c5f8ec82-006b-46f5-9335-f94d1de7b7aa")}]
+# update_pie(changes)
 
-changes = [{"action":UPDATE,"data":(3,3,":-)",6,"aqua"),"id":(1,)},{"action":DELETE,"id":(2,)},{"action":CREATE,"data":(1,2,"*",3,"blue")},{"action":CREATE,"data":(1,2,"*",3,"blue")}]
-update_scatter(changes)
+# changes = []
+# import random
+# for _ in range(2000):
+#     changes.append({ACTION:CREATE,DATA:(str(random.randrange(0,500)),random.randrange(0,500),"red"),ID:generate_uuid()})
+#
+# update_bar(changes)
