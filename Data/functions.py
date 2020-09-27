@@ -7,8 +7,12 @@ conn = sqlite3.connect("data.db")
 c = conn.cursor()
 
 def get_table(name):
-    c.execute("SELECT * FROM ?",name)
+    c.execute("SELECT * FROM {}".format(name))
     return c.fetchall()
+
+def delete_all_from_table(name):
+    c.execute("DELETE FROM {};".format(name))
+    conn.commit()
 
 def update_math(changes):
     for change in changes:
@@ -87,3 +91,5 @@ def update_bar(changes):
 #     changes.append({ACTION:CREATE,DATA:(str(random.randrange(0,500)),random.randrange(0,500),"red"),ID:generate_uuid()})
 #
 # update_bar(changes)
+
+delete_all_from_table("bar")
