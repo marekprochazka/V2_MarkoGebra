@@ -68,11 +68,11 @@ def update_bar(changes):
     for change in changes:
         if change[ACTION] == CREATE:
             c.execute("""   INSERT INTO bar
-                            VALUES (?,?,?,?)"""
+                            VALUES (?,?,?,?,?)"""
                       ,change[ID] + change[DATA])
         elif change[ACTION] == UPDATE:
             c.execute("""   UPDATE bar
-                            SET name=?,value=?,color=?
+                            SET name=?,value=?,color=?,width=?
                             WHERE id=?"""
                       ,change[DATA] + change[ID])
         elif change[ACTION] == DELETE:
