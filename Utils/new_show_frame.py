@@ -1,7 +1,7 @@
 from Globals.variables import Variables as V
 from Static.constants import GRAPHING_METHOD, MAX_WIDTH, MAX_HEIGHT, MATH, BAR, PIE, TO_ANIMATExTABLES
 from Data.functions import UPDATE_FUNCTIONS, get_tables
-
+from .graph_update import *
 from Static.constants import ACTION,CREATE,UPDATE,DELETE,ID,DATA,TYPE,SCATTER,FUNCTION
 from Utils.uuid import generate_uuid,format_existing_uuid
 
@@ -14,7 +14,7 @@ class ShowFrame:
         # SAVING PREVIOUS
         if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
 
-        #CHANGE to_animate TO ACTUAL FRAME
+        #CHANGE to_animate TO ACTUAL FRAME + FRAME DRAWING
         if cont != None:
             new_frame = cont(self.main.SetupContainer, self.main)
             V.to_animate = GRAPHING_METHOD[new_frame.type]
@@ -30,6 +30,10 @@ class ShowFrame:
 
         #LODAING DATA TO CACHE
         V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+
+        #TABLE DATA WRITING
+        self.main.update_table()
+
 
 
 # TESTING
