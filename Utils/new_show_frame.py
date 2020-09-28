@@ -1,6 +1,6 @@
 from Globals.variables import Variables as V
-from Static.constants import GRAPHING_METHOD, MAX_WIDTH, MAX_HEIGHT, MATH, BAR, PIE
-from Data.functions import UPDATE_FUNCTIONS
+from Static.constants import GRAPHING_METHOD, MAX_WIDTH, MAX_HEIGHT, MATH, BAR, PIE, TO_ANIMATExTABLES
+from Data.functions import UPDATE_FUNCTIONS, get_tables
 
 from Static.constants import ACTION,CREATE,UPDATE,DELETE,ID,DATA,TYPE,SCATTER,FUNCTION
 from Utils.uuid import generate_uuid,format_existing_uuid
@@ -28,6 +28,9 @@ class ShowFrame:
             # self.main._frame = new_frame
             # self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
 
+        #LODAING DATA TO CACHE
+        V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+
 
 # TESTING
 # tst = ShowFrame("aaaa")
@@ -36,3 +39,8 @@ class ShowFrame:
 # V.changes_cache.append({ACTION:CREATE,DATA:("x**2","solid","red",2),ID:generate_uuid(),TYPE:FUNCTION})
 # print((V.changes_cache))
 # tst.show_Setup_Frame()
+import numpy
+# V.to_animate = MATH
+# print(V.cache)
+# V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+# print(V.cache)

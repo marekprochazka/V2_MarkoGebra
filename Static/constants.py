@@ -20,6 +20,8 @@ GRAPHING_METHOD = {
     "noise": 4
 }
 
+
+
 ACTION = "ACTION"
 DATA = "DATA"
 ID = "ID"
@@ -34,3 +36,10 @@ MATH = "MATH"
 BAR = "BAR"
 PIE = "PIE"
 NOISE = "NOISE"
+
+TO_ANIMATExTABLES = {
+    MATH:("scatter","function"),
+    BAR:("bar",),
+    PIE:("pie",),
+    NOISE:("noise",)
+}

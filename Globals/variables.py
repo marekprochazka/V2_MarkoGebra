@@ -8,7 +8,7 @@ class Variables:
     command_history = []
     history_moves = 0
 
-    cache = dict
+    cache = []
     changes_cache = []
 
     coordinates_scatter = []

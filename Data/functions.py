@@ -8,9 +8,10 @@ from Utils.uuid import generate_uuid, format_existing_uuid
 conn = sqlite3.connect(get_path()+"\data.db")
 c = conn.cursor()
 
-def get_table(name):
-    c.execute("SELECT * FROM {}".format(name))
-    return c.fetchall()
+def get_tables(names):
+    for name in names:
+        c.execute("SELECT * FROM {}".format(name))
+        yield c.fetchall()
 
 def delete_all_from_table(name):
     c.execute("DELETE FROM {};".format(name))
@@ -96,4 +97,7 @@ UPDATE_FUNCTIONS = {MATH:update_math,BAR:update_bar,PIE:update_pie}
 #
 # update_bar(changes)
 
-# delete_all_from_table("bar")
+# delete_all_from_tables("bar")
+# x = list(get_tables(("pie",)))
+# print(x[0])
+# print(x)
