@@ -1,7 +1,7 @@
 from Globals.variables import Variables as V
 from Static.constants import GRAPHING_METHOD, MAX_WIDTH, MAX_HEIGHT, MATH, BAR, PIE, TO_ANIMATExTABLES
 from Data.functions import UPDATE_FUNCTIONS, get_tables
-from .graph_update import *
+from Utils.graph_update import *
 from Static.constants import ACTION,CREATE,UPDATE,DELETE,ID,DATA,TYPE,SCATTER,FUNCTION
 from Utils.uuid import generate_uuid,format_existing_uuid
 
@@ -43,8 +43,8 @@ class ShowFrame:
 # V.changes_cache.append({ACTION:CREATE,DATA:("x**2","solid","red",2),ID:generate_uuid(),TYPE:FUNCTION})
 # print((V.changes_cache))
 # tst.show_Setup_Frame()
-import numpy
-# V.to_animate = MATH
+# import numpy
+# V.to_animate = PIE
 # print(V.cache)
 # V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
 # print(V.cache)
