@@ -13,12 +13,12 @@ class GraphAnimation:
             self.animate_bar()
         elif V.to_animate == NOISE:
             self.animate_noise()
-
+    
     def animate_graphs(i):
         a.clear()
         a.axis("equal")
 
-        for coord in V.coordinates_scatter:
+        for coord in V.cache:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.coordinates_plot:
             x = np.arange(2, V.lim1, 0.5)
