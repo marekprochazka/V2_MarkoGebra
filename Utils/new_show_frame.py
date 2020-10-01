@@ -17,16 +17,16 @@ class ShowFrame:
         #CHANGE to_animate TO ACTUAL FRAME + FRAME DRAWING
         if cont != None:
             new_frame = cont(self.main.SetupContainer, self.main)
-            V.to_animate = GRAPHING_METHOD[new_frame.type]
+            V.to_animate = new_frame.type
 
             #TODO uncomment after GUI connection
 
-            # if self.main._frame is not None:
-            #     for child in self.main._frame.winfo_children():
-            #         child.destroy()
-            #     self.main._frame.destroy()
-            # self.main._frame = new_frame
-            # self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
+            if self.main._frame is not None:
+                for child in self.main._frame.winfo_children():
+                    child.destroy()
+                self.main._frame.destroy()
+            self.main._frame = new_frame
+            self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
 
         #LODAING DATA TO CACHE
         V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
