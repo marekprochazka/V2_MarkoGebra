@@ -1,6 +1,7 @@
 from Globals.variables import Variables as V
 from tkinter import END
-
+from Utils.uuid import generate_uuid
+from Static.constants import ACTION,CREATE,ID,DATA
 
 class BarUpdate:
     def __init__(self,main):
@@ -9,10 +10,14 @@ class BarUpdate:
     def add_bar_data(self, name, value, color, entry1, entry2, cbb, error):
         try:
 
-            float(value)
-            V.bars.append([name, value, color, 0.8])
 
-            V.coordinates_all_list.append([name, value, color])
+
+            float(value)
+            uuid = generate_uuid()
+            V.cache[0].append((uuid,value,name,color,0.8))
+            V.changes_cache.append({ACTION: CREATE,DATA:(value,name,color,0.8),ID:uuid})
+
+
             entry1.delete(0, END)
             entry2.delete(0, END)
             cbb.set("")

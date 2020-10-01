@@ -1,14 +1,15 @@
-
+import numpy as np
 class Variables:
 
-    to_animate = 0
+    to_animate = None
 
     pie_colors = []
 
     command_history = []
     history_moves = 0
 
-
+    cache = []
+    changes_cache = []
 
     coordinates_scatter = []
     coordinates_plot = []

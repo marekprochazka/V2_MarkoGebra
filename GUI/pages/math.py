@@ -1,12 +1,15 @@
 from tkinter import Frame,Label
 from tkinter import ttk as t
 from Globals.calculated import fonts
+from Static.constants import MATH
 
 class Mathematical(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         self.controller = controller
-        self.type = "matematical"
+        self.type = MATH
+        self.old_type = "matematical" #TODO delete after Data update
+
         # Scatter
         # labely
         self.labelX = t.Label(self, text="X:", font=fonts()["SMALL_FONT"])

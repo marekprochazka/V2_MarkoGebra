@@ -1,4 +1,3 @@
-
 MAX_WIDTH = 1600
 MAX_HEIGHT = 600
 
@@ -19,4 +18,28 @@ GRAPHING_METHOD = {
     "pie": 2,
     "bar": 3,
     "noise": 4
+}
+
+
+
+ACTION = "ACTION"
+DATA = "DATA"
+ID = "ID"
+UPDATE = "UPDATE"
+CREATE = "CREATE"
+DELETE = "DELETE"
+TYPE = "TYPE"
+SCATTER = "SCATTER"
+FUNCTION = "FUNCTION"
+
+MATH = "MATH"
+BAR = "BAR"
+PIE = "PIE"
+NOISE = "NOISE"
+
+TO_ANIMATExTABLES = {
+    MATH:("scatter","function"),
+    BAR:("bar",),
+    PIE:("pie",),
+    NOISE:("noise",)
 }
