@@ -1,6 +1,7 @@
 from Globals.variables import Variables as V
 from tkinter import END
 from Utils.uuid import generate_uuid
+from Static.constants import ACTION,CREATE,ID,DATA
 
 class BarUpdate:
     def __init__(self,main):
@@ -12,7 +13,9 @@ class BarUpdate:
 
 
             float(value)
-            V.cache[0].append((generate_uuid(),value,name,color,0.8))
+            uuid = generate_uuid()
+            V.cache[0].append((uuid,value,name,color,0.8))
+            V.changes_cache.append({ACTION: CREATE,DATA:(value,name,color,0.8),ID:uuid})
 
 
             entry1.delete(0, END)

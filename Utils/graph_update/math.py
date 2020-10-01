@@ -1,6 +1,6 @@
 from Globals.variables import Variables as V
 from tkinter import END
-from Static.constants import FUNCTION_ALLOWED_MARKS
+from Static.constants import FUNCTION_ALLOWED_MARKS,ACTION,CREATE,ID,DATA,TYPE,SCATTER,FUNCTION
 import numpy as np
 from Utils.uuid import generate_uuid
 
@@ -21,7 +21,10 @@ class MathUpdate:
             if y < V.lim2:
                 V.lim2 = y
 
-            V.cache[0].append((generate_uuid(),x,y,marker,color,size))
+            uuid = generate_uuid()
+
+            V.cache[0].append((uuid,x,y,marker,color,size))
+            V.changes_cache.append({ACTION:CREATE,DATA:(x,y,marker,color,size),ID:uuid,TYPE:SCATTER})
 
 
             if error != None:
@@ -48,7 +51,9 @@ class MathUpdate:
             function = function.replace("p", "pi")
             y = function
 
-            V.cache[1].append((generate_uuid(),y,line,color,size))
+            uuid = generate_uuid()
+            V.cache[1].append((uuid,y,line,color,size))
+            V.changes_cache.append({ACTION:CREATE,DATA:(y,line,color,size),ID:uuid,TYPE:FUNCTION})
 
             if error != None:
                 error["text"] = ""
