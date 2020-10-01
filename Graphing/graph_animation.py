@@ -18,9 +18,9 @@ class GraphAnimation:
         a.clear()
         a.axis("equal")
 
-        for coord in V.cache:
+        for coord in V.cache[0]:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
-        for coord in V.coordinates_plot:
+        for coord in V.cache[1]:
             x = np.arange(2, V.lim1, 0.5)
             y = eval(coord[1])
 
@@ -42,7 +42,7 @@ class GraphAnimation:
     def animate_bar(self):
         a.clear()
         a.axis("auto")
-        for bar in V.cache:
+        for bar in V.cache[0]:
             a.bar([str(bar[1])], [int(bar[2])], color=bar[3], width=float(bar[4]))
 
     #TODO
