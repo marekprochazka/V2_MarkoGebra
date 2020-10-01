@@ -12,7 +12,7 @@ class BarUpdate:
 
 
             float(value)
-            V.cache[0].append(generate_uuid(),value,name,color,0.8)
+            V.cache[0].append((generate_uuid(),value,name,color,0.8))
 
 
             entry1.delete(0, END)

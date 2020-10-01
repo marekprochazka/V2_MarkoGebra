@@ -11,7 +11,7 @@ class PieUpdate:
         try:
             float(data[0])
 
-            V.cache[0].append(generate_uuid(),data[0],data[1],data[2],expl)
+            V.cache[0].append((generate_uuid(),data[0],data[1],data[2],expl))
 
             if entry1 != None:
                 entry1.delete(0, END)
