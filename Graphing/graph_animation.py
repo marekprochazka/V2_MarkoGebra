@@ -21,13 +21,14 @@ class GraphAnimation:
         for coord in V.cache[0]:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.cache[1]:
-            x = np.arange(2, V.lim1, 0.5)
-            y = eval(coord[1])
+            x = np.linspace(-5,5,100)
 
-            for limit in range(len(y)):
-                if y[limit] > V.lim1 or y[limit] < V.lim2:
-                    y[limit] = None
-            a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+
+
+            # for limit in range(len(y)):
+            #     if y[limit] > V.lim1 or y[limit] < V.lim2:
+            #         y[limit] = None
+            a.plot(x, eval(coord[1]), linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
 
     def animate_pie(i):
         a.clear()
