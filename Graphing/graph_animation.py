@@ -14,21 +14,26 @@ class GraphAnimation:
         elif V.to_animate == NOISE:
             self.animate_noise()
     
-    def animate_graphs(i):
+    def animate_graphs(self):
+
+
         a.clear()
         a.axis("equal")
 
         for coord in V.cache[0]:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.cache[1]:
-            x = np.linspace(-5,5,100)
 
+
+            x,y = self.cut_y_limits(coord[1])
 
 
             # for limit in range(len(y)):
             #     if y[limit] > V.lim1 or y[limit] < V.lim2:
             #         y[limit] = None
-            a.plot(x, eval(coord[1]), linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+            a.plot(x,y , linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+
+
 
     def animate_pie(i):
         a.clear()
@@ -54,3 +59,13 @@ class GraphAnimation:
             for coord in noise:
                 a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
 
+    def cut_y_limits(self, func):
+        x = np.linspace(V.lim2,V.lim1,100)
+        y = eval(func)
+        to_del = []
+        for index, value in enumerate(y):
+            if value > V.lim1 or value < V.lim2:
+                to_del.append(index)
+        x = np.delete(x, to_del)
+        y = np.delete(y, to_del)
+        return x, y
