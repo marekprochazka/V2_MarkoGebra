@@ -6,7 +6,7 @@ math.json
 bar.json
 noise.json
 pie.json
-
+sandbox.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
