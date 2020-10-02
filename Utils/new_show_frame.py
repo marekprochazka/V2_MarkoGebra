@@ -14,6 +14,9 @@ class ShowFrame:
         # SAVING PREVIOUS
         if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
 
+        #CLEAR changes_cahce
+        V.changes_cache = []
+
         #CHANGE to_animate TO ACTUAL FRAME + FRAME DRAWING
         if cont != None:
             new_frame = cont(self.main.SetupContainer, self.main)
@@ -30,6 +33,8 @@ class ShowFrame:
 
         #LODAING DATA TO CACHE
         V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+
+
 
         #TABLE DATA WRITING
         self.main.update_table()
