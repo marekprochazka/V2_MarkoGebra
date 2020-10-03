@@ -34,10 +34,18 @@ class ShowFrame:
         #LODAING DATA TO CACHE
         V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
 
-
+        self.__update_limits()
 
         #TABLE DATA WRITING
         self.main.update_table()
+
+    def __update_limits(self):
+        for scatter_value in V.cache[0]:
+            if scatter_value[1] > V.lim1: V.lim1 = scatter_value[1]
+            if scatter_value[1] < V.lim2: V.lim2 = scatter_value[1]
+            if scatter_value[2] > V.lim1: V.lim1 = scatter_value[2]
+            if scatter_value[2] < V.lim2: V.lim2 = scatter_value[2]
+
 
 
 

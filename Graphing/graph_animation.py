@@ -2,6 +2,8 @@ from Globals.variables import Variables as V
 from Graphing.setup import a
 import numpy as np
 from Static.constants import MATH,PIE,BAR,NOISE
+from sympy import solveset,Eq,Symbol
+
 
 class GraphAnimation:
     def Go(self, i):
@@ -68,4 +70,21 @@ class GraphAnimation:
                 to_del.append(index)
         x = np.delete(x, to_del)
         y = np.delete(y, to_del)
+
+        left_x_lim,right_x_lim = self.add_limit_points(func)
+        x = np.insert(x,0,left_x_lim)
+        x = np.append(x,right_x_lim)
+
+        y = np.insert(y,0,V.lim2)
+        y = np.append(y,V.lim1)
+
+
         return x, y
+
+    def add_limit_points(self,func):
+        x = Symbol("x")
+
+        lower_lim = complex(list(solveset(Eq(V.lim2,eval(func)),x))[0]).real
+        upper_lim = complex(list(solveset(Eq(V.lim1,eval(func)),x))[0]).real
+        return lower_lim,upper_lim
+
