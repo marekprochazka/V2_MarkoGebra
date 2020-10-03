@@ -14,8 +14,8 @@ class BarUpdate:
 
             float(value)
             uuid = generate_uuid()
-            V.cache[0].append((uuid,value,name,color,0.8))
-            V.changes_cache.append({ACTION: CREATE,DATA:(value,name,color,0.8),ID:uuid})
+            V.cache[0].append((uuid,name,value,color,0.8))
+            V.changes_cache.append({ACTION: CREATE,DATA:(name,value,color,0.8),ID:uuid})
 
 
             entry1.delete(0, END)

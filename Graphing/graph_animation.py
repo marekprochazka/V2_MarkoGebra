@@ -51,7 +51,7 @@ class GraphAnimation:
         a.clear()
         a.axis("auto")
         for bar in V.cache[0]:
-            a.bar([str(bar[1])], [int(bar[2])], color=bar[3], width=float(bar[4]))
+            a.bar(str(bar[1]), int(bar[2]), color=bar[3], width=float(bar[4]))
 
     #TODO
     def animate_noise(self):

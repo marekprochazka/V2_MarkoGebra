@@ -34,7 +34,10 @@ class ShowFrame:
         #LODAING DATA TO CACHE
         V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
 
-        self.__update_limits()
+
+        #UPDATE LIMITS IF IT'S MATH GRAPHING
+        if V.to_animate == MATH:self.__update_limits()
+
 
         #TABLE DATA WRITING
         self.main.update_table()
