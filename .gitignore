@@ -7,6 +7,7 @@ bar.json
 noise.json
 pie.json
 sandbox.py
+unused_features.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
