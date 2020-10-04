@@ -28,12 +28,29 @@ class Base(Tk):
         canvas.draw()
         canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 470, y=MAX_HEIGHT - 470)
 
+
+        # MULTISELECT OF GRAPHING METHODS
+        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
+                               state="readonly")
+        self.CBB2.bind('<<ComboboxSelected>>',
+                       lambda event: self.show_Setup_Frame(self.input_frames[self.CBB2.current()]))
+        self.CBB2.current(0)
+        self.CBB2.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
+                        x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
+
+
+
+        # TOPRIGHT BUTTONS
         self.hint = t.Button(self, command=lambda: self.openHelp(), text="Nápověda")
         self.hint.place(bordermode=OUTSIDE, x=MAX_WIDTH * .94, width=MAX_WIDTH * .06, y=0, height=MAX_HEIGHT * .04)
+        self.save_but = t.Button(self, text="uložit jako orázek", command=lambda: self.saver())
+        self.save_but.place(bordermode=OUTSIDE, x=MAX_WIDTH * .84, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
+        self.deleteAll_button = t.Button(self, text="Smazat vše", command=lambda: self.delete_all())
+        self.deleteAll_button.place(bordermode=OUTSIDE, x=MAX_WIDTH * .74, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
 
-        # TODO settings
+        # SETTINGS
         self.settings_container = Frame(self)
-        self.settings_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .55, y=MAX_HEIGHT * .22, width=MAX_WIDTH * .14,
+        self.settings_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .55, y=MAX_HEIGHT * .45, width=MAX_WIDTH * .14,
                                       height=MAX_HEIGHT * .8)
 
         self.InfoLabel = t.Label(self.settings_container, text="Nastavení mřížky", font=fonts()["LARGE_FONT"])
@@ -64,24 +81,12 @@ class Base(Tk):
         self.cbb_line.grid(row=5, column=0, sticky="we")
 
         self.settings_container.grid_columnconfigure(0, weight=2)
-        self.save_but = t.Button(self.settings_container, text="uložit jako orázek", command=lambda: self.saver())
-        self.save_but.grid(row=6, column=0, sticky="we")
-        self.deleteAll_button = t.Button(self.settings_container, text="Smazat vše", command=lambda: self.delete_all())
-        self.deleteAll_button.grid(row=7, column=0, sticky="we")
-        # Combobox - 2
-        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
-                               state="readonly")
-        self.CBB2.bind('<<ComboboxSelected>>',
-                       lambda event: self.show_Setup_Frame(self.input_frames[self.CBB2.current()]))
-        self.CBB2.current(0)
-        self.CBB2.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
-                        x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
 
-        """
-        {{ relative input part }}
-        """
 
-        # TODO scrollable table part
+
+
+
+        #GRAPHING INPUTS LIST
         self.Table_container = t.Frame(self)
         self.canvas = Canvas(self.Table_container)
         self.scrollbar = t.Scrollbar(self.Table_container, orient="vertical", command=self.canvas.yview)
