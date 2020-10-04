@@ -24,28 +24,34 @@ def update_math(changes):
                 c.execute("""   INSERT INTO scatter 
                                 VALUES (?,?,?,?,?,?)"""
                           ,change[ID] + change[DATA])
+                conn.commit()
 
             elif change[ACTION] == UPDATE:
                 c.execute("""   UPDATE scatter 
                                 SET x=?,y=?,marker=?,size=?,color=?
                                 WHERE id=?"""
                           ,change[DATA] + change[ID])
+                conn.commit()
             elif change[ACTION] == DELETE:
                 c.execute("DELETE FROM scatter WHERE id=?",change[ID])
+                conn.commit()
         elif change[TYPE] == FUNCTION:
             if change[ACTION] == CREATE:
                 c.execute("""   INSERT INTO function
                                 VALUES (?,?,?,?,?)"""
                           , change[ID] + change[DATA])
+                conn.commit()
             elif change[ACTION] == UPDATE:
                 c.execute("""   UPDATE function
                                 SET func=?,line=?,color=?,size=?
                                 WHERE id=?"""
                           , change[DATA] + change[ID])
+                conn.commit()
             elif change[ACTION] == DELETE:
                 c.execute("DELETE FROM function WHERE id=?", change[ID])
+                conn.commit()
 
-    conn.commit()
+
 
 
 
@@ -55,14 +61,16 @@ def update_pie(changes):
             c.execute("""   INSERT INTO pie
                             VALUES (?,?,?,?,?)"""
                       ,change[ID] + change[DATA])
+            conn.commit()
         elif change[ACTION] == UPDATE:
             c.execute("""   UPDATE pie
                             SET slice=?,activity=?,color=?,explode=?
                             WHERE id=?"""
                       ,change[DATA] + change[ID])
+            conn.commit()
         elif change[ACTION] == DELETE:
             c.execute("DELETE FROM pie WHERE id=?",change[ID])
-    conn.commit()
+            conn.commit()
 
 def update_bar(changes):
     for change in changes:
@@ -70,14 +78,18 @@ def update_bar(changes):
             c.execute("""   INSERT INTO bar
                             VALUES (?,?,?,?,?)"""
                       ,change[ID] + change[DATA])
+            conn.commit()
+
         elif change[ACTION] == UPDATE:
             c.execute("""   UPDATE bar
                             SET name=?,value=?,color=?,width=?
                             WHERE id=?"""
                       ,change[DATA] + change[ID])
+            conn.commit()
+
         elif change[ACTION] == DELETE:
             c.execute("DELETE FROM bar WHERE id=?",change[ID])
-    conn.commit()
+            conn.commit()
 
 
 UPDATE_FUNCTIONS = {MATH:update_math,BAR:update_bar,PIE:update_pie}
