@@ -45,12 +45,13 @@ class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.M
         webbrowser.open(url="https://gist.github.com/RandomResourceWeb/93e887facdb98937ab5d260d1a0df270", new=1)
 
 
+if __name__ == '__main__':
 
-aniObj = GraphAnimation()
-aniFun = aniObj.Go
+    aniObj = GraphAnimation()
+    aniFun = aniObj.Go
 
-app = MarkoGebra()
+    app = MarkoGebra()
 
-ani = anim.FuncAnimation(f, aniFun, interval=1000, blit=False)
-app.protocol("WM_DELETE_WINDOW", app.on_exit)
-app.mainloop()
+    ani = anim.FuncAnimation(f, aniFun, interval=1000, blit=False)
+    app.protocol("WM_DELETE_WINDOW", app.on_exit)
+    app.mainloop()
