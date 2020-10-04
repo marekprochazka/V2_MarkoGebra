@@ -5,3 +5,4 @@ from .update_table import UpdateTable
 from .grid import Grid
 import Utils.graph_update
 from .new_show_frame import ShowFrame
+from .limits import Limits

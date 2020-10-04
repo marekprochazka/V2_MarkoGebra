@@ -1,6 +1,7 @@
-import numpy as np
-class Variables:
+from Static.constants import X, Y, MIN, MAX
 
+
+class Variables:
     to_animate = None
 
     pie_colors = []
@@ -31,3 +32,14 @@ class Variables:
 
     lim1 = 30
     lim2 = -30
+
+    limits = {
+        X: {
+            MIN: -30,
+            MAX: 30
+        },
+        Y: {
+            MIN: -30,
+            MAX: 30
+        }
+    }

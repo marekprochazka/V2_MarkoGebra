@@ -37,6 +37,11 @@ BAR = "BAR"
 PIE = "PIE"
 NOISE = "NOISE"
 
+MIN = "MIN"
+MAX = "MAX"
+X = "X"
+Y = "Y"
+
 TO_ANIMATExTABLES = {
     MATH:("scatter","function"),
     BAR:("bar",),

@@ -8,7 +8,7 @@ import webbrowser
 
 
 from GUI.base import Base
-from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update
+from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update,Limits
 from Graphing.graph_animation import GraphAnimation
 from Console.console import Console
 
@@ -25,10 +25,10 @@ from Graphing.setup import *
 
 
 
-class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate,Console):
+class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate,Console,Limits):
     def __init__(self):
 
-        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate,Console)
+        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate,Console,Limits)
         self.doInherit()
         Base.__init__(self)
 

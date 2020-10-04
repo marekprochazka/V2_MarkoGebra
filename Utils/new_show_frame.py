@@ -36,7 +36,7 @@ class ShowFrame:
 
 
         #UPDATE LIMITS IF IT'S MATH GRAPHING
-        if V.to_animate == MATH:self.__update_limits()
+        # if V.to_animate == MATH:self.__update_limits()
 
 
         #TABLE DATA WRITING

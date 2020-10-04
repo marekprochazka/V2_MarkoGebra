@@ -1,7 +1,7 @@
 from Globals.variables import Variables as V
 from Graphing.setup import a
 import numpy as np
-from Static.constants import MATH, PIE, BAR, NOISE
+from Static.constants import MATH, PIE, BAR, NOISE,MAX,MIN,X,Y
 
 
 class GraphAnimation:
@@ -18,14 +18,14 @@ class GraphAnimation:
     def animate_graphs(self):
 
         a.clear()
-        a.axis("equal")
-        a.set_title("Ahoj")
-        a.set_xlim([V.lim2, V.lim1])
-        a.set_ylim([V.lim2, V.lim1])
+        a.set_xlim([V.limits[X][MIN], V.limits[X][MAX]])
+        a.set_ylim([V.limits[Y][MIN], V.limits[Y][MAX]])
+        a.set_aspect('equal')
+
         for coord in V.cache[0]:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.cache[1]:
-            x = np.linspace(V.lim2, V.lim1, 100)
+            x = np.linspace(V.limits[X][MIN], V.limits[X][MAX], 100)
             y = eval(coord[1])
 
             a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
