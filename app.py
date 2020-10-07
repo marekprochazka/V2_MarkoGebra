@@ -3,40 +3,44 @@ import matplotlib as mp
 import matplotlib.animation as anim
 from matplotlib import style as st
 import webbrowser
-
-
-
-
 from GUI.base import Base
-from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update,Limits
+from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update, Limits
 from Graphing.graph_animation import GraphAnimation
 from Console.console import Console
 
-mp.use("TkAgg")
+mp.use("TkAgg")  # backend configuration for tkinter
+
+# SET GRAPH STYLE FROM TXT FILE
 with open("graphstyle.txt", "r") as style:
     st.use(style)
 
 # st.use('ggplot')
 
 
-
 # f = plt.figure(figsize=(4.5, 4.5), dpi=100)
 from Graphing.setup import *
 
 
-
-class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate,Console,Limits):
+# MAIN CLASS THAT IS CALLED INTO MAINLOOP
+# BASE = GUI (Frontend)
+# REST ARE FUNCTIONALILITIES
+class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
+                 graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits):
     def __init__(self):
-
-        self.to_inherit = (DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.MathUpdate,graph_update.PieUpdate,graph_update.NoiseUpdate,graph_update.BarUpdate,Console,Limits)
+        self.to_inherit = (
+        DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
+        graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits)
         self.doInherit()
         Base.__init__(self)
 
-
+    # TO EACH PARENT CLASS A "self" FROM MAIN CLASS AS MAIN TO MAKE FUNCTIONAL CONNECTION BETWEEN CLASSES FROM HIGHER LEVEL
     def doInherit(self):
         for cls in self.to_inherit:
-            cls.__init__(self,main=self)
+            cls.__init__(self, main=self)
 
+    # SAVING DATA TO DATABASE IS MADE IN SHOW FRAME
+    # THAT'S WHY EXIT METHOD IS MODIFIED
+    # TODO MAKE SAVE DATA FUNCIONALITY IN MAYBE SHOW FRAME THAT CAN BE CALLED ALONE HERE
     def on_exit(self):
         self.show_Setup_Frame()
         self.destroy()
@@ -46,12 +50,13 @@ class MarkoGebra(Base,DeleteAll,Saving,ShowFrame,UpdateTable,Grid,graph_update.M
 
 
 if __name__ == '__main__':
-
+    # THIS OBJECT ALLOW DINAMIC UPDATE OF GRAPH (ANIMATION)
     aniObj = GraphAnimation()
     aniFun = aniObj.Go
 
     app = MarkoGebra()
 
+    # GRAPH ANIMATION RUN, CHANGED EXIT METHOD, MAINLOOP
     ani = anim.FuncAnimation(f, aniFun, interval=1000, blit=False)
     app.protocol("WM_DELETE_WINDOW", app.on_exit)
     app.mainloop()
