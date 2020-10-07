@@ -1,6 +1,7 @@
 from Static.constants import X, Y, MIN, MAX
 
 
+#GLOBAL VARIABLES THAT ARE USED ALL AROUND THE PROJECT
 class Variables:
     to_animate = None
 

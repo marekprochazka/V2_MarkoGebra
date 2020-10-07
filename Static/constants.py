@@ -13,15 +13,10 @@ AVALIBLE_STYLES = ['Solarize_Light2', '_classic_test_patch', 'classic', 'dark_ba
                    'seaborn-dark','seaborn-poster',
                    'seaborn-ticks', 'seaborn-whitegrid']
 
-GRAPHING_METHOD = {
-    "matematical": 1,
-    "pie": 2,
-    "bar": 3,
-    "noise": 4
-}
 
 
 
+#NAMING CONSTANTS TO AVOID TYPOS
 ACTION = "ACTION"
 DATA = "DATA"
 ID = "ID"
@@ -31,17 +26,17 @@ DELETE = "DELETE"
 TYPE = "TYPE"
 SCATTER = "SCATTER"
 FUNCTION = "FUNCTION"
-
 MATH = "MATH"
 BAR = "BAR"
 PIE = "PIE"
 NOISE = "NOISE"
-
 MIN = "MIN"
 MAX = "MAX"
 X = "X"
 Y = "Y"
 
+
+#RELATIONSHIP BETWEEN to_animate VALUES AND GRAPHING METHOD FORMATTED FOR DATABASE FUNCTIONS "Data\functions.py"
 TO_ANIMATExTABLES = {
     MATH:("scatter","function"),
     BAR:("bar",),
