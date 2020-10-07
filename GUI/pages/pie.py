@@ -8,11 +8,17 @@ class Pie(Frame):
         Frame.__init__(self, parent)
         self.controller = controller
         self.type = PIE
-        self.old_type = "pie" #TODO delete after Data update
+        # THIS VARIABLE IS USED IN "new_show_frame.py"
+        # AND HAS ONE OF THE VALUES THAT IS CAPABLE
+        # FOR GLOBAL VARIABLE "to_animate" WHICH DEFINES
+        # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
 
+        # PREDEFINED VALUES FOR MULTISELECTS
+        # TODO SUBSTITUTE BY COLORWHEELS
         self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
         self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
 
+        #DEFINIG TK OBJECTS
         self.txt1 = t.Label(self, text="Množství:", font=fonts()["SMALL_FONT"])
         self.txt2 = t.Label(self, text="Název:", font=fonts()["SMALL_FONT"])
         self.txt3 = t.Label(self, text="Barva:", font=fonts()["SMALL_FONT"])
@@ -25,12 +31,14 @@ class Pie(Frame):
             entry2=self.label,
             cbb=self.color, error=self.errorText))
 
+        #ERROR MESSAGES IF THERE ARE ANY
         self.errorText = Label(self, text="", fg="red")
         self.errorText.grid(row=4, column=0)
         self.txt1.grid(row=0, column=0, sticky="we")
         self.txt2.grid(row=1, column=0, sticky="we")
         self.txt3.grid(row=2, column=0, sticky="we")
 
+        #PLACING TO GRID
         self.slice.grid(row=0, column=1, sticky="we", padx=20)
         self.label.grid(row=1, column=1, sticky="we", padx=20)
         self.color.grid(row=2, column=1, sticky="we", padx=20)

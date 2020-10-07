@@ -3,15 +3,23 @@ from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import BAR
 
+#GUI OF BAR INPUTS
 class Bar(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         self.controller = controller
         self.type = BAR
-        self.old_type = "bar" #TODO delete after Data update
+        #THIS VARIABLE IS USED IN "new_show_frame.py"
+        # AND HAS ONE OF THE VALUES THAT IS CAPABLE
+        # FOR GLOBAL VARIABLE "to_animate" WHICH DEFINES
+        # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
+
+        #PREDEFINED VALUES FOR MULTISELECTS
+        #TODO SUBSTITUTE BY COLORWHEELS
         self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
         self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
 
+        #DEFINIG TK OBJECTS
         self.txt1 = t.Label(self, text="Množství:", font=fonts()["SMALL_FONT"])
         self.txt2 = t.Label(self, text="Název:", font=fonts()["SMALL_FONT"])
         self.txt3 = t.Label(self, text="Barva:", font=fonts()["SMALL_FONT"])
@@ -24,9 +32,11 @@ class Bar(Frame):
                                                                    self.basic_colors[self.color.current()], self.name,
                                                                    self.value, self.color, self.errorText))
 
+        #ERROR MESSAGES IF THERE ARE ANY
         self.errorText = Label(self, text="", fg="red")
         self.errorText.grid(row=4, column=0)
 
+        #PLACING TO GRID
         self.txt1.grid(row=0, column=0, sticky="we")
         self.txt2.grid(row=1, column=0, sticky="we")
         self.txt3.grid(row=2, column=0, sticky="we")
