@@ -1,5 +1,6 @@
 from matplotlib.figure import Figure
 
+#SETUP VALUES FOR MAPLOTLIB GRAPH
 f = Figure(figsize=(4.5, 4.5), dpi=100)
 a = f.add_subplot(111)
 

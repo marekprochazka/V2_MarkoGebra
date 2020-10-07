@@ -38,6 +38,7 @@ class Base(Tk):
         canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 470, y=MAX_HEIGHT - 470)
 
         # MULTISELECT OF GRAPHING METHODS
+        # AFTER SELECTION THE "show_Setup_Frame" FUNCTION FROM "new_show_frame.py" IS CALLED TO MANAGE FRAME CHANGE
         self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
                                state="readonly")
         self.CBB2.bind('<<ComboboxSelected>>',
