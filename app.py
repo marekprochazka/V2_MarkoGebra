@@ -23,7 +23,7 @@ from Graphing.setup import *
 
 # MAIN CLASS THAT IS CALLED INTO MAINLOOP
 # BASE = GUI (Frontend)
-# REST ARE FUNCTIONALILITIES
+# REST ARE FUNCTIONALITIES
 class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
                  graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits):
     def __init__(self):
@@ -50,7 +50,7 @@ class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_up
 
 
 if __name__ == '__main__':
-    # THIS OBJECT ALLOW DINAMIC UPDATE OF GRAPH (ANIMATION)
+    # THIS OBJECT ALLOW DYNAMIC UPDATE OF GRAPH (ANIMATION)
     aniObj = GraphAnimation()
     aniFun = aniObj.Go
 

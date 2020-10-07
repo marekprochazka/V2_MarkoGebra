@@ -8,16 +8,23 @@ from .pages import Mathematical, Pie, Bar, Noise
 
 from Globals.calculated import fonts
 
-
+#ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")
+#FRAMES TO DIFFERENT GRAPHING METHODS ARE CONNECTED TO THIS CLASS
+#FRAME CHANGING LOGIC IS MANAGED IN "Utils/new_show_frame.py"
 class Base(Tk):
     def __init__(self):
+        #INITIAL GUI SETUP
         Tk.__init__(self)
         Tk.wm_title(self, "MarkoGebra")
         Tk.minsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
         Tk.maxsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
 
-        self.input_frames = (Mathematical, Pie, Bar, Noise)
+        #TUPLE OF ALL GRAPHING METHODS THAT IS REPRESENTED IN FE BY MULTISESECT
+        #TODO ADD NOISE AFTER FINISHING FEATURE
+        self.input_frames = (Mathematical, Pie, Bar)
+        # self.input_frames = (Mathematical, Pie, Bar, Noise)
 
+        #RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD
         self.SetupContainer = t.Frame(self, width=MAX_WIDTH * .4, height=MAX_HEIGHT)
 
         self.SetupContainer.pack(side="top", fill="both", expand=True)
@@ -25,6 +32,7 @@ class Base(Tk):
         self.SetupContainer.grid_rowconfigure(0, weight=1)
         self.SetupContainer.grid_columnconfigure(0, weight=1)
 
+        #MATLOPLIB GRAPH REPESENTATION ON FE
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 470, y=MAX_HEIGHT - 470)
