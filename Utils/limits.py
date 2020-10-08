@@ -42,4 +42,5 @@ class Limits:
             V.limits[X][MAX] = -y + 5
             V.limits[Y][MAX] = -y + 5
 
+        # FE UPDATE
         self.main.set_limits_entries_values_by_global_variables()

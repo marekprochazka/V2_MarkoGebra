@@ -99,6 +99,7 @@ class Base(Tk):
 
         self.limits_auto_update_checkbox_title = t.Label(self.limits_settings_container, text="Autoupdate",
                                                          font=fonts()["SMALL_FONT"])
+        # IS AUTO UPDATE ALLOWED CHECKBOX
         self.limits_auto_update_checkbox_check_var = IntVar(value=1)
         self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
         self.limits_auto_update_checkbox = t.Checkbutton(self.limits_settings_container,
@@ -184,10 +185,16 @@ class Base(Tk):
         self.limits_entry_y_min.insert(0, V.limits[Y][MIN])
         self.limits_entry_y_max.insert(0, V.limits[Y][MAX])
 
+    # CALLING MANUAL UPDATE WITH RIGHT VALUES
     def __update_limits(self):
-        self.main.update_limits(int(self.limits_entry_x_min.get()), int(self.limits_entry_x_max.get()),
-                                int(self.limits_entry_y_min.get()), int(self.limits_entry_y_max.get()))
+        try:
+            self.main.update_limits(int(self.limits_entry_x_min.get()), int(self.limits_entry_x_max.get()),
+                                    int(self.limits_entry_y_min.get()), int(self.limits_entry_y_max.get()))
+        except:
+            pass
+            # TODO make error messages
 
+    # AUTO UPDATE VARIABLE CONTROLLER
     def __switch_auto_limit_update_value(self):
         V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
         print(V.is_auto_update)
