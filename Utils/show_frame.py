@@ -2,7 +2,8 @@ from Globals.variables import Variables as V
 from Static.constants import GRAPHING_METHOD,MAX_WIDTH,MAX_HEIGHT
 import json
 
-
+# OLD VERSION OF SHOW FRAME
+# WILL BE DELLETED SOON
 class ShowFrame:
 
     def __init__(self,main):

@@ -1,22 +1,28 @@
 from tkinter import Toplevel, filedialog
 from PIL import Image
-from Graphing.setup import a,f
+from Graphing.setup import a, f
 from tkinter import ttk as t
 import numpy as np
 
+
+# PNG SAVER POPUP GUI AND BACKEND FUNCTIONALITY
 class Saving:
     def __init__(self, main):
         self.main = main
 
+    # POPUP CANT BE CLOSED BY 'X' (WAS CAUSING ERROR)
+    # TODO CAN BE TEORETICALLY UPDATIGN TO AUTOMATICALY SET AXIS VISIBLE SAME AS EXIT_TOP
     @staticmethod
     def __callback():
         return
 
+    # ACTUAL EXIT FUNCTION
     def exit_top(self, top):
         a.axes.get_xaxis().set_visible(True)
         a.axes.get_yaxis().set_visible(True)
         top.destroy()
 
+    # POPUP GUI
     def saver(self):
         top = Toplevel()
         top.wm_geometry("400x400")
@@ -45,12 +51,14 @@ class Saving:
         go_back = t.Button(top, text="zrušit", command=lambda: self.exit_top(top))
         go_back.grid(row=3, column=2)
 
+    # DIRECTORY DIALOG
     def find_dir(self, dir_label, top):
         file = filedialog.askdirectory()
         if file:
             dir_label["text"] = file
         top.lift()
 
+    # ON/OFF GRID SWITCH
     def is_grid_func(self, state):
         if "selected" in state:
             a.axes.get_xaxis().set_visible(False)
@@ -59,6 +67,7 @@ class Saving:
             a.axes.get_xaxis().set_visible(True)
             a.axes.get_yaxis().set_visible(True)
 
+    # ACTUAL SAVING
     def save_as_img(self, file, name, top):
         w, h = f.canvas.get_width_height()
         buf = np.frombuffer(f.canvas.tostring_argb(), dtype=np.uint8)

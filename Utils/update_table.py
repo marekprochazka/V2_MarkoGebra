@@ -4,6 +4,8 @@ from Globals.calculated import fonts
 from tkinter import LEFT
 from Static.constants import MATH,PIE,BAR,NOISE
 
+#UPDATER OF LIST GUI
+#TODO WILL BE REFACTORED SOON
 class UpdateTable:
     def __init__(self, main):
         self.main = main
