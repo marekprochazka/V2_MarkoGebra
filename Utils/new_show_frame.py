@@ -34,9 +34,9 @@ class ShowFrame:
         V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
 
         # UPDATE LIMITS IF IT'S MATH GRAPHING
-        if V.to_animate == MATH:
+        if V.to_animate == MATH and V.is_auto_update:
             for value in V.cache[0]:
-                self.main.auto_update_limits_by_scatter_input(value[1],value[2])
+                self.main.auto_update_limits_by_scatter_input(value[1], value[2])
 
         # TABLE DATA WRITING
         self.main.update_table()

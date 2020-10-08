@@ -1,4 +1,4 @@
-from tkinter import Tk, OUTSIDE, Frame, Scale, HORIZONTAL, Canvas, CENTER, END
+from tkinter import Tk, OUTSIDE, Frame, Scale, HORIZONTAL, Canvas, CENTER, END, IntVar
 from tkinter import ttk as t
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -15,7 +15,7 @@ from Globals.variables import Variables as V
 # FRAMES TO DIFFERENT GRAPHING METHODS ARE CONNECTED TO THIS CLASS
 # FRAME CHANGING LOGIC IS MANAGED IN "Utils/new_show_frame.py"
 class Base(Tk):
-    def __init__(self,main):
+    def __init__(self, main):
         # INITIAL GUI SETUP
         Tk.__init__(self)
         Tk.wm_title(self, "MarkoGebra")
@@ -92,16 +92,21 @@ class Base(Tk):
         self.limits_entry_y_max = t.Entry(self.limits_settings_container, justify="center")
         self.limits_entry_y_max.grid(row=4, column=1, sticky="we", padx=15, pady=15)
 
+        # TAKES ENTRY VALUES AND EXECUTES UPDATE FUNCTION
         self.limits_execute_update_button = t.Button(self.limits_settings_container, text="Aktualizovat limity",
                                                      command=lambda: self.__update_limits())
         self.limits_execute_update_button.grid(row=5, column=0, columnspan=2, sticky="we")
 
         self.limits_auto_update_checkbox_title = t.Label(self.limits_settings_container, text="Autoupdate",
                                                          font=fonts()["SMALL_FONT"])
+        self.limits_auto_update_checkbox_check_var = IntVar(value=1)
         self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
-        self.limits_auto_update_checkbox = t.Checkbutton(self.limits_settings_container)
+        self.limits_auto_update_checkbox = t.Checkbutton(self.limits_settings_container,
+                                                         variable=self.limits_auto_update_checkbox_check_var,
+                                                         command=lambda: self.__switch_auto_limit_update_value())
         self.limits_auto_update_checkbox.grid(row=6, column=1, sticky="we")
 
+        # UPDATE FE VALUES BY BE VALUES
         self.set_limits_entries_values_by_global_variables()
 
         # GRID SETTINGS
@@ -180,4 +185,9 @@ class Base(Tk):
         self.limits_entry_y_max.insert(0, V.limits[Y][MAX])
 
     def __update_limits(self):
-        self.main.update_limits(int(self.limits_entry_x_min.get()), int(self.limits_entry_x_max.get()), int(self.limits_entry_y_min.get()), int(self.limits_entry_y_max.get()))
+        self.main.update_limits(int(self.limits_entry_x_min.get()), int(self.limits_entry_x_max.get()),
+                                int(self.limits_entry_y_min.get()), int(self.limits_entry_y_max.get()))
+
+    def __switch_auto_limit_update_value(self):
+        V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
+        print(V.is_auto_update)

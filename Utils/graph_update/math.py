@@ -19,7 +19,8 @@ class MathUpdate:
             y = int(y)
 
             # UPDATING LIMITS (IF NEEDED)
-            self.main.auto_update_limits_by_scatter_input(x, y)
+            if V.is_auto_update:
+                self.main.auto_update_limits_by_scatter_input(x, y)
 
             # GENERATING UUID FOR IDENTIFYING, APPENDING TO CACHES
             uuid = generate_uuid()

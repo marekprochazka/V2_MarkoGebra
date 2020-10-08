@@ -1,7 +1,7 @@
 from Static.constants import X, Y, MIN, MAX
 
 
-#GLOBAL VARIABLES THAT ARE USED ALL AROUND THE PROJECT
+# GLOBAL VARIABLES THAT ARE USED ALL AROUND THE PROJECT
 class Variables:
     to_animate = None
 
@@ -23,3 +23,5 @@ class Variables:
             MAX: 30
         }
     }
+
+    is_auto_update = True
