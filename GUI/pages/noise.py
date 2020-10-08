@@ -2,7 +2,7 @@ from tkinter import Frame,HORIZONTAL,Scale
 from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import NOISE
-
+#TODO
 class Noise(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)

@@ -1,30 +1,34 @@
-from tkinter import Tk, OUTSIDE, Frame, Scale, HORIZONTAL, Canvas, CENTER
+from tkinter import Tk, OUTSIDE, Frame, Scale, HORIZONTAL, Canvas, CENTER, END
 from tkinter import ttk as t
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from Graphing.setup import f
-from Static.constants import MAX_HEIGHT, MAX_WIDTH
+from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y
 from .pages import Mathematical, Pie, Bar, Noise
 
 from Globals.calculated import fonts
 
-#ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")
-#FRAMES TO DIFFERENT GRAPHING METHODS ARE CONNECTED TO THIS CLASS
-#FRAME CHANGING LOGIC IS MANAGED IN "Utils/new_show_frame.py"
+from Globals.variables import Variables as V
+
+
+# ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")
+# FRAMES TO DIFFERENT GRAPHING METHODS ARE CONNECTED TO THIS CLASS
+# FRAME CHANGING LOGIC IS MANAGED IN "Utils/new_show_frame.py"
 class Base(Tk):
-    def __init__(self):
-        #INITIAL GUI SETUP
+    def __init__(self,main):
+        # INITIAL GUI SETUP
         Tk.__init__(self)
         Tk.wm_title(self, "MarkoGebra")
         Tk.minsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
         Tk.maxsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
+        self.main = main
 
-        #TUPLE OF ALL GRAPHING METHODS THAT IS REPRESENTED IN FE BY MULTISESECT
-        #TODO ADD NOISE AFTER FINISHING FEATURE
+        # TUPLE OF ALL GRAPHING METHODS THAT IS REPRESENTED IN FE BY MULTISESECT
+        # TODO ADD NOISE AFTER FINISHING FEATURE
         self.input_frames = (Mathematical, Pie, Bar)
         # self.input_frames = (Mathematical, Pie, Bar, Noise)
 
-        #RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD
+        # RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD
         self.SetupContainer = t.Frame(self, width=MAX_WIDTH * .4, height=MAX_HEIGHT)
 
         self.SetupContainer.pack(side="top", fill="both", expand=True)
@@ -32,7 +36,7 @@ class Base(Tk):
         self.SetupContainer.grid_rowconfigure(0, weight=1)
         self.SetupContainer.grid_columnconfigure(0, weight=1)
 
-        #MATLOPLIB GRAPH REPESENTATION ON FE
+        # MATLOPLIB GRAPH REPESENTATION ON FE
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 470, y=MAX_HEIGHT - 470)
@@ -88,7 +92,8 @@ class Base(Tk):
         self.limits_entry_y_max = t.Entry(self.limits_settings_container, justify="center")
         self.limits_entry_y_max.grid(row=4, column=1, sticky="we", padx=15, pady=15)
 
-        self.limits_execute_update_button = t.Button(self.limits_settings_container, text="Aktualizovat limity")
+        self.limits_execute_update_button = t.Button(self.limits_settings_container, text="Aktualizovat limity",
+                                                     command=lambda: self.__update_limits())
         self.limits_execute_update_button.grid(row=5, column=0, columnspan=2, sticky="we")
 
         self.limits_auto_update_checkbox_title = t.Label(self.limits_settings_container, text="Autoupdate",
@@ -96,6 +101,8 @@ class Base(Tk):
         self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
         self.limits_auto_update_checkbox = t.Checkbutton(self.limits_settings_container)
         self.limits_auto_update_checkbox.grid(row=6, column=1, sticky="we")
+
+        self.set_limits_entries_values_by_global_variables()
 
         # GRID SETTINGS
         self.grid_settings_container = Frame(self)
@@ -162,3 +169,15 @@ class Base(Tk):
 
         self._frame = None
         self.show_Setup_Frame(cont=Mathematical)
+
+    def set_limits_entries_values_by_global_variables(self):
+        for e in (self.limits_entry_x_min, self.limits_entry_x_max, self.limits_entry_y_min, self.limits_entry_y_max):
+            e.delete(0, END)
+
+        self.limits_entry_x_min.insert(0, V.limits[X][MIN])
+        self.limits_entry_x_max.insert(0, V.limits[X][MAX])
+        self.limits_entry_y_min.insert(0, V.limits[Y][MIN])
+        self.limits_entry_y_max.insert(0, V.limits[Y][MAX])
+
+    def __update_limits(self):
+        self.main.update_limits(int(self.limits_entry_x_min.get()), int(self.limits_entry_x_max.get()), int(self.limits_entry_y_min.get()), int(self.limits_entry_y_max.get()))

@@ -7,8 +7,16 @@ class Limits:
     def __init__(self, main):
         self.main = main
 
-    def update_limmits(self, min_x, max_x, min_y, max_y):
-        pass
+    def update_limits(self, min_x, max_x, min_y, max_y):
+        V.limits = {
+            X: {
+                MIN: min_x,
+                MAX: max_x
+            },
+            Y: {
+                MIN: min_y,
+                MAX: max_y
+            }}
 
     def auto_update_limits_by_scatter_input(self, x, y):
         if x > V.limits[X][MAX]:
@@ -33,3 +41,5 @@ class Limits:
             V.limits[Y][MIN] = y - 5
             V.limits[X][MAX] = -y + 5
             V.limits[Y][MAX] = -y + 5
+
+        self.main.set_limits_entries_values_by_global_variables()

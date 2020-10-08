@@ -28,10 +28,9 @@ class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_up
                  graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits):
     def __init__(self):
         self.to_inherit = (
-        DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
-        graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits)
+            Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
+            graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits)
         self.doInherit()
-        Base.__init__(self)
 
     # TO EACH PARENT CLASS A "self" FROM MAIN CLASS AS MAIN TO MAKE FUNCTIONAL CONNECTION BETWEEN CLASSES FROM HIGHER LEVEL
     def doInherit(self):
