@@ -2,7 +2,7 @@ from Globals.variables import Variables as V
 from math import floor
 import numpy as np
 
-
+#TODO
 class NoiseUpdate:
     def __init__(self,main):
         self.main = main
