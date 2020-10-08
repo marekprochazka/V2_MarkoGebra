@@ -1,5 +1,7 @@
 import sqlite3
 
+#FILE THAT WILL CREATE DATABASE WITH NEEDED TABLES
+#RUN ONLY ONCE BEFORE FIRST RUN!
 conn = sqlite3.connect("data.db")
 c = conn.cursor()
 

@@ -5,6 +5,9 @@ from Data.path import get_path
 from Utils.uuid import generate_uuid, format_existing_uuid
 
 
+#THIS FILE IS MANAGING ALL CONTACTS WITH DATABASE
+#IS CALLED IN 'new_show_frame.py' TO SAVE CACHED DATA (UPDATE CHANGES) AND LOAD NEW DATA TO CACHE
+#AS INPUT TO THIS FUNCTIONS IS VARIABLE 'changes_cahce' THAT KEEPS ONLY CHANGES IN RIGHT FORMAT (CREATE,DELETE,UPDATE)
 conn = sqlite3.connect(get_path()+"\data.db")
 c = conn.cursor()
 
@@ -91,9 +94,10 @@ def update_bar(changes):
             c.execute("DELETE FROM bar WHERE id=?",change[ID])
             conn.commit()
 
-
+#ALL FUNCTIONS IN RELATIONSHIP WITH 'to_animate'
 UPDATE_FUNCTIONS = {MATH:update_math,BAR:update_bar,PIE:update_pie}
 
+#TESTS
 # changes = [{ACTION: CREATE,DATA:(3,3,"aa",7,"pink"),ID:(str(uuid.uuid4()),),TYPE:SCATTER},{ACTION:CREATE,DATA:("y**2","- -","red",8),ID:(str(uuid.uuid4()),),TYPE:FUNCTION}]
 # update_math(changes)
 
