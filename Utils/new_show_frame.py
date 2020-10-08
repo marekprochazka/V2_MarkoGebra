@@ -1,9 +1,6 @@
 from Globals.variables import Variables as V
-from Static.constants import MAX_WIDTH, MAX_HEIGHT, MATH, BAR, PIE, TO_ANIMATExTABLES
+from Static.constants import MAX_WIDTH, MAX_HEIGHT, MATH, TO_ANIMATExTABLES
 from Data.functions import UPDATE_FUNCTIONS, get_tables
-from Utils.graph_update import *
-from Static.constants import ACTION, CREATE, UPDATE, DELETE, ID, DATA, TYPE, SCATTER, FUNCTION
-from Utils.uuid import generate_uuid, format_existing_uuid
 
 
 # ONE OF THE MOST IMPORTANT FUNCTIONALITIES

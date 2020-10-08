@@ -1,6 +1,6 @@
 from Globals.variables import Variables as V
 from tkinter import END
-from Static.constants import FUNCTION_ALLOWED_MARKS, ACTION, CREATE, ID, DATA, TYPE, SCATTER, FUNCTION, MAX, MIN, X, Y
+from Static.constants import FUNCTION_ALLOWED_MARKS, ACTION, CREATE, ID, DATA, TYPE, SCATTER, FUNCTION
 import numpy as np
 from Utils.uuid import generate_uuid
 
