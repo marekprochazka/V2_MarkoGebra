@@ -1,8 +1,10 @@
 from Graphing.setup import a
 import tkinter.colorchooser as col
 
+
+# GRID SETTINGS FUNCTIONS THAT ARE CALLED ON FE
 class Grid:
-    def __init__(self,main):
+    def __init__(self, main):
         self.main = main
 
     def colorize_grid(self):
