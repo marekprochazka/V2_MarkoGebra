@@ -11,6 +11,7 @@ class Variables:
     cache = []
     changes_cache = []
 
+    start_angle = 90
     # noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
 
     limits = {

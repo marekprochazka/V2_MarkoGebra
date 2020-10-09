@@ -46,7 +46,7 @@ class GraphAnimation:
             activities.append(val[2])
             cols.append(val[3])
             explode.append(val[4])
-        a.pie(slices, labels=activities, colors=cols, explode=explode, startangle=V.start_angle)
+        a.pie(slices, labels=activities, colors=cols, explode=explode, startangle=V.start_angle, normalize=True)
 
     # BAR
     def animate_bar(self):
