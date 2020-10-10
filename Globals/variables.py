@@ -8,7 +8,7 @@ class Variables:
     command_history = []
     history_moves = 0
 
-    cache = []
+    cache = [[],[]]
     changes_cache = []
 
     start_angle = 90

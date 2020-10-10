@@ -147,22 +147,21 @@ class Base(Tk):
 
         self.grid_settings_container.grid_columnconfigure(0, weight=2)
 
-        # GRAPHING INPUTS LIST
-        self.Table_container = t.Frame(self)
-        self.canvas = Canvas(self.Table_container)
-        self.scrollbar = t.Scrollbar(self.Table_container, orient="vertical", command=self.canvas.yview)
-        self.scrollable_frame = t.Frame(self.canvas)
-        self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.update_table()
-        for i in range(50):
-            Frame(self.scrollable_frame).pack()
 
-        self.Table_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
-                                   height=MAX_HEIGHT * .3)
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.scrollbar.pack(side="right", fill="y")
+        #TODO NEW LIST VIEW
+        self.list_view_container = t.Frame(self)
+        self.list_view_canvas = Canvas(self.list_view_container)
+        self.list_view_scrollbar = t.Scrollbar(self.list_view_container, orient="vertical", command=self.list_view_canvas.yview)
+        self.list_view_scrollable_frame = t.Frame(self.list_view_canvas)
+        self.list_view_scrollable_frame.bind("<Configure>", lambda e: self.list_view_canvas.configure(scrollregion=self.list_view_canvas.bbox("all")))
+        self.list_view_canvas.create_window((0, 0), window=self.list_view_scrollable_frame, anchor="nw")
+        self.list_view_canvas.configure(yscrollcommand=self.list_view_scrollbar.set)
+
+        self.list_view_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
+                                       height=MAX_HEIGHT * .3)
+        self.list_view_canvas.pack(side="left", fill="both", expand=True)
+        self.list_view_scrollbar.pack(side="right", fill="y")
+        self.main.update_table()
 
         # OPEN CONSOLE BUTTON
         self.console = t.Button(self, text="Konzole", command=lambda: self.console_controller())
