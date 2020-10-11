@@ -161,7 +161,7 @@ class Base(Tk):
                                        height=MAX_HEIGHT * .3)
         self.list_view_canvas.pack(side="left", fill="both", expand=True)
         self.list_view_scrollbar.pack(side="right", fill="y")
-        self.main.update_table()
+        self.main.update_list_view()
 
         # OPEN CONSOLE BUTTON
         self.console = t.Button(self, text="Konzole", command=lambda: self.console_controller())

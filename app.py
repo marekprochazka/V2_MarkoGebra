@@ -4,7 +4,7 @@ import matplotlib.animation as anim
 from matplotlib import style as st
 import webbrowser
 from GUI.base import Base
-from Utils import DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update, Limits
+from Utils import DeleteAll, Saving, ShowFrame, ListView, Grid, graph_update, Limits
 from Graphing.graph_animation import GraphAnimation
 from Console.console import Console
 
@@ -24,11 +24,11 @@ from Graphing.setup import *
 # MAIN CLASS THAT IS CALLED INTO MAINLOOP
 # BASE = GUI (Frontend)
 # REST ARE FUNCTIONALITIES
-class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
+class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, ListView, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
                  graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits):
     def __init__(self):
         self.to_inherit = (
-            Base, DeleteAll, Saving, ShowFrame, UpdateTable, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
+            Base, DeleteAll, Saving, ShowFrame, ListView, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
             graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits)
         self.doInherit()
 

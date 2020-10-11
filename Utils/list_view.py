@@ -7,12 +7,12 @@ from Static.constants import MATH, PIE, BAR, NOISE
 
 # UPDATER OF LIST GUI
 # TODO WILL BE REFACTORED SOON
-class UpdateTable:
+class ListView:
 
     def __init__(self, main):
         self.main = main
 
-    def update_table(self):
+    def update_list_view(self):
         self.list_elements_scatter = [t.Label(self.main.list_view_scrollable_frame) for _ in range(len(V.cache[0]))]
         if V.to_animate == MATH:
             for i, scatter_value in enumerate(V.cache[0]):

@@ -24,7 +24,7 @@ class BarUpdate:
             cbb.set("")
             error["text"] = ""
 
-            self.main.update_table()
+            self.main.update_list_view()
         except:
             # EMPTYING ENTRIES
             entry1.delete(0, END)

@@ -39,7 +39,7 @@ class ShowFrame:
                 self.main.auto_update_limits_by_scatter_input(value[1], value[2])
 
         # TABLE DATA WRITING
-        self.main.update_table()
+        self.main.update_list_view()
 
     def __update_limits(self):
         for scatter_value in V.cache[0]:

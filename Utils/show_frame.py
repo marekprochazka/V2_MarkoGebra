@@ -95,4 +95,4 @@ class ShowFrame:
                     V.dispersion = data[2]
                     V.number = data[3]
 
-        self.main.update_table()
+        self.main.update_list_view()
