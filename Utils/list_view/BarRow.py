@@ -1,19 +1,18 @@
 from tkinter import Button
 
-from . import BaseRow
 import tkinter.ttk as t
 from Globals.calculated import fonts
 
-from Bases.BaseEntry import BaseEntry
+from Bases import BaseEntry, BaseRow, BaseLabel
 
 
-# VALUE = [id,slice,activity,color,explode]
+# VALUE = [id,name,value,color,width]
 class BarRow(BaseRow):
     def __init__(self, parent, pie_value):
         super().__init__(parent, pie_value)
-        self.text_name = t.Label(self.parent, text="Název:", font=fonts()["SMALL_FONT"])
-        self.text_value = t.Label(self.parent, text="Množstvý:", font=fonts()["SMALL_FONT"])
-        self.text_width = t.Label(self.parent, text="Šířka:", font=fonts()["SMALL_FONT"])
+        self.text_name = BaseLabel(self.parent, text="Název:")
+        self.text_value = BaseLabel(self.parent, text="Množstvý:")
+        self.text_width = BaseLabel(self.parent, text="Šířka:")
 
         self.entry_name = BaseEntry(self.parent, width=8)
         self.entry_name.insert(0, self.value[1])

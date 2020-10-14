@@ -2,6 +2,7 @@ from tkinter import Frame,Label
 from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import MATH
+from Bases import BaseEntry,BaseLabel
 
 #GUI OF MATH INPUTS
 class Mathematical(Frame):
@@ -16,14 +17,14 @@ class Mathematical(Frame):
 
 
         # SCATTER INPUT PART
-        self.labelX = t.Label(self, text="X:", font=fonts()["SMALL_FONT"])
-        self.labelY = t.Label(self, text="Y:", font=fonts()["SMALL_FONT"])
+        self.labelX = BaseLabel(self, text="X:")
+        self.labelY = BaseLabel(self, text="Y:")
 
         self.labelX.grid(row=0, column=0)
         self.labelY.grid(row=0, column=2)
 
-        self.EntryX = t.Entry(self, justify="center")
-        self.EntryY = t.Entry(self, justify="center")
+        self.EntryX = BaseEntry(self)
+        self.EntryY = BaseEntry(self)
 
         self.EntryX.grid(row=0, column=1, sticky="we")
         self.EntryY.grid(row=0, column=3, sticky="we")
@@ -37,10 +38,10 @@ class Mathematical(Frame):
         self.placeButtonScatter.grid(row=0, column=4, sticky="we")
 
         # FUNCTION INPUT PART
-        self.labelFun = t.Label(self, text="f(x):", font=fonts()["SMALL_FONT"])
+        self.labelFun = BaseLabel(self, text="f(x):")
         self.labelFun.grid(row=1, column=0)
 
-        self.EntryFun = t.Entry(self, justify="center")
+        self.EntryFun = BaseEntry(self)
 
         self.EntryFun.grid(row=1, column=1, columnspan=3, sticky="we")
 

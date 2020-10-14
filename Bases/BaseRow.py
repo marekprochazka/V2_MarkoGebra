@@ -1,5 +1,4 @@
 import tkinter.ttk as t
-from tkinter import Button
 
 class BaseRow:
     def __init__(self, parent, scatter_value):

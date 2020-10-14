@@ -1,19 +1,18 @@
 from tkinter import Button
 
-from . import BaseRow
 import tkinter.ttk as t
 from Globals.calculated import fonts
 
-from Bases.BaseEntry import BaseEntry
+from Bases import BaseEntry, BaseRow, BaseLabel
 
 
 # VALUE = [id,slice,activity,color,explode]
 class PieRow(BaseRow):
     def __init__(self, parent, pie_value):
         super().__init__(parent, pie_value)
-        self.text_slice = t.Label(self.parent, text="Množství:", font=fonts()["SMALL_FONT"])
-        self.text_activity = t.Label(self.parent, text="Název:", font=fonts()["SMALL_FONT"])
-        self.text_explode = t.Label(self.parent, text="Výstup:", font=fonts()["SMALL_FONT"])
+        self.text_slice = BaseLabel(self.parent, text="Množství:")
+        self.text_activity = BaseLabel(self.parent, text="Název:")
+        self.text_explode = BaseLabel(self.parent, text="Výstup:")
 
         self.entry_slice = BaseEntry(self.parent, width=8)
         self.entry_slice.insert(0, self.value[1])

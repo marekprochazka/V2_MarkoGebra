@@ -2,6 +2,7 @@ from tkinter import Frame, Label
 from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import PIE
+from Bases import BaseLabel,BaseEntry
 
 class Pie(Frame):
     def __init__(self, parent, controller):
@@ -19,12 +20,12 @@ class Pie(Frame):
         self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
 
         #DEFINIG TK OBJECTS
-        self.txt1 = t.Label(self, text="Množství:", font=fonts()["SMALL_FONT"])
-        self.txt2 = t.Label(self, text="Název:", font=fonts()["SMALL_FONT"])
-        self.txt3 = t.Label(self, text="Barva:", font=fonts()["SMALL_FONT"])
+        self.txt1 = BaseLabel(self, text="Množství:")
+        self.txt2 = BaseLabel(self, text="Název:")
+        self.txt3 = BaseLabel(self, text="Barva:")
 
-        self.slice = t.Entry(self, justify="center")
-        self.label = t.Entry(self, justify="center")
+        self.slice = BaseEntry(self)
+        self.label = BaseEntry(self)
         self.color = t.Combobox(self, values=self.cb_values, state="readonly")
         self.add_value = t.Button(self, text="Přidat hodnotu", command=lambda: controller.add_pie_data(
             [self.slice.get(), self.label.get(), self.basic_colors[self.color.current()]], entry1=self.slice,

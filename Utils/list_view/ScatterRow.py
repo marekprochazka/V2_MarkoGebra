@@ -1,10 +1,9 @@
 from tkinter import Button
 
-from . import BaseRow
 import tkinter.ttk as t
 from Globals.calculated import fonts
 
-from Bases import BaseEntry
+from Bases import BaseEntry, BaseRow, BaseLabel
 
 
 # VALUE = [id,x,y,marker,color,size]
@@ -12,9 +11,9 @@ from Bases import BaseEntry
 class ScatterRow(BaseRow):
     def __init__(self, parent, scatter_value):
         super().__init__(parent, scatter_value)
-        self.text_x = t.Label(self.parent, text="X:", font=fonts()["SMALL_FONT"])
-        self.text_y = t.Label(self.parent, text="Y:", font=fonts()["SMALL_FONT"])
-        self.text_size = t.Label(self.parent, text="Vel.:", font=fonts()["SMALL_FONT"])
+        self.text_x = BaseLabel(self.parent, text="X:")
+        self.text_y = BaseLabel(self.parent, text="Y:")
+        self.text_size = BaseLabel(self.parent, text="Vel.:")
         self.entry_x, self.entry_y = BaseEntry(self.parent, width=13), BaseEntry(self.parent, width=13)
         self.entry_x.insert(0, self.value[1])
         self.entry_y.insert(0, self.value[2])
@@ -33,7 +32,7 @@ class ScatterRow(BaseRow):
         self.text_y.grid(row=0, column=2)
         self.entry_y.grid(row=0, column=3)
         self.marker_multiselect.grid(row=0, column=4, padx=8)
-        self.text_size.grid(row=0,column=5)
+        self.text_size.grid(row=0, column=5)
         self.entry_size.grid(row=0, column=6, padx=4)
         self.col_but.grid(row=0, column=7, padx=4)
         self.del_but.grid(row=0, column=8, padx=4)
