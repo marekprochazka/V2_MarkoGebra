@@ -43,8 +43,8 @@ class Base(Tk):
 
         # MULTISELECT OF GRAPHING METHODS
         # AFTER SELECTION THE "show_Setup_Frame" FUNCTION FROM "new_show_frame.py" IS CALLED TO MANAGE FRAME CHANGE
-        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
-                               state="readonly")
+        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový"],
+                               state="readonly") #TODO add noise after implenetation
         self.CBB2.bind('<<ComboboxSelected>>',
                        lambda event: self.show_Setup_Frame(self.input_frames[self.CBB2.current()]))
         self.CBB2.current(0)
