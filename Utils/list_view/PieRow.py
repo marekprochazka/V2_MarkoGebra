@@ -13,8 +13,8 @@ from Utils.ask_color import ask_color
 
 
 class PieRow(BaseRow):
-    def __init__(self, parent, pie_value,controller):
-        super().__init__(parent, pie_value,controller)
+    def __init__(self, parent, pie_value, controller):
+        super().__init__(parent, pie_value, controller)
         self.text_slice = BaseLabel(self.parent, text="Množství:")
         self.text_activity = BaseLabel(self.parent, text="Název:")
         self.text_explode = BaseLabel(self.parent, text="Výstup:")
@@ -48,7 +48,7 @@ class PieRow(BaseRow):
         activity = self.entry_activity.get()
         color = self.col_but["bg"]
         explode = self.entry_explode.get()
-        data[CACHE] = (id,slice,activity,color,explode)
-        data[CHANGES_CACHE][DATA] = (slice,activity,color,explode)
+        data[CACHE] = (id, slice, activity, color, explode)
+        data[CHANGES_CACHE][DATA] = (slice, activity, color, explode)
         data[CHANGES_CACHE][ID] = id
         return data
