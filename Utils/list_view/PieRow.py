@@ -1,17 +1,10 @@
 from tkinter import Button
-
-import tkinter.ttk as t
-from Globals.calculated import fonts
-
 from Bases import BaseEntry, BaseRow, BaseLabel
-
 from Decorators.input_checkers import check_pie_input
-
-# VALUE = [id,slice,activity,color,explode]
 from Static.constants import CACHE, CHANGES_CACHE, DATA, ID
 from Utils.ask_color import ask_color
 
-
+# VALUE = [id,slice,activity,color,explode]
 class PieRow(BaseRow):
     def __init__(self, parent, pie_value, controller):
         super().__init__(parent, pie_value, controller)

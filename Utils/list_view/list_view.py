@@ -7,7 +7,6 @@ from . import ScatterRow, FunctionRow, PieRow, BarRow
 
 
 # UPDATER OF LIST GUI
-# TODO WILL BE REFACTORED SOON
 class ListView:
 
     def __init__(self, main):

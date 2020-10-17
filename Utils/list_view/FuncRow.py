@@ -1,13 +1,12 @@
 from tkinter import Button
 from Bases import BaseRow, BaseLabel, BaseEntry
 import tkinter.ttk as t
-from Globals.calculated import fonts
 from Static.constants import LINE_MARKERS,FUNCTION,CACHE,CHANGES_CACHE,ID,DATA,TYPE
 from Decorators.input_checkers import check_function_input
 
-# VALUE = [id, func,line,color,size]
 from Utils.ask_color import ask_color
 
+# VALUE = [id, func,line,color,size]
 
 class FunctionRow(BaseRow):
     def __init__(self, parent, func_value,controller):

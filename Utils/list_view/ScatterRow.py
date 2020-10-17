@@ -1,12 +1,8 @@
 from tkinter import Button
-
 import tkinter.ttk as t
-from Globals.calculated import fonts
-
 from Bases import BaseEntry, BaseRow, BaseLabel
 from Static.constants import DATA, ID, TYPE, SCATTER,CHANGES_CACHE,CACHE,ERRORS, POINT_MARKERS
 from Decorators.input_checkers import check_scatter_input
-from Globals.variables import Variables as V
 from Utils.ask_color import ask_color
 
 # VALUE = [id,x,y,marker,color,size]
