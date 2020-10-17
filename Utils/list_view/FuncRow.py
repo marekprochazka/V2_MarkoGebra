@@ -2,12 +2,13 @@ from tkinter import Button
 from Bases import BaseRow, BaseLabel, BaseEntry
 import tkinter.ttk as t
 from Globals.calculated import fonts
-
+from Static.constants import FUNCTION
 
 # VALUE = [id, func,line,color,size]
 class FunctionRow(BaseRow):
-    def __init__(self, parent, func_value):
-        super().__init__(parent, func_value)
+    def __init__(self, parent, func_value,controller):
+        super().__init__(parent, func_value,controller)
+        self.type = FUNCTION
         self.text_fun = BaseLabel(self.parent, text="Funkce:")
         self.text_size = BaseLabel(self.parent, text="Vel.:")
 

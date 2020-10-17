@@ -8,8 +8,8 @@ from Bases import BaseEntry, BaseRow, BaseLabel
 
 # VALUE = [id,slice,activity,color,explode]
 class PieRow(BaseRow):
-    def __init__(self, parent, pie_value):
-        super().__init__(parent, pie_value)
+    def __init__(self, parent, pie_value,controller):
+        super().__init__(parent, pie_value,controller)
         self.text_slice = BaseLabel(self.parent, text="Množství:")
         self.text_activity = BaseLabel(self.parent, text="Název:")
         self.text_explode = BaseLabel(self.parent, text="Výstup:")

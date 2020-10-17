@@ -21,19 +21,19 @@ class ListView:
             list_elements += [t.Label(self.main.list_view_scrollable_frame) for _ in
                                    range(len(V.cache[1]))]
             for i, scatter_value in enumerate(V.cache[0]):
-                ScatterRow(list_elements[i], scatter_value)
+                ScatterRow(list_elements[i], scatter_value, controller=self)
             for i, func_value in enumerate(V.cache[1]):
-                FunctionRow(list_elements[i + (len(V.cache[0]))], func_value)
+                FunctionRow(list_elements[i + (len(V.cache[0]))], func_value,controller=self)
             self.__place_list_elements(list_elements)
 
         elif V.to_animate == BAR:
             for i, bar_value in enumerate(V.cache[0]):
-                BarRow(list_elements[i],bar_value)
+                BarRow(list_elements[i],bar_value,controller=self)
             self.__place_list_elements(list_elements)
 
         elif V.to_animate == PIE:
             for i, pie_value in enumerate(V.cache[0]):
-                PieRow(list_elements[i], pie_value)
+                PieRow(list_elements[i], pie_value,controller=self)
             self.__place_list_elements(list_elements)
 
     def __place_list_elements(self, list_elements):

@@ -8,8 +8,8 @@ from Bases import BaseEntry, BaseRow, BaseLabel
 
 # VALUE = [id,name,value,color,width]
 class BarRow(BaseRow):
-    def __init__(self, parent, pie_value):
-        super().__init__(parent, pie_value)
+    def __init__(self, parent, pie_value,controller):
+        super().__init__(parent, pie_value,controller)
         self.text_name = BaseLabel(self.parent, text="Název:")
         self.text_value = BaseLabel(self.parent, text="Množstvý:")
         self.text_width = BaseLabel(self.parent, text="Šířka:")
