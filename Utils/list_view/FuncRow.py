@@ -3,7 +3,7 @@ from Bases import BaseRow, BaseLabel, BaseEntry
 import tkinter.ttk as t
 from Globals.calculated import fonts
 from Static.constants import LINE_MARKERS,FUNCTION,CACHE,CHANGES_CACHE,ID,DATA,TYPE
-from Decorators.input_checkers import check_function
+from Decorators.input_checkers import check_function_input
 
 # VALUE = [id, func,line,color,size]
 from Utils.ask_color import ask_color
@@ -36,7 +36,7 @@ class FunctionRow(BaseRow):
         self.del_but.grid(row=0, column=6, padx=4)
         self.save_but.grid(row=0, column=7, padx=4)
 
-    @check_function
+    @check_function_input
     def collect_data(self):
         data = self.data_dict()
         id = self.value[0]

@@ -2,7 +2,7 @@ from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID, TYP
 from Utils.uuid import format_existing_uuid
 
 
-def check_function(fun):
+def check_function_input(fun):
     def wrapper(*args, **kwargs):
         data = fun(*args, **kwargs)
         cache = data[CACHE]
