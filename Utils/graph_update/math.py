@@ -32,7 +32,7 @@ class MathUpdate:
                 error["text"] = ""
                 entry1.delete(0, END)
                 entry2.delete(0, END)
-                self.main.update_table()
+                self.main.update_list_view()
         except:
             if error != None:
                 error["text"] = "chyba"
@@ -63,7 +63,7 @@ class MathUpdate:
             if error != None:
                 error["text"] = ""
                 entry.delete(0, END)
-            self.main.update_table()
+            self.main.update_list_view()
         else:
             if error != None:
                 entry.delete(0, END)

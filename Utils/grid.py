@@ -1,6 +1,5 @@
 from Graphing.setup import a
-import tkinter.colorchooser as col
-
+from Utils.ask_color import ask_color
 
 # GRID SETTINGS FUNCTIONS THAT ARE CALLED ON FE
 class Grid:
@@ -8,8 +7,7 @@ class Grid:
         self.main = main
 
     def colorize_grid(self):
-        color = col.askcolor()
-        a.grid(color=color[1])
+        a.grid(color=ask_color())
 
     def size_grid(self, size):
         a.grid(linewidth=size)

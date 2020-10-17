@@ -10,6 +10,7 @@ from Globals.calculated import fonts
 
 from Globals.variables import Variables as V
 
+from Bases import BaseLabel, BaseEntry
 
 # ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")
 # FRAMES TO DIFFERENT GRAPHING METHODS ARE CONNECTED TO THIS CLASS
@@ -43,8 +44,8 @@ class Base(Tk):
 
         # MULTISELECT OF GRAPHING METHODS
         # AFTER SELECTION THE "show_Setup_Frame" FUNCTION FROM "new_show_frame.py" IS CALLED TO MANAGE FRAME CHANGE
-        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
-                               state="readonly")
+        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový"],
+                               state="readonly") #TODO add noise after implenetation
         self.CBB2.bind('<<ComboboxSelected>>',
                        lambda event: self.show_Setup_Frame(self.input_frames[self.CBB2.current()]))
         self.CBB2.current(0)
@@ -66,30 +67,26 @@ class Base(Tk):
                                              width=MAX_WIDTH * .18,
                                              height=MAX_HEIGHT * .3)
 
-        self.limits_info_label = t.Label(self.limits_settings_container, text="Nastavení limit",
+        self.limits_info_label = BaseLabel(self.limits_settings_container, text="Nastavení limit",
                                          font=fonts()["LARGE_FONT"], anchor=CENTER)
         self.limits_info_label.grid(row=0, column=0, columnspan=2, sticky="we", padx=35, pady=15)
 
-        self.limits_entry_x_min_title = t.Label(self.limits_settings_container, text="min x",
-                                                font=fonts()["SMALL_FONT"], anchor=CENTER)
+        self.limits_entry_x_min_title = BaseLabel(self.limits_settings_container, text="min x", anchor=CENTER)
         self.limits_entry_x_min_title.grid(row=1, column=0, sticky="we")
-        self.limits_entry_x_max_title = t.Label(self.limits_settings_container, text="max x",
-                                                font=fonts()["SMALL_FONT"], anchor=CENTER)
+        self.limits_entry_x_max_title = BaseLabel(self.limits_settings_container, text="max x", anchor=CENTER)
         self.limits_entry_x_max_title.grid(row=1, column=1, sticky="we")
-        self.limits_entry_x_min = t.Entry(self.limits_settings_container, justify="center")
+        self.limits_entry_x_min = BaseEntry(self.limits_settings_container)
         self.limits_entry_x_min.grid(row=2, column=0, sticky="we")
-        self.limits_entry_x_max = t.Entry(self.limits_settings_container, justify="center")
+        self.limits_entry_x_max = BaseEntry(self.limits_settings_container)
         self.limits_entry_x_max.grid(row=2, column=1, sticky="we", padx=15, pady=15)
 
-        self.limits_entry_y_min_title = t.Label(self.limits_settings_container, text="min y",
-                                                font=fonts()["SMALL_FONT"], anchor=CENTER)
+        self.limits_entry_y_min_title = BaseLabel(self.limits_settings_container, text="min y", anchor=CENTER)
         self.limits_entry_y_min_title.grid(row=3, column=0, sticky="we")
-        self.limits_entry_y_max_title = t.Label(self.limits_settings_container, text="max y",
-                                                font=fonts()["SMALL_FONT"], anchor=CENTER)
+        self.limits_entry_y_max_title = BaseLabel(self.limits_settings_container, text="max y", anchor=CENTER)
         self.limits_entry_y_max_title.grid(row=3, column=1, sticky="we")
-        self.limits_entry_y_min = t.Entry(self.limits_settings_container, justify="center")
+        self.limits_entry_y_min = BaseEntry(self.limits_settings_container)
         self.limits_entry_y_min.grid(row=4, column=0, sticky="we", pady=15)
-        self.limits_entry_y_max = t.Entry(self.limits_settings_container, justify="center")
+        self.limits_entry_y_max = BaseEntry(self.limits_settings_container)
         self.limits_entry_y_max.grid(row=4, column=1, sticky="we", padx=15, pady=15)
 
         # TAKES ENTRY VALUES AND EXECUTES UPDATE FUNCTION
@@ -97,8 +94,7 @@ class Base(Tk):
                                                      command=lambda: self.__update_limits())
         self.limits_execute_update_button.grid(row=5, column=0, columnspan=2, sticky="we")
 
-        self.limits_auto_update_checkbox_title = t.Label(self.limits_settings_container, text="Autoupdate",
-                                                         font=fonts()["SMALL_FONT"])
+        self.limits_auto_update_checkbox_title = BaseLabel(self.limits_settings_container, text="Autoupdate")
         # IS AUTO UPDATE ALLOWED CHECKBOX
         self.limits_auto_update_checkbox_check_var = IntVar(value=1)
         self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
@@ -116,7 +112,7 @@ class Base(Tk):
                                            width=MAX_WIDTH * .14,
                                            height=MAX_HEIGHT * .8)
 
-        self.grid_info_label = t.Label(self.grid_settings_container, text="Nastavení mřížky",
+        self.grid_info_label = BaseLabel(self.grid_settings_container, text="Nastavení mřížky",
                                        font=fonts()["LARGE_FONT"])
         self.grid_info_label.grid(row=0, column=0, pady=15)
 
@@ -124,7 +120,7 @@ class Base(Tk):
                                    command=lambda: self.colorize_grid())
         self.Col_button.grid(row=1, column=0, sticky="we", pady=15)
 
-        self.size_label = t.Label(self.grid_settings_container, text="Velikost mřížky")
+        self.size_label = BaseLabel(self.grid_settings_container, text="Velikost mřížky")
         self.size_label.grid(row=2, column=0, sticky="we")
 
         self.grid_size = Scale(self.grid_settings_container, activebackground="aqua", bd=0, from_=0, to=50,
@@ -134,7 +130,7 @@ class Base(Tk):
         self.grid_size.bind("<ButtonRelease-1>",
                             lambda event: self.size_grid(self.grid_size.get() / 10))
 
-        self.line_label = t.Label(self.grid_settings_container, text="Druh mřížky")
+        self.line_label = BaseLabel(self.grid_settings_container, text="Druh mřížky")
         self.line_label.grid(row=4, column=0, sticky="we", pady=15)
 
         self.cbb_convertion = ["-", "--", "-.", ":", ""]
@@ -147,22 +143,21 @@ class Base(Tk):
 
         self.grid_settings_container.grid_columnconfigure(0, weight=2)
 
-        # GRAPHING INPUTS LIST
-        self.Table_container = t.Frame(self)
-        self.canvas = Canvas(self.Table_container)
-        self.scrollbar = t.Scrollbar(self.Table_container, orient="vertical", command=self.canvas.yview)
-        self.scrollable_frame = t.Frame(self.canvas)
-        self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.update_table()
-        for i in range(50):
-            Frame(self.scrollable_frame).pack()
 
-        self.Table_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
-                                   height=MAX_HEIGHT * .3)
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.scrollbar.pack(side="right", fill="y")
+        #TODO NEW LIST VIEW
+        self.list_view_container = t.Frame(self)
+        self.list_view_canvas = Canvas(self.list_view_container)
+        self.list_view_scrollbar = t.Scrollbar(self.list_view_container, orient="vertical", command=self.list_view_canvas.yview)
+        self.list_view_scrollable_frame = t.Frame(self.list_view_canvas)
+        self.list_view_scrollable_frame.bind("<Configure>", lambda e: self.list_view_canvas.configure(scrollregion=self.list_view_canvas.bbox("all")))
+        self.list_view_canvas.create_window((0, 0), window=self.list_view_scrollable_frame, anchor="nw")
+        self.list_view_canvas.configure(yscrollcommand=self.list_view_scrollbar.set)
+
+        self.list_view_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
+                                       height=MAX_HEIGHT * .3)
+        self.list_view_canvas.pack(side="left", fill="both", expand=True)
+        self.list_view_scrollbar.pack(side="right", fill="y")
+        self.main.update_list_view()
 
         # OPEN CONSOLE BUTTON
         self.console = t.Button(self, text="Konzole", command=lambda: self.console_controller())

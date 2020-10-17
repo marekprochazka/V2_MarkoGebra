@@ -20,4 +20,4 @@ class NoiseUpdate:
         V.dispersion.append(disper)
         V.number.append(num)
         V.coordinates_all_list.append([num, disper, V.noises[-1][0][2], V.noises[-1][0][3], V.noises[-1][0][4]])
-        self.main.update_table()
+        self.main.update_list_view()

@@ -22,4 +22,4 @@ class DeleteAll:
         # EMPTYING GRAPH CACHE (MATH GRAPHING NEEDS SPECIAL FORMAT
         # THAT IS NORMALLY MADE AUTOMATICALLY BY DATA LOADING BUT HERE IT'S REQUIRED TO BE HARD CODED)
         V.cache = [[], []] if V.to_animate == MATH else [[]]
-        self.main.update_table()
+        self.main.update_list_view()

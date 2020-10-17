@@ -362,7 +362,7 @@ class Console:
                     if val[1] == V.coordinates_all_list[index][0][1]:
                         del V.coordinates_plot[indx]
                         del V.coordinates_all_list[index]
-                        self.main.update_table()
+                        self.main.update_list_view()
 
 
 
@@ -373,7 +373,7 @@ class Console:
                         V.coordinates_scatter.remove(coord)
 
                 del V.coordinates_all_list[index]
-                self.main.update_table()
+                self.main.update_list_view()
 
         if V.to_animate == 2:
             del V.coordinates_all_list[index]
@@ -381,19 +381,19 @@ class Console:
             del V.cols[index]
             del V.activities[index]
             del V.explode[index]
-            self.main.update_table()
+            self.main.update_list_view()
 
         if V.to_animate == 3:
             del V.bars[index]
             del V.coordinates_all_list[index]
-            self.main.update_table()
+            self.main.update_list_view()
 
         if V.to_animate == 4:
             del V.noises[index + 1]
             del V.dispersion[index]
             del V.number[index]
             del V.coordinates_all_list[index]
-            self.main.update_table()
+            self.main.update_list_view()
 
     # DONE
     def changeLine(self, index, linetype: str):
@@ -404,7 +404,7 @@ class Console:
                         if val[1] == V.coordinates_all_list[index][0][1]:
                             V.coordinates_plot[indx][2] = linetype
                             V.coordinates_all_list[index][1] = linetype
-                            self.main.update_table()
+                            self.main.update_list_view()
                 else:
                     raise SyntaxError
 
@@ -416,7 +416,7 @@ class Console:
                             V.coordinates_scatter[indx][2] = linetype
                             V.coordinates_all_list[index][1] = linetype
 
-                    self.main.update_table()
+                    self.main.update_list_view()
                 else:
                     raise SyntaxError
 
@@ -425,7 +425,7 @@ class Console:
                 for coord in V.noises[index + 1]:
                     coord[2] = linetype
                 V.coordinates_all_list[index][2] = linetype
-                self.main.update_table()
+                self.main.update_list_view()
 
             else:
                 raise SyntaxError
@@ -442,7 +442,7 @@ class Console:
 
                         V.coordinates_plot[indx][3] = color[1]
                         V.coordinates_all_list[index][2] = color[1]
-                        self.main.update_table()
+                        self.main.update_list_view()
                         top.lift()
 
             else:
@@ -452,7 +452,7 @@ class Console:
                         color = col.askcolor()
                         V.coordinates_scatter[indx][3] = color[1]
                         V.coordinates_all_list[index][2] = color[1]
-                        self.main.update_table()
+                        self.main.update_list_view()
                         top.lift()
 
 
@@ -460,20 +460,20 @@ class Console:
             color = col.askcolor()
             V.cols[index] = color[1]
             V.coordinates_all_list[index][2] = color[1]
-            self.main.update_table()
+            self.main.update_list_view()
             top.lift()
         elif V.to_animate == 3:
             color = col.askcolor()
             V.bars[index][2] = color[1]
             V.coordinates_all_list[index][2] = color[1]
-            self.main.update_table()
+            self.main.update_list_view()
             top.lift()
         elif V.to_animate == 4:
             color = col.askcolor()
             for coord in V.noises[index + 1]:
                 coord[3] = color[1]
             V.coordinates_all_list[index][3] = color[1]
-            self.main.update_table()
+            self.main.update_list_view()
             top.lift()
 
     # DONE
@@ -486,7 +486,7 @@ class Console:
                         if val[1] == V.coordinates_all_list[index][0][1]:
                             V.coordinates_plot[indx][4] = size
                             V.coordinates_all_list[index][3] = size
-                            self.main.update_table()
+                            self.main.update_list_view()
 
                 else:
 
@@ -495,7 +495,7 @@ class Console:
                             V.coordinates_scatter[indx][4] = float(size)
                             V.coordinates_all_list[index][3] = size
 
-                    self.main.update_table()
+                    self.main.update_list_view()
 
             elif V.to_animate == 3:
                 # TODO během po úpravě coord_all přidat úpravu
@@ -505,7 +505,7 @@ class Console:
                 for coord in V.noises[index + 1]:
                     coord[4] = size
                 V.coordinates_all_list[index][4] = size
-                self.main.update_table()
+                self.main.update_list_view()
 
 
             else:
