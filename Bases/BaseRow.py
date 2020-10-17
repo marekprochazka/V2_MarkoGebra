@@ -40,7 +40,7 @@ class BaseRow:
     def save_changes(self, collector):
         data = collector()
         if data[ERRORS]:
-            print("CHYBAAA")
+            print(data[ERRORS])
         else:
 
             for index, value in enumerate(V.cache[0]):

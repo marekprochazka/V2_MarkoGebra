@@ -5,8 +5,13 @@ from Globals.calculated import fonts
 
 from Bases import BaseEntry, BaseRow, BaseLabel
 
+from Decorators.input_checkers import check_pie_input
 
 # VALUE = [id,slice,activity,color,explode]
+from Static.constants import CACHE, CHANGES_CACHE, DATA, ID
+from Utils.ask_color import ask_color
+
+
 class PieRow(BaseRow):
     def __init__(self, parent, pie_value,controller):
         super().__init__(parent, pie_value,controller)
@@ -22,7 +27,7 @@ class PieRow(BaseRow):
         self.entry_explode.insert(0, self.value[4])
 
         self.col_but = Button(self.parent, bg=self.value[3],
-                              command=lambda id=self.value[0]: self.change_color(id),
+                              command=lambda: self.col_but.config(bg=ask_color()),
                               width=10)
 
         self.text_slice.grid(row=0, column=0)
@@ -34,3 +39,16 @@ class PieRow(BaseRow):
         self.col_but.grid(row=0, column=6, padx=3)
         self.del_but.grid(row=0, column=7, padx=3)
         self.save_but.grid(row=0, column=8, padx=3)
+
+    @check_pie_input
+    def collect_data(self):
+        data = self.data_dict()
+        id = self.value[0]
+        slice = self.entry_slice.get()
+        activity = self.entry_activity.get()
+        color = self.col_but["bg"]
+        explode = self.entry_explode.get()
+        data[CACHE] = (id,slice,activity,color,explode)
+        data[CHANGES_CACHE][DATA] = (slice,activity,color,explode)
+        data[CHANGES_CACHE][ID] = id
+        return data
