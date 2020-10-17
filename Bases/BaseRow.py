@@ -49,11 +49,11 @@ class BaseRow:
                     break
             if V.to_animate == MATH:
                 for index, value in enumerate(V.cache[1]):
-                    if value[0] == data[CACHE][1]:
+                    if value[0] == data[CACHE][0]:
                         V.cache[1][index] = data[CACHE]
                         break
 
             V.changes_cache.append(data[CHANGES_CACHE])
 
     def data_dict(self):
-        return {CACHE: [], CHANGES_CACHE: {ACTION: UPDATE, DATA: [], ID: ""}, ERRORS: []}
+        return {CACHE: (), CHANGES_CACHE: {ACTION: UPDATE, DATA: [], ID: ""}, ERRORS: []}

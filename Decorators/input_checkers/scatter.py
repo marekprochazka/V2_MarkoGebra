@@ -8,7 +8,7 @@ def check_scatter(fun):
         cache = data[CACHE]
         changes_cache = data[CHANGES_CACHE]
         errors = data[ERRORS]
-        checked_data = {ERRORS:[]}
+        checked_data = {ERRORS:errors}
         try:
             checked_data[CACHE] = (cache[0],
                                    int(cache[1]),
