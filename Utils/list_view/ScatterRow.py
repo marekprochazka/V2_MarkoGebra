@@ -4,7 +4,9 @@ import tkinter.ttk as t
 from Globals.calculated import fonts
 
 from Bases import BaseEntry, BaseRow, BaseLabel
-
+from Static.constants import DATA, ID, TYPE, SCATTER,CHANGES_CACHE,CACHE,ERRORS, POINT_MARKERS
+from Decorators.input_checkers import check_scatter
+from Globals.variables import Variables as V
 
 # VALUE = [id,x,y,marker,color,size]
 
@@ -18,9 +20,9 @@ class ScatterRow(BaseRow):
         self.entry_x.insert(0, self.value[1])
         self.entry_y.insert(0, self.value[2])
 
-        self.marker_multiselect = t.Combobox(self.parent, values=["aa", "bb"], state="readonly",
+        self.marker_multiselect = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",
                                              width=5)  # TODO fill from constant add command
-
+        self.marker_multiselect.current(POINT_MARKERS.index(self.value[3]))
         self.col_but = Button(self.parent, bg=self.value[4],
                               command=lambda id=self.value[0]: self.change_color(id),
                               width=10)
@@ -37,3 +39,21 @@ class ScatterRow(BaseRow):
         self.col_but.grid(row=0, column=7, padx=4)
         self.del_but.grid(row=0, column=8, padx=4)
         self.save_but.grid(row=0, column=9, padx=4)
+
+    @check_scatter
+    def collect_data(self):
+        data = self.data_dict()
+        id = self.value[0]
+        x = self.entry_x.get()
+        y = self.entry_y.get()
+        marker = self.marker_multiselect.get()
+        color = self.col_but["bg"]
+        size = self.entry_size.get()
+        data[CACHE] = [id, x, y, marker, color, size]
+        data[CHANGES_CACHE][TYPE] = SCATTER
+        data[CHANGES_CACHE][DATA] = [x, y, marker, color, size]
+        data[CHANGES_CACHE][ID] = id
+        return data
+
+
+

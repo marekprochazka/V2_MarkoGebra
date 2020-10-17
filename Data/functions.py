@@ -31,7 +31,7 @@ def update_math(changes):
 
             elif change[ACTION] == UPDATE:
                 c.execute("""   UPDATE scatter 
-                                SET x=?,y=?,marker=?,size=?,color=?
+                                SET x=?,y=?,marker=?,color=?,size=?
                                 WHERE id=?"""
                           ,change[DATA] + change[ID])
                 conn.commit()

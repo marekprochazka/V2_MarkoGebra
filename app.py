@@ -41,7 +41,7 @@ class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, ListView, Grid, graph_updat
     # THAT'S WHY EXIT METHOD IS MODIFIED
     # TODO MAKE SAVE DATA FUNCIONALITY IN MAYBE SHOW FRAME THAT CAN BE CALLED ALONE HERE
     def on_exit(self):
-        self.show_Setup_Frame()
+        self.show_Setup_Frame(exit=True)
         self.destroy()
 
     def openHelp(self):
