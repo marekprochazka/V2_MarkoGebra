@@ -15,4 +15,4 @@
     call startDB.py
     cd ..
     ECHO Making graphstyle file
-    ECHO seaborn>graphstyle.txt
+    ECHO seaborn>/p="graphstyle.txt"
