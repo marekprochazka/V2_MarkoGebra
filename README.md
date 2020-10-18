@@ -1,8 +1,8 @@
 # MarkoGebra
 ## How to run:
 ### First install with init.bat
-clone repository
-execute init.bat in cmd in project folder
+1. clone repository 
+2. execute init.bat in cmd in project folder
 
 ### First install without init.bat
 1.  clone repository
