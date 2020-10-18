@@ -12,7 +12,8 @@ mp.use("TkAgg")  # backend configuration for tkinter
 
 # SET GRAPH STYLE FROM TXT FILE
 with open("graphstyle.txt", "r") as style:
-    st.use(style.strip("\n"))
+    stl = style.readline()
+    st.use(stl.strip("\n"))
 
 # st.use('ggplot')
 
