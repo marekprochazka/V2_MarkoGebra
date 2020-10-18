@@ -1,5 +1,5 @@
 @ECHO off
-    ECHO Welcome to Markogebra easy installer. Press any key to continue...
+    ECHO Welcome to Markogebra easy installer.
     ECHO Note: please make sure you've got installed python and set to path variable
     PAUSE
 
@@ -15,4 +15,4 @@
     call startDB.py
     cd ..
     ECHO Making graphstyle file
-    ECHO seaborn>/p="graphstyle.txt"
+    ECHO seaborn>graphstyle.txt
