@@ -12,4 +12,4 @@
 5.  execute _startDB.py_ in Data folder
 6.  create graphstyle.txt in main folder and write name of graph style ('seaborn' for example)
 ### Then
-5.  execute app.py with activated venv
+1.  execute app.py with activated venv
