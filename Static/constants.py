@@ -14,6 +14,8 @@ AVALIBLE_STYLES = ['Solarize_Light2', '_classic_test_patch', 'classic', 'dark_ba
                    'seaborn-ticks', 'seaborn-whitegrid']
 
 
+BASIC_COLORS_VALUES = ["blue", "green", "red", "cyan", "purple", "gold", "black"]
+BASIC_COLORS_NAMES = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
 
 
 #NAMING CONSTANTS TO AVOID TYPOS

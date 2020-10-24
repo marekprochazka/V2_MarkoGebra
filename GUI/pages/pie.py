@@ -1,7 +1,7 @@
 from tkinter import Frame, Label
 from tkinter import ttk as t
 from Globals.calculated import fonts
-from Static.constants import PIE
+from Static.constants import PIE, BASIC_COLORS_VALUES, BASIC_COLORS_NAMES
 from Bases import BaseLabel,BaseEntry
 
 class Pie(Frame):
@@ -16,8 +16,8 @@ class Pie(Frame):
 
         # PREDEFINED VALUES FOR MULTISELECTS
         # TODO SUBSTITUTE BY COLORWHEELS
-        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
-        self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
+        self.basic_colors = BASIC_COLORS_VALUES
+        self.cb_values = BASIC_COLORS_NAMES
 
         #DEFINIG TK OBJECTS
         self.txt1 = BaseLabel(self, text="Množství:")

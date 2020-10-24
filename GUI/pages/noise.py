@@ -10,7 +10,7 @@ class Noise(Frame):
         self.type = NOISE
         self.old_type = "noise" #TODO delete after Data update
 
-        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
+        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"] #TODO jména barev
         self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
 
         self.number = Scale(self, activebackground="aqua", bd=0, from_=0, to=100, orient=HORIZONTAL)

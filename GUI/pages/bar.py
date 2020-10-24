@@ -3,7 +3,7 @@ from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import BAR
 from Bases import BaseLabel, BaseEntry
-
+from Static.constants import BASIC_COLORS_NAMES,BASIC_COLORS_VALUES
 
 # GUI OF BAR INPUTS
 class Bar(Frame):
@@ -18,8 +18,8 @@ class Bar(Frame):
 
         # PREDEFINED VALUES FOR MULTISELECTS
         # TODO SUBSTITUTE BY COLORWHEELS
-        self.basic_colors = ["b", "g", "r", "c", "m", "gold", "k"]
-        self.cb_values = ["Modrá", "Zelená", "Červená", "Světle modrá", "Fialová", "Žlutá", "Černá"]
+        self.basic_colors = BASIC_COLORS_VALUES
+        self.cb_values = BASIC_COLORS_NAMES
 
         # DEFINIG TK OBJECTS
         self.txt1 = BaseLabel(self, text="Množství:")
