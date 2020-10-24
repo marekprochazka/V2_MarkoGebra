@@ -2,6 +2,8 @@ from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID, TYP
 from Utils.uuid import format_existing_uuid
 
 
+# CONVERTING DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
+# IF THERE ARE ANY ERRORS THEY ARE ALSO RETURNED
 def check_function_input(fun):
     def wrapper(*args, **kwargs):
         data = fun(*args, **kwargs)

@@ -1,9 +1,12 @@
 from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID
 from Utils.uuid import format_existing_uuid
 
+
+# CONVERTING DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
+# IF THERE ARE ANY ERRORS THEY ARE ALSO RETURNED
 def check_bar_input(fun):
-    def wrapper(*args,**kwargs):
-        data = fun(*args,**kwargs)
+    def wrapper(*args, **kwargs):
+        data = fun(*args, **kwargs)
         cache = data[CACHE]
         changes_cache = data[CHANGES_CACHE]
         errors = data[ERRORS]
@@ -19,12 +22,12 @@ def check_bar_input(fun):
             checked_data[ERRORS].append("cahce error")
 
         try:
-            checked_data[CHANGES_CACHE] = {ACTION:changes_cache[ACTION],
-                                           DATA:(str(cache[1]),
-                                                 int(cache[2]),
-                                                 str(cache[3]),
-                                                 float(cache[4])),
-                                           ID:format_existing_uuid(cache[0])}
+            checked_data[CHANGES_CACHE] = {ACTION: changes_cache[ACTION],
+                                           DATA: (str(cache[1]),
+                                                  int(cache[2]),
+                                                  str(cache[3]),
+                                                  float(cache[4])),
+                                           ID: format_existing_uuid(cache[0])}
         except:
             checked_data[ERRORS].append("changes error")
 
