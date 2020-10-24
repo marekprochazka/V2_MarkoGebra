@@ -1,5 +1,6 @@
-from Static.constants import X, Y, MIN, MAX
+from Static.constants import X, Y, MIN, MAX, NAME, INFO
 from Globals.variables import Variables as V
+from GUI.error_popup import error_popup
 
 
 def check_limits_input(fun):
@@ -22,11 +23,11 @@ def check_value(axis, min, max):
         int(min)
     except ValueError:
         is_ok = False
-        print(f"Chybný vstup na ose {axis} hodnota {min} je neplatná")
+        error_popup({NAME: "Value error", INFO: f"Chybný vstup na ose {axis} hodnota {min} je neplatná"})
     try:
         int(max)
     except ValueError:
         is_ok = False
-        print(f"Chybný vstup na ose {axis} hodnota {max} je neplatná")
+        error_popup({NAME: "Value error", INFO: f"Chybný vstup na ose {axis} hodnota {min} je neplatná"})
 
     return is_ok
