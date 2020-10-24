@@ -1,14 +1,15 @@
 from Globals.variables import Variables as V
 from Static.constants import X, Y, MIN, MAX
-
+from Decorators.input_checkers import check_limits_input
 
 # MANUAL AND AUTO LIMIT UPDATES
 class Limits:
     def __init__(self, main):
         self.main = main
 
+    @check_limits_input
     def update_limits(self, min_x, max_x, min_y, max_y):
-        V.limits = {
+        return {
             X: {
                 MIN: min_x,
                 MAX: max_x

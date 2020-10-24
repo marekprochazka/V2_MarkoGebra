@@ -182,12 +182,9 @@ class Base(Tk):
 
     # CALLING MANUAL UPDATE WITH RIGHT VALUES
     def __update_limits(self):
-        try:
-            self.main.update_limits(int(self.limits_entry_x_min.get()), int(self.limits_entry_x_max.get()),
-                                    int(self.limits_entry_y_min.get()), int(self.limits_entry_y_max.get()))
-        except:
-            pass
-            # TODO make error messages
+        self.main.update_limits(self.limits_entry_x_min.get(), self.limits_entry_x_max.get(),
+                                    self.limits_entry_y_min.get(), self.limits_entry_y_max.get())
+
 
     # AUTO UPDATE VARIABLE CONTROLLER
     def __switch_auto_limit_update_value(self):
