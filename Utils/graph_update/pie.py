@@ -28,7 +28,7 @@ class PieUpdate:
 
             error["text"] = ""
 
-            self.update_table()
+            self.main.update_list_view()
         except:
             if entry1 != None:
                 entry1.delete(0, END)
