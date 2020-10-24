@@ -28,15 +28,7 @@ from Graphing.setup import *
 class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, ListView, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
                  graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits):
     def __init__(self):
-        self.to_inherit = (
-            Base, DeleteAll, Saving, ShowFrame, ListView, Grid, graph_update.MathUpdate, graph_update.PieUpdate,
-            graph_update.NoiseUpdate, graph_update.BarUpdate, Console, Limits)
-        self.doInherit()
-
-    # TO EACH PARENT CLASS A "self" FROM MAIN CLASS AS MAIN TO MAKE FUNCTIONAL CONNECTION BETWEEN CLASSES FROM HIGHER LEVEL
-    def doInherit(self):
-        for cls in self.to_inherit:
-            cls.__init__(self, main=self)
+        super().__init__(main=self)
 
     # SAVING DATA TO DATABASE IS MADE IN SHOW FRAME
     # THAT'S WHY EXIT METHOD IS MODIFIED
