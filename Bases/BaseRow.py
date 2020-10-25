@@ -25,7 +25,7 @@ class BaseRow:
         from Utils.update_data import update_data
 
         self.save_but = t.Button(self.parent, text="ULOŽIT",
-                                 command=lambda: update_data(self.collect_data),
+                                 command=lambda: update_data(self.collect_data()),
                                  width=10)
 
     #   collect_data FUNCTION IS REWRITTEN IN EACH DIFFERENT ROW BUT NEEDS TO ALSO BE DEFINED HERE

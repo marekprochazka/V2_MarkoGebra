@@ -1,10 +1,9 @@
 from tkinter import Button
 import tkinter.ttk as t
 from Bases import BaseEntry, BaseRow, BaseLabel
-from Static.constants import DATA, ID, TYPE, SCATTER, CHANGES_CACHE, CACHE, ERRORS, POINT_MARKERS
+from Static.constants import DATA, ID, TYPE, SCATTER, CHANGES_CACHE, CACHE, ERRORS, POINT_MARKERS, UPDATE
 from Decorators.input_checkers import check_scatter_input
 from Utils.ask_color import ask_color
-
 
 # VALUE = [id,x,y,marker,color,size]
 # VALUE IS IN FORM AS IT IS SAVED IN CACHE AND IN DATABASE
@@ -64,15 +63,13 @@ class ScatterRow(BaseRow):
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
     @check_scatter_input
     def collect_data(self):
-        data = self.data_dict()
-        id = self.value[0]
+        from Utils.make_data_update_dict import make_data_update_dict
+        from Utils.uuid import format_existing_uuid
+        id = format_existing_uuid(self.value[0])
         x = self.entry_x.get()
         y = self.entry_y.get()
         marker = self.marker_multiselect.get()
         color = self.col_but["bg"]
         size = self.entry_size.get()
-        data[CACHE] = [id, x, y, marker, color, size]
-        data[CHANGES_CACHE][TYPE] = SCATTER
-        data[CHANGES_CACHE][DATA] = [x, y, marker, color, size]
-        data[CHANGES_CACHE][ID] = id
+        data = make_data_update_dict(id=id, values=(x, y, marker, color, size), action=UPDATE, type=SCATTER)
         return data

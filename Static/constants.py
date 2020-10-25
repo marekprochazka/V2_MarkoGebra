@@ -1,6 +1,7 @@
 MAX_WIDTH = 1600
 MAX_HEIGHT = 900
 
+
 FUNCTION_ALLOWED_MARKS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "x", "+", "-", "*", "/", "(", ")","s","c","t","p"]
 
 POINT_MARKERS = ['.', ',', 'o', 'v', '^', '<', '>', '1', '2', '3', '4', '8', 's', 'p', 'P', '*', 'h', 'H', '+', 'x',
@@ -52,3 +53,5 @@ CHANGES_CACHE = "CHANGES_CACHE"
 ERRORS = "ERRORS"
 NAME = "NAME"
 INFO = "INFO"
+
+DATA_UPDATE_DICT = {CACHE: (), CHANGES_CACHE: {ACTION: UPDATE, DATA: [], ID: ""}, ERRORS: []}

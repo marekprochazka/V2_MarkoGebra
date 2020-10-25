@@ -1,15 +1,18 @@
 from tkinter import Frame, Label, Button
 from tkinter import ttk as t
 from Globals.calculated import fonts
-from Static.constants import MATH
+from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE
 from Bases import BaseEntry, BaseLabel
 from Utils.ask_color import ask_color
-
+from Static.constants import DATA_UPDATE_DICT
+from Utils.uuid import generate_uuid
+from Decorators.input_checkers import check_function_input, check_scatter_input
 
 # GUI OF MATH INPUTS
 class Mathematical(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        from Utils.update_data import update_data
         self.controller = controller
         self.type = MATH
         # THIS VARIABLE IS USED IN "new_show_frame.py"
@@ -35,12 +38,7 @@ class Mathematical(Frame):
         self.colorButtonScatter.grid(row=0, column=4, sticky="we", padx=2)
 
         self.placeButtonScatter = t.Button(self, text="Vložit",
-                                           command=lambda: controller.add_point_scatter(self.EntryX.get(),
-                                                                                        self.EntryY.get(),
-                                                                                        error=self.ErrorWarning,
-                                                                                        entry1=self.EntryX,
-                                                                                        entry2=self.EntryY,
-                                                                                        color=self.colorButtonScatter["bg"]))
+                                           command=lambda: update_data(self.__collect_scatter(),self.controller.update_list_view))
         self.placeButtonScatter.grid(row=0, column=5, sticky="we")
 
         # FUNCTION INPUT PART
@@ -58,7 +56,8 @@ class Mathematical(Frame):
                                         command=lambda: controller.add_plot_from_function(self.EntryFun.get(),
                                                                                           error=self.ErrorWarning,
                                                                                           entry=self.EntryFun,
-                                                                                          color=self.colorButtonFunc["bg"]))
+                                                                                          color=self.colorButtonFunc[
+                                                                                              "bg"]))
 
         self.placeButtonPlot.grid(row=1, column=5, sticky="we", pady=20)
 
@@ -71,3 +70,15 @@ class Mathematical(Frame):
 
     def __set_value_color(self, button):
         button.config(bg=ask_color())
+
+    @check_scatter_input
+    def __collect_scatter(self):
+        from Utils.make_data_update_dict import make_data_update_dict
+        id = generate_uuid()
+        x = self.EntryX.get()
+        y = self.EntryY.get()
+        marker = "."
+        color = self.colorButtonScatter["bg"]
+        size = 1
+        data = make_data_update_dict(id=id, values=(x, y, marker, color, size), action=CREATE, type=SCATTER)
+        return data
