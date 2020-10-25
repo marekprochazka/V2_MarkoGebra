@@ -12,10 +12,10 @@ class Bar(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         from Utils.update_data import update_data
+        from Decorators.input_checkers import check_bar_input
 
         self.controller = controller
         self.type = BAR
-        from Decorators.input_checkers import check_bar_input
 
         # THIS VARIABLE IS USED IN "new_show_frame.py"
         # AND HAS ONE OF THE VALUES THAT IS CAPABLE
@@ -58,7 +58,7 @@ class Bar(Frame):
         id = generate_uuid()
         name = self.name.get()
         value = self.value.get()
-        color = self.color.get()
+        color = self.basic_colors[self.color.current()]
         width = 0.8
         data = make_data_update_dict(id=id, values=(name,value,color,width), action=CREATE)
         return data
