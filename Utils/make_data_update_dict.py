@@ -5,7 +5,7 @@ def make_data_update_dict(id,values,action,type=None):
     data = DATA_UPDATE_DICT
     data[CACHE] = id+values
     if type:
-        data[CHANGES_CACHE][TYPE] = SCATTER
+        data[CHANGES_CACHE][TYPE] = type
     data[CHANGES_CACHE][DATA] = values
     data[CHANGES_CACHE][ID] = id
     data[CHANGES_CACHE][ACTION] = action

@@ -19,7 +19,7 @@ def check_scatter_input(fun):
                                    str(cache[4]),
                                    float(cache[5]))
         except:
-            checked_data[ERRORS] = errors.append("error")
+            checked_data[ERRORS].append("error")
 
         try:
             checked_data[CHANGES_CACHE] = {ACTION: changes_cache[ACTION],
@@ -28,7 +28,7 @@ def check_scatter_input(fun):
                                            ID: format_existing_uuid(cache[0]),
                                            TYPE: changes_cache[TYPE]}
         except:
-            checked_data[ERRORS] = errors.append("error")
+            checked_data[ERRORS].append("error")
 
         return checked_data
 

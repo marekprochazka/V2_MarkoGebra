@@ -1,7 +1,7 @@
 from tkinter import Frame, Label, Button
 from tkinter import ttk as t
 from Globals.calculated import fonts
-from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE
+from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE, FUNCTION
 from Bases import BaseEntry, BaseLabel
 from Utils.ask_color import ask_color
 from Static.constants import DATA_UPDATE_DICT
@@ -53,11 +53,7 @@ class Mathematical(Frame):
         self.colorButtonFunc.grid(row=1, column=4, sticky="we", padx=2)
 
         self.placeButtonPlot = t.Button(self, text="Odložit",
-                                        command=lambda: controller.add_plot_from_function(self.EntryFun.get(),
-                                                                                          error=self.ErrorWarning,
-                                                                                          entry=self.EntryFun,
-                                                                                          color=self.colorButtonFunc[
-                                                                                              "bg"]))
+                                        command=lambda: update_data(self.__collect_function(),self.controller.update_list_view))
 
         self.placeButtonPlot.grid(row=1, column=5, sticky="we", pady=20)
 
@@ -81,4 +77,15 @@ class Mathematical(Frame):
         color = self.colorButtonScatter["bg"]
         size = 1
         data = make_data_update_dict(id=id, values=(x, y, marker, color, size), action=CREATE, type=SCATTER)
+        return data
+
+    @check_function_input
+    def __collect_function(self):
+        from Utils.make_data_update_dict import make_data_update_dict
+        id = generate_uuid()
+        func = self.EntryFun.get()
+        line = "-"
+        color = self.colorButtonFunc["bg"]
+        size = 1
+        data = make_data_update_dict(id=id,values=(func,line,color,size),action=CREATE, type=FUNCTION)
         return data
