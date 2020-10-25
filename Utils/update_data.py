@@ -1,7 +1,8 @@
 from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, FUNCTION, SCATTER
 from Globals.variables import Variables as V
 
-def update_data(data,update_fun=None):
+
+def update_data(data, update_fun=None, limits_fun=None):
     data
 
     # ERRORS ARE ADDED TO DATA IN DECORATORS IF THERE
@@ -25,7 +26,7 @@ def update_data(data,update_fun=None):
                 if value[0] == data[CACHE][0]:
                     V.cache[0][index] = data[CACHE]
                     break
-            # IF IT'S MATH GRAPHING IT SE NECESSARY TO ALSO CHECK SECOND CACHE
+            # IF IT'S MATH GRAPHING IT IS NECESSARY TO ALSO CHECK SECOND CACHE
             if V.to_animate == MATH:
                 for index, value in enumerate(V.cache[1]):
                     if value[0] == data[CACHE][0]:
@@ -37,3 +38,7 @@ def update_data(data,update_fun=None):
         V.changes_cache.append(data[CHANGES_CACHE])
         if update_fun:
             update_fun()
+
+        if V.is_auto_update:
+            if limits_fun:
+                limits_fun(data[CACHE][1], data[CACHE][2])

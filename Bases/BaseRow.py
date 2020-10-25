@@ -1,6 +1,7 @@
 import tkinter.ttk as t
-from Static.constants import UPDATE, DATA, ID, ACTION, CACHE, CHANGES_CACHE, ERRORS, MATH, DELETE, TYPE
+from Static.constants import UPDATE, DATA, ID, ACTION, CACHE, CHANGES_CACHE, ERRORS, MATH, DELETE, TYPE, SCATTER
 from Globals.variables import Variables as V
+
 
 class BaseRow:
     def __init__(self, parent, scatter_value, controller, *args, **kwargs):
@@ -25,7 +26,7 @@ class BaseRow:
         from Utils.update_data import update_data
 
         self.save_but = t.Button(self.parent, text="ULOŽIT",
-                                 command=lambda: update_data(self.collect_data()),
+                                 command=lambda: update_data(self.collect_data(),limits_fun=self.controller.auto_update_limits_by_scatter_input),
                                  width=10)
 
     #   collect_data FUNCTION IS REWRITTEN IN EACH DIFFERENT ROW BUT NEEDS TO ALSO BE DEFINED HERE
@@ -57,31 +58,7 @@ class BaseRow:
         self.controller.update_list_view()
 
     def save_changes(self, collector):
-        # collect_data FUNCTION OF A PARTICULAR ROW
-        data = collector()
-
-        # ERRORS ARE ADDED TO DATA IN DECORATORS IF THERE
-        # WERE ANY WRONG INPUTS
-        if data[ERRORS]:
-            print(data[ERRORS])
-        else:
-            # IF NO ERRORS
-            # FINDING RIGHT VALUE IN CACHE BY IT'S id
-            # UPDATING THE VALUE
-            for index, value in enumerate(V.cache[0]):
-                if value[0] == data[CACHE][0]:
-                    V.cache[0][index] = data[CACHE]
-                    break
-            # IF IT'S MATH GRAPHING IT SE NECESSARY TO ALSO CHECK SECOND CACHE
-            if V.to_animate == MATH:
-                for index, value in enumerate(V.cache[1]):
-                    if value[0] == data[CACHE][0]:
-                        V.cache[1][index] = data[CACHE]
-                        break
-
-            # DATA FOR changes_cache IS PREPARED IN DECORATOR
-            # ONLY APPENDING HERE
-            V.changes_cache.append(data[CHANGES_CACHE])
+        pass
 
     def data_dict(self):
         return {CACHE: (), CHANGES_CACHE: {ACTION: UPDATE, DATA: [], ID: ""}, ERRORS: []}

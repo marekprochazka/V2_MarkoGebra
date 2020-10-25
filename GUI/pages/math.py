@@ -52,7 +52,7 @@ class Mathematical(Frame):
         self.colorButtonFunc.grid(row=1, column=4, sticky="we", padx=2)
 
         self.placeButtonPlot = t.Button(self, text="Odložit",
-                                        command=lambda: self.__update_data_function)
+                                        command=lambda: self.__update_data_function())
 
         self.placeButtonPlot.grid(row=1, column=5, sticky="we", pady=20)
 
@@ -65,7 +65,7 @@ class Mathematical(Frame):
 
     def __update_data_scatter(self):
         from Utils.update_data import update_data
-        update_data(self.__collect_scatter(),self.controller.update_list_view)
+        update_data(self.__collect_scatter(),update_fun=self.controller.update_list_view,limits_fun=self.controller.auto_update_limits_by_scatter_input)
         self.EntryX.delete(0,END)
         self.EntryY.delete(0,END)
 
