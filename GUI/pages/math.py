@@ -39,7 +39,8 @@ class Mathematical(Frame):
                                                                                         self.EntryY.get(),
                                                                                         error=self.ErrorWarning,
                                                                                         entry1=self.EntryX,
-                                                                                        entry2=self.EntryY))
+                                                                                        entry2=self.EntryY,
+                                                                                        color=self.colorButtonScatter["bg"]))
         self.placeButtonScatter.grid(row=0, column=5, sticky="we")
 
         # FUNCTION INPUT PART
@@ -56,7 +57,8 @@ class Mathematical(Frame):
         self.placeButtonPlot = t.Button(self, text="Odložit",
                                         command=lambda: controller.add_plot_from_function(self.EntryFun.get(),
                                                                                           error=self.ErrorWarning,
-                                                                                          entry=self.EntryFun))
+                                                                                          entry=self.EntryFun,
+                                                                                          color=self.colorButtonFunc["bg"]))
 
         self.placeButtonPlot.grid(row=1, column=5, sticky="we", pady=20)
 
@@ -68,5 +70,4 @@ class Mathematical(Frame):
         self.grid_columnconfigure(5, weight=2)
 
     def __set_value_color(self, button):
-        print(button["bg"])
         button.config(bg=ask_color())
