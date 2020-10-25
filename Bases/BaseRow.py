@@ -2,7 +2,6 @@ import tkinter.ttk as t
 from Static.constants import UPDATE, DATA, ID, ACTION, CACHE, CHANGES_CACHE, ERRORS, MATH, DELETE, TYPE
 from Globals.variables import Variables as V
 
-
 class BaseRow:
     def __init__(self, parent, scatter_value, controller, *args, **kwargs):
         # LINK TO ListView CLASS BECAUSE IN delete_value IS NECESSARY
@@ -23,8 +22,10 @@ class BaseRow:
         self.del_but = t.Button(self.parent, text="SMAZAT",
                                 command=lambda id=self.value[0]: self.delete_value(id, type=self.type),
                                 width=10)
+        from Utils.update_data import update_data
+
         self.save_but = t.Button(self.parent, text="ULOŽIT",
-                                 command=lambda: self.save_changes(self.collect_data),
+                                 command=lambda: update_data(self.collect_data),
                                  width=10)
 
     #   collect_data FUNCTION IS REWRITTEN IN EACH DIFFERENT ROW BUT NEEDS TO ALSO BE DEFINED HERE

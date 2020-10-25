@@ -58,8 +58,7 @@ class FunctionRow(BaseRow):
     # THE CHECKING DECORATOR THAT CONVERTS
     # RAW DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
 
-    # collect_data FUNCTION IS CALLED IN save_changes FUNCTION
-    # THAT IS DEFINED IN BaseRow
+    # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
     @check_function_input
     def collect_data(self):
         data = self.data_dict()
