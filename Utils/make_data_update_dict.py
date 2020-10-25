@@ -1,8 +1,8 @@
-from Static.constants import DATA_UPDATE_DICT, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID,ACTION
-
+from Static.constants import CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID,ACTION
+from Globals.calculated import data_update_dict_base
 
 def make_data_update_dict(id,values,action,type=None):
-    data = DATA_UPDATE_DICT
+    data = data_update_dict_base()
     data[CACHE] = id+values
     if type:
         data[CHANGES_CACHE][TYPE] = type

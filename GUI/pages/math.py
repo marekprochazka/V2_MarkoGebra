@@ -4,7 +4,6 @@ from Globals.calculated import fonts
 from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE, FUNCTION
 from Bases import BaseEntry, BaseLabel
 from Utils.ask_color import ask_color
-from Static.constants import DATA_UPDATE_DICT
 from Utils.uuid import generate_uuid
 from Decorators.input_checkers import check_function_input, check_scatter_input
 
