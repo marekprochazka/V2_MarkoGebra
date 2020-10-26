@@ -2,13 +2,15 @@ from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE,
 from Globals.variables import Variables as V
 from GUI.error_popup import error_popup
 
+
 def update_data(data, update_fun=None, limits_fun=None):
     data
 
     # ERRORS ARE ADDED TO DATA IN DECORATORS IF THERE
     # WERE ANY WRONG INPUTS
     if data[ERRORS]:
-        error_popup({NAME:"Error",INFO: ";".join(data[ERRORS])})
+        error_popup({NAME: ";".join([error[NAME] for error in data[ERRORS]]),
+                     INFO: "\n".join([error[INFO] for error in data[ERRORS]])})
     else:
         if data[CHANGES_CACHE][ACTION] == CREATE:
             if V.to_animate == MATH:

@@ -1,4 +1,4 @@
-from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID
+from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID, NAME, INFO
 from Utils.uuid import format_existing_uuid
 
 
@@ -13,23 +13,27 @@ def check_bar_input(fun):
         checked_data = {ERRORS: errors}
 
         try:
+            int(cache[2])
+        except ValueError:
+            checked_data[ERRORS].append({NAME: "ValueError", INFO: "Hodnota 'množství' musí být celé číslo"})
+        try:
+            float(cache[4])
+        except ValueError:
+            checked_data[ERRORS].append({NAME: "ValueError", INFO: "Hodnota 'šířka' musí být číslo"})
+
+        if not checked_data[ERRORS]:
             checked_data[CACHE] = (cache[0],
                                    str(cache[1]),
                                    int(cache[2]),
                                    str(cache[3]),
                                    float(cache[4]))
-        except:
-            checked_data[ERRORS].append("cahce error")
 
-        try:
             checked_data[CHANGES_CACHE] = {ACTION: changes_cache[ACTION],
                                            DATA: (str(cache[1]),
                                                   int(cache[2]),
                                                   str(cache[3]),
                                                   float(cache[4])),
                                            ID: format_existing_uuid(cache[0])}
-        except:
-            checked_data[ERRORS].append("changes error")
 
         return checked_data
 

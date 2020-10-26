@@ -1,4 +1,4 @@
-from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID, TYPE
+from Static.constants import CACHE, CHANGES_CACHE, ERRORS, ACTION, DATA, ID, TYPE, NAME, INFO
 from Utils.uuid import format_existing_uuid
 
 
@@ -11,26 +11,24 @@ def check_function_input(fun):
         changes_cache = data[CHANGES_CACHE]
         errors = data[ERRORS]
         checked_data = {ERRORS: errors}
+        # TODO function checkers
         try:
+            float(cache[4])
+        except ValueError:
+            checked_data[ERRORS].append({NAME: "ValueError", INFO: "Hodnota 'Vel.' musí být číslo"})
+        if not checked_data[ERRORS]:
             checked_data[CACHE] = (cache[0],
                                    str(cache[1]),
                                    str(cache[2]),
                                    str(cache[3]),
                                    float(cache[4]))
 
-        except:
-            checked_data[ERRORS].append("error")
-
-        try:
             checked_data[CHANGES_CACHE] = {
                 ACTION: changes_cache[ACTION],
                 DATA: (str(cache[1]), str(cache[2]), str(cache[3]), float(cache[4])),
                 ID: format_existing_uuid(cache[0]),
                 TYPE: changes_cache[TYPE]
             }
-
-        except:
-            checked_data[ERRORS].append("error")
 
         return checked_data
 
