@@ -2,8 +2,7 @@ from tkinter import Button
 from Bases import BaseEntry, BaseRow, BaseLabel
 from Decorators.input_checkers import check_pie_input
 from Static.constants import CACHE, CHANGES_CACHE, DATA, ID
-from Utils.ask_color import ask_color
-
+from Bases import BaseColorPicker
 
 # VALUE = [id,slice,activity,color,explode]
 # VALUE IS IN FORM AS IT IS SAVED IN CACHE AND IN DATABASE
@@ -30,9 +29,7 @@ class PieRow(BaseRow):
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = Button(self.parent, bg=self.value[3],
-                              command=lambda: self.col_but.config(bg=ask_color()),
-                              width=10)
+        self.col_but = BaseColorPicker(self.parent, color=self.value[3], width=10)
 
         # PLACING WITH GRID
         # del_but AND save_but ARE DEFINED IN BaseRow

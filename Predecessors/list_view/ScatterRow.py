@@ -3,7 +3,8 @@ import tkinter.ttk as t
 from Bases import BaseEntry, BaseRow, BaseLabel
 from Static.constants import DATA, ID, TYPE, SCATTER, CHANGES_CACHE, CACHE, ERRORS, POINT_MARKERS, UPDATE
 from Decorators.input_checkers import check_scatter_input
-from Utils.ask_color import ask_color
+from Bases import BaseColorPicker
+
 
 # VALUE = [id,x,y,marker,color,size]
 # VALUE IS IN FORM AS IT IS SAVED IN CACHE AND IN DATABASE
@@ -35,9 +36,7 @@ class ScatterRow(BaseRow):
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = Button(self.parent, bg=self.value[4],
-                              command=lambda: self.col_but.config(bg=ask_color()),
-                              width=10)
+        self.col_but = BaseColorPicker(self.parent, color=self.value[4], width=10)
 
         # ENTRY OF SIZE
         self.entry_size = BaseEntry(self.parent, width=8)

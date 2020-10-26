@@ -3,7 +3,7 @@ from Bases import BaseRow, BaseLabel, BaseEntry
 import tkinter.ttk as t
 from Static.constants import LINE_MARKERS, FUNCTION, CACHE, CHANGES_CACHE, ID, DATA, TYPE
 from Decorators.input_checkers import check_function_input
-
+from Bases import BaseColorPicker
 from Utils.ask_color import ask_color
 
 
@@ -36,8 +36,7 @@ class FunctionRow(BaseRow):
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = Button(self.parent, bg=self.value[3],
-                              command=lambda: self.col_but.config(bg=ask_color()), width=10)
+        self.col_but = BaseColorPicker(self.parent,color=self.value[3],width=10)
 
         # ENTRY OF SIZE
         self.entry_size = BaseEntry(self.parent, width=8)

@@ -2,7 +2,7 @@ from tkinter import Frame, Label, END
 from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import BAR, CREATE
-from Bases import BaseLabel, BaseEntry
+from Bases import BaseLabel, BaseEntry, BaseColorPicker
 from Static.constants import BASIC_COLORS_NAMES, BASIC_COLORS_VALUES
 from Utils.uuid import generate_uuid
 
@@ -20,11 +20,6 @@ class Bar(Frame):
         # FOR GLOBAL VARIABLE "to_animate" WHICH DEFINES
         # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
 
-        # PREDEFINED VALUES FOR MULTISELECTS
-        # TODO SUBSTITUTE BY COLORWHEELS
-        self.basic_colors = BASIC_COLORS_VALUES
-        self.cb_values = BASIC_COLORS_NAMES
-
         # DEFINIG TK OBJECTS
         self.txt1 = BaseLabel(self, text="Množství:")
         self.txt2 = BaseLabel(self, text="Název:")
@@ -32,7 +27,7 @@ class Bar(Frame):
 
         self.value = BaseEntry(self)
         self.name = BaseEntry(self)
-        self.color = t.Combobox(self, values=self.cb_values, state="readonly")
+        self.color = BaseColorPicker(self)
         self.go = t.Button(self, text="Zapsat hodnotu",
                            command=lambda: self.__update_data())
 
@@ -63,7 +58,7 @@ class Bar(Frame):
         id = generate_uuid()
         name = self.name.get()
         value = self.value.get()
-        color = self.basic_colors[self.color.current()]
+        color = self.color["bg"]
         width = 0.8
         data = make_data_update_dict(id=id, values=(name, value, color, width), action=CREATE)
         return data

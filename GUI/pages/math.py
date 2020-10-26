@@ -2,10 +2,11 @@ from tkinter import Frame, Label, Button, END
 from tkinter import ttk as t
 from Globals.calculated import fonts
 from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE, FUNCTION
-from Bases import BaseEntry, BaseLabel
+from Bases import BaseEntry, BaseLabel, BaseColorPicker
 from Utils.ask_color import ask_color
 from Utils.uuid import generate_uuid
 from Decorators.input_checkers import check_function_input, check_scatter_input
+
 
 # GUI OF MATH INPUTS
 class Mathematical(Frame):
@@ -31,8 +32,7 @@ class Mathematical(Frame):
         self.EntryX.grid(row=0, column=1, sticky="we")
         self.EntryY.grid(row=0, column=3, sticky="we")
 
-        self.colorButtonScatter = Button(self, bg="blue", width=15,
-                                         command=lambda: self.__set_value_color(self.colorButtonScatter))
+        self.colorButtonScatter = BaseColorPicker(self, width=15)
         self.colorButtonScatter.grid(row=0, column=4, sticky="we", padx=2)
 
         self.placeButtonScatter = t.Button(self, text="Vložit",
@@ -47,7 +47,7 @@ class Mathematical(Frame):
 
         self.EntryFun.grid(row=1, column=1, columnspan=3, sticky="we")
 
-        self.colorButtonFunc = Button(self, bg="blue", width=15)
+        self.colorButtonFunc = BaseColorPicker(self, width=15)
         self.colorButtonFunc.grid(row=1, column=4, sticky="we", padx=2)
 
         self.placeButtonPlot = t.Button(self, text="Odložit",
@@ -64,19 +64,15 @@ class Mathematical(Frame):
 
     def __update_data_scatter(self):
         from Utils.update_data import update_data
-        update_data(self.__collect_scatter(),update_fun=self.controller.update_list_view,limits_fun=self.controller.auto_update_limits_by_scatter_input)
-        self.EntryX.delete(0,END)
-        self.EntryY.delete(0,END)
+        update_data(self.__collect_scatter(), update_fun=self.controller.update_list_view,
+                    limits_fun=self.controller.auto_update_limits_by_scatter_input)
+        self.EntryX.delete(0, END)
+        self.EntryY.delete(0, END)
 
     def __update_data_function(self):
         from Utils.update_data import update_data
         update_data(self.__collect_function(), self.controller.update_list_view)
         self.EntryFun.delete(0, END)
-
-
-    def __set_value_color(self, button):
-        button.config(bg=ask_color())
-
 
     @check_scatter_input
     def __collect_scatter(self):
@@ -98,5 +94,5 @@ class Mathematical(Frame):
         line = "-"
         color = self.colorButtonFunc["bg"]
         size = 1
-        data = make_data_update_dict(id=id,values=(func,line,color,size),action=CREATE, type=FUNCTION)
+        data = make_data_update_dict(id=id, values=(func, line, color, size), action=CREATE, type=FUNCTION)
         return data
