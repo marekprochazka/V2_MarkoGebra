@@ -4,6 +4,7 @@ import numpy as np
 from Static.constants import MATH, PIE, BAR, NOISE, MAX, MIN, X, Y
 from Utils.replace_for_math import replace_for_math
 
+
 # GRAPHING METHODS ARE MANAGED IN THIS CLASS
 class GraphAnimation:
     def Go(self, i):
@@ -22,9 +23,8 @@ class GraphAnimation:
     # MATH
     def animate_graphs(self):
 
-
         a.clear()
-        #SETTING LIMITS OF 'X' AND 'Y' FROM VARIABLES (BASE -30,30)
+        # SETTING LIMITS OF 'X' AND 'Y' FROM VARIABLES (BASE -30,30)
         a.set_xlim([V.limits[X][MIN], V.limits[X][MAX]])
         a.set_ylim([V.limits[Y][MIN], V.limits[Y][MAX]])
         a.set_aspect('equal')
@@ -33,10 +33,22 @@ class GraphAnimation:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.cache[1]:
             function = replace_for_math(coord[1])
-            x = np.linspace(V.limits[X][MIN], V.limits[X][MAX], 100)
-            y = eval(function)
+            if self.__zero_x(function):
+                x = np.linspace(V.limits[X][MIN], V.limits[X][MAX], 1000)
+                y = eval(function)
 
-            a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+                a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+            else:
+                if V.limits[X][MIN] < 0:
+                    x1 = np.linspace(V.limits[X][MIN], -0.000000001, 500)
+                    y1 = eval(function, {"x": x1})
+                    a.plot(x1, y1, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+                if V.limits[X][MAX] > 0:
+                    x2 = np.linspace(0.000000001, V.limits[X][MAX], 500)
+                    y2 = eval(function, {"x": x2})
+                    a.plot(x2, y2, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+
+
 
     # PIE
     def animate_pie(i):
@@ -64,3 +76,11 @@ class GraphAnimation:
         for noise in V.noises:
             for coord in noise:
                 a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
+
+    def __zero_x(self, fun):
+        try:
+            x = 0
+            eval(fun)
+            return True
+        except ZeroDivisionError:
+            return False
