@@ -2,7 +2,7 @@ from Globals.variables import Variables as V
 from Graphing.setup import a
 import numpy as np
 from Static.constants import MATH, PIE, BAR, NOISE, MAX, MIN, X, Y
-
+from Utils.replace_for_math import replace_for_math
 
 # GRAPHING METHODS ARE MANAGED IN THIS CLASS
 class GraphAnimation:
@@ -32,8 +32,9 @@ class GraphAnimation:
         for coord in V.cache[0]:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.cache[1]:
+            function = replace_for_math(coord[1])
             x = np.linspace(V.limits[X][MIN], V.limits[X][MAX], 100)
-            y = eval(coord[1])
+            y = eval(function)
 
             a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
 
