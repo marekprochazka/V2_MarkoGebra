@@ -41,6 +41,8 @@ def update_data(data, update_fun=None, limits_fun=None):
         if update_fun:
             update_fun()
 
-        if V.is_auto_update:
-            if limits_fun:
-                limits_fun(data[CACHE][1], data[CACHE][2])
+        if V.to_animate == MATH:
+            if data[CHANGES_CACHE][TYPE] == SCATTER:
+                if V.is_auto_update:
+                    if limits_fun:
+                        limits_fun(data[CACHE][1], data[CACHE][2])
