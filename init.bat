@@ -13,6 +13,7 @@
     ECHO Starting database
     cd Data
     call startDB.py
+    ECHO {}>math_limits.json
     cd ..
     ECHO Making graphstyle file
     ECHO seaborn>graphstyle.txt

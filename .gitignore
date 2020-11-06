@@ -8,6 +8,7 @@ noise.json
 pie.json
 sandbox.py
 unused_features.txt
+math_limits.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
