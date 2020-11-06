@@ -2,7 +2,7 @@ from Static.constants import X, Y, MIN, MAX
 from Data.path import get_path
 import json
 
-def get_saved_limits_or_emty_limits():
+def get_saved_limits_or_empty_limits():
     with open(get_path() + "\math_limits.json") as data:
         data = json.load(data)
         if data:

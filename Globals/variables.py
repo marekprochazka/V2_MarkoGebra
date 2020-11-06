@@ -1,4 +1,4 @@
-from Utils.limits import get_saved_limits_or_emty_limits
+from Utils.limits import get_saved_limits_or_empty_limits
 
 
 
@@ -15,7 +15,7 @@ class Variables:
     start_angle = 90
     # noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
 
-    limits = get_saved_limits_or_emty_limits()
+    limits = get_saved_limits_or_empty_limits()
 
     is_auto_update = True
 
