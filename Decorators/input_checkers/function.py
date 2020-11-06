@@ -78,10 +78,3 @@ def evaluate_function_error(fun):
         return True
 
 
-print(ALLOWED_WORDS)
-print(ALLOWED_MARKS)
-fn = "x+1*ln(10.15)***e+sin(20)"
-print(has_forbidden_character(fn))
-new_fn = replace_for_math(fn)
-print(new_fn)
-print(evaluate_function_error(new_fn))

@@ -12,6 +12,9 @@ class ShowFrame:
     def show_Setup_Frame(self, cont=None, exit=False):
         # SAVING PREVIOUS
         if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
+        if V.to_animate == MATH:
+            from Utils.limits import save_limits_JSON_memory
+            save_limits_JSON_memory(V.limits)
 
         # CLEAR changes_cache
         V.changes_cache = []

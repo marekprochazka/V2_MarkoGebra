@@ -1,4 +1,5 @@
-from Static.constants import X, Y, MIN, MAX
+from Utils.limits import get_saved_limits_or_emty_limits
+
 
 
 # GLOBAL VARIABLES THAT ARE USED ALL AROUND THE PROJECT
@@ -8,21 +9,15 @@ class Variables:
     command_history = []
     history_moves = 0
 
-    cache = [[],[]]
+    cache = [[], []]
     changes_cache = []
 
     start_angle = 90
     # noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
 
-    limits = {
-        X: {
-            MIN: -30,
-            MAX: 30
-        },
-        Y: {
-            MIN: -30,
-            MAX: 30
-        }
-    }
+    limits = get_saved_limits_or_emty_limits()
 
     is_auto_update = True
+
+
+
