@@ -1,11 +1,14 @@
-from tkinter import Frame, Label, Button, END
+from tkinter import Frame, Label, Button, END, OUTSIDE, CENTER, IntVar, Scale, HORIZONTAL
 from tkinter import ttk as t
 from Globals.calculated import fonts
-from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE, FUNCTION
+from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE, FUNCTION, MAX_WIDTH, \
+    MAX_HEIGHT, X, MIN, MAX, Y
 from Bases import BaseEntry, BaseLabel, BaseColorPicker
 from Utils.ask_color import ask_color
 from Utils.uuid import generate_uuid
 from Decorators.input_checkers import check_function_input, check_scatter_input
+from Globals.variables import Variables as V
+from GUI.settings_components import LimitsSettings, GridSettings
 
 
 # GUI OF MATH INPUTS
@@ -61,6 +64,18 @@ class Mathematical(Frame):
         self.grid_columnconfigure(1, weight=3)
         self.grid_columnconfigure(3, weight=3)
         self.grid_columnconfigure(5, weight=2)
+
+        # LIMITS SETTINGS
+        self.limits_settings = LimitsSettings(parent=self, controller=controller)
+        self.limits_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .001, y=MAX_HEIGHT * .1,
+                                   width=MAX_WIDTH * .18,
+                                   height=MAX_HEIGHT * .3)
+
+        # GRID SETTINGS
+        self.grid_settings = GridSettings(parent=self, controller=controller)
+        self.grid_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .25, y=MAX_HEIGHT * .1,
+                                 width=MAX_WIDTH * .14,
+                                 height=MAX_HEIGHT * .8)
 
     def __update_data_scatter(self):
         from Utils.update_data import update_data
