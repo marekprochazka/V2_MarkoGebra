@@ -8,7 +8,7 @@ from Globals.variables import Variables as V
 
 
 class LimitsSettings(Frame):
-    def __init__(self,parent, controller):
+    def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
         # LIMITS SETTINGS
