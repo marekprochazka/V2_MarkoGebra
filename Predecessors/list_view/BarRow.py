@@ -1,8 +1,6 @@
-from tkinter import Button
 from Bases import BaseEntry, BaseRow, BaseLabel
 from Decorators.input_checkers import check_bar_input
 from Static.constants import CACHE, CHANGES_CACHE, DATA, ID
-from Utils.ask_color import ask_color
 from Bases import BaseColorPicker
 
 

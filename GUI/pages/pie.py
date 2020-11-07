@@ -1,7 +1,7 @@
 from tkinter import Frame, Label, END
 from tkinter import ttk as t
-from Globals.calculated import fonts
-from Static.constants import PIE, BASIC_COLORS_VALUES, BASIC_COLORS_NAMES, CREATE
+
+from Static.constants import PIE, CREATE
 from Bases import BaseLabel, BaseEntry, BaseColorPicker
 from Utils.uuid import generate_uuid
 

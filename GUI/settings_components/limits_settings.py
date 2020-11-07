@@ -1,8 +1,8 @@
-from tkinter import Frame, OUTSIDE, CENTER, IntVar, END
+from tkinter import Frame, CENTER, IntVar, END
 
 from Bases import BaseLabel, BaseEntry
 from Globals.calculated import fonts
-from Static.constants import MAX_WIDTH, MAX_HEIGHT, X, MIN, MAX, Y
+from Static.constants import X, MIN, MAX, Y
 from tkinter import ttk as t
 from Globals.variables import Variables as V
 

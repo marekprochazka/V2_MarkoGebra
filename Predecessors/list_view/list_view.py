@@ -1,7 +1,5 @@
 from Globals.variables import Variables as V
 import tkinter.ttk as t
-from Globals.calculated import fonts
-from tkinter import LEFT, END, Button
 from Static.constants import MATH, PIE, BAR, NOISE
 from . import ScatterRow, FunctionRow, PieRow, BarRow
 

@@ -1,13 +1,11 @@
-from tkinter import Frame, Label, Button, END, OUTSIDE, CENTER, IntVar, Scale, HORIZONTAL
+from tkinter import Frame, Label, END, OUTSIDE
 from tkinter import ttk as t
 from Globals.calculated import fonts
-from Static.constants import MATH, CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID, CREATE, FUNCTION, MAX_WIDTH, \
-    MAX_HEIGHT, X, MIN, MAX, Y
+from Static.constants import MATH,SCATTER, CREATE, FUNCTION, MAX_WIDTH, MAX_HEIGHT
 from Bases import BaseEntry, BaseLabel, BaseColorPicker
-from Utils.ask_color import ask_color
+
 from Utils.uuid import generate_uuid
 from Decorators.input_checkers import check_function_input, check_scatter_input
-from Globals.variables import Variables as V
 from GUI.settings_components import LimitsSettings, GridSettings
 
 

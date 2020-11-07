@@ -1,4 +1,4 @@
-from Static.constants import CACHE, CHANGES_CACHE, TYPE, SCATTER, DATA, ID,ACTION
+from Static.constants import CACHE, CHANGES_CACHE, TYPE, DATA, ID,ACTION
 from Globals.calculated import data_update_dict_base
 
 def make_data_update_dict(id,values,action,type=None):

@@ -1,4 +1,4 @@
-from tkinter import Tk, OUTSIDE, Frame, Scale, HORIZONTAL, Canvas, CENTER, END, IntVar
+from tkinter import Tk, OUTSIDE, Canvas, END
 from tkinter import ttk as t
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -6,11 +6,10 @@ from Graphing.setup import f
 from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y
 from .pages import Mathematical, Pie, Bar, Noise
 
-from Globals.calculated import fonts
 
 from Globals.variables import Variables as V
 
-from Bases import BaseLabel, BaseEntry
+
 
 
 # ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")

@@ -1,5 +1,5 @@
 import tkinter.ttk as t
-from Static.constants import UPDATE, DATA, ID, ACTION, CACHE, CHANGES_CACHE, ERRORS, MATH, DELETE, TYPE, SCATTER
+from Static.constants import UPDATE, DATA, ID, ACTION, CACHE, CHANGES_CACHE, ERRORS, MATH, DELETE, TYPE
 from Globals.variables import Variables as V
 
 

@@ -1,4 +1,4 @@
-from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, FUNCTION, SCATTER, NAME, INFO
+from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, SCATTER, NAME, INFO
 from Globals.variables import Variables as V
 from GUI.error_popup import error_popup
 
