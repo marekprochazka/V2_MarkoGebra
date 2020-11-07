@@ -31,7 +31,7 @@ class Base(Tk):
         # self.input_frames = (Mathematical, Pie, Bar, Noise)
 
         # RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD
-        self.SetupContainer = t.Frame(self, width=MAX_WIDTH * .4, height=MAX_HEIGHT)
+        self.SetupContainer = t.Frame(self, width=MAX_WIDTH, height=MAX_HEIGHT)
 
         self.SetupContainer.pack(side="top", fill="both", expand=True)
 
@@ -48,7 +48,7 @@ class Base(Tk):
         self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový"],
                                state="readonly") #TODO add noise after implenetation
         self.CBB2.bind('<<ComboboxSelected>>',
-                       lambda event: self.show_Setup_Frame(self.input_frames[self.CBB2.current()]))
+                       lambda event: self.__frame_change(self.input_frames[self.CBB2.current()]))
         self.CBB2.current(0)
         self.CBB2.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
                         x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
@@ -61,88 +61,6 @@ class Base(Tk):
         self.deleteAll_button = t.Button(self, text="Smazat vše", command=lambda: self.delete_all())
         self.deleteAll_button.place(bordermode=OUTSIDE, x=MAX_WIDTH * .74, width=MAX_WIDTH * .1, y=0,
                                     height=MAX_HEIGHT * .04)
-
-        # LIMITS SETTINGS
-        self.limits_settings_container = Frame(self)
-        self.limits_settings_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .51, y=MAX_HEIGHT * .32,
-                                             width=MAX_WIDTH * .18,
-                                             height=MAX_HEIGHT * .3)
-
-        self.limits_info_label = BaseLabel(self.limits_settings_container, text="Nastavení limit",
-                                         font=fonts()["LARGE_FONT"], anchor=CENTER)
-        self.limits_info_label.grid(row=0, column=0, columnspan=2, sticky="we", padx=35, pady=15)
-
-        self.limits_entry_x_min_title = BaseLabel(self.limits_settings_container, text="min x", anchor=CENTER)
-        self.limits_entry_x_min_title.grid(row=1, column=0, sticky="we")
-        self.limits_entry_x_max_title = BaseLabel(self.limits_settings_container, text="max x", anchor=CENTER)
-        self.limits_entry_x_max_title.grid(row=1, column=1, sticky="we")
-        self.limits_entry_x_min = BaseEntry(self.limits_settings_container)
-        self.limits_entry_x_min.grid(row=2, column=0, sticky="we")
-        self.limits_entry_x_max = BaseEntry(self.limits_settings_container)
-        self.limits_entry_x_max.grid(row=2, column=1, sticky="we", padx=15, pady=15)
-
-        self.limits_entry_y_min_title = BaseLabel(self.limits_settings_container, text="min y", anchor=CENTER)
-        self.limits_entry_y_min_title.grid(row=3, column=0, sticky="we")
-        self.limits_entry_y_max_title = BaseLabel(self.limits_settings_container, text="max y", anchor=CENTER)
-        self.limits_entry_y_max_title.grid(row=3, column=1, sticky="we")
-        self.limits_entry_y_min = BaseEntry(self.limits_settings_container)
-        self.limits_entry_y_min.grid(row=4, column=0, sticky="we", pady=15)
-        self.limits_entry_y_max = BaseEntry(self.limits_settings_container)
-        self.limits_entry_y_max.grid(row=4, column=1, sticky="we", padx=15, pady=15)
-
-        # TAKES ENTRY VALUES AND EXECUTES UPDATE FUNCTION
-        self.limits_execute_update_button = t.Button(self.limits_settings_container, text="Aktualizovat limity",
-                                                     command=lambda: self.__update_limits())
-        self.limits_execute_update_button.grid(row=5, column=0, columnspan=2, sticky="we")
-
-        self.limits_auto_update_checkbox_title = BaseLabel(self.limits_settings_container, text="Autoupdate")
-        # IS AUTO UPDATE ALLOWED CHECKBOX
-        self.limits_auto_update_checkbox_check_var = IntVar(value=1)
-        self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
-        self.limits_auto_update_checkbox = t.Checkbutton(self.limits_settings_container,
-                                                         variable=self.limits_auto_update_checkbox_check_var,
-                                                         command=lambda: self.__switch_auto_limit_update_value())
-        self.limits_auto_update_checkbox.grid(row=6, column=1, sticky="we")
-
-        # UPDATE FE VALUES BY BE VALUES
-        self.set_limits_entries_values_by_global_variables()
-
-        # GRID SETTINGS
-        self.grid_settings_container = Frame(self)
-        self.grid_settings_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .55, y=MAX_HEIGHT * .67,
-                                           width=MAX_WIDTH * .14,
-                                           height=MAX_HEIGHT * .8)
-
-        self.grid_info_label = BaseLabel(self.grid_settings_container, text="Nastavení mřížky",
-                                       font=fonts()["LARGE_FONT"])
-        self.grid_info_label.grid(row=0, column=0, pady=15)
-
-        self.Col_button = t.Button(self.grid_settings_container, text="Změnit barvu",
-                                   command=lambda: self.colorize_grid())
-        self.Col_button.grid(row=1, column=0, sticky="we", pady=15)
-
-        self.size_label = BaseLabel(self.grid_settings_container, text="Velikost mřížky")
-        self.size_label.grid(row=2, column=0, sticky="we")
-
-        self.grid_size = Scale(self.grid_settings_container, activebackground="aqua", bd=0, from_=0, to=50,
-                               orient=HORIZONTAL, sliderlength=22)
-        self.grid_size.set(1)
-        self.grid_size.grid(row=3, column=0, sticky="we")
-        self.grid_size.bind("<ButtonRelease-1>",
-                            lambda event: self.size_grid(self.grid_size.get() / 10))
-
-        self.line_label = BaseLabel(self.grid_settings_container, text="Druh mřížky")
-        self.line_label.grid(row=4, column=0, sticky="we", pady=15)
-
-        self.cbb_convertion = ["-", "--", "-.", ":", ""]
-        self.cbb_line = t.Combobox(self.grid_settings_container, values=["'-'", "'--'", "'-.'", "':'", "' '"],
-                                   state="readonly")
-        self.cbb_line.current(0)
-        self.cbb_line.bind('<<ComboboxSelected>>',
-                           lambda event: self.line_grid(self.cbb_convertion[self.cbb_line.current()]))
-        self.cbb_line.grid(row=5, column=0, sticky="we")
-
-        self.grid_settings_container.grid_columnconfigure(0, weight=2)
 
 
         #TODO NEW LIST VIEW
@@ -170,24 +88,26 @@ class Base(Tk):
         self.SetupFrames = {}
 
         self._frame = None
-        self.show_Setup_Frame(cont=Mathematical)
+        self.show_Setup_Frame(component=Mathematical)
 
     def set_limits_entries_values_by_global_variables(self):
-        for e in (self.limits_entry_x_min, self.limits_entry_x_max, self.limits_entry_y_min, self.limits_entry_y_max):
+
+        for e in (self._frame.limits_settings.limits_entry_x_min, self._frame.limits_settings.limits_entry_x_max, self._frame.limits_settings.limits_entry_y_min, self._frame.limits_settings.limits_entry_y_max):
             e.delete(0, END)
 
-        self.limits_entry_x_min.insert(0, V.limits[X][MIN])
-        self.limits_entry_x_max.insert(0, V.limits[X][MAX])
-        self.limits_entry_y_min.insert(0, V.limits[Y][MIN])
-        self.limits_entry_y_max.insert(0, V.limits[Y][MAX])
+        self._frame.limits_settings.limits_entry_x_min.insert(0, V.limits[X][MIN])
+        self._frame.limits_settings.limits_entry_x_max.insert(0, V.limits[X][MAX])
+        self._frame.limits_settings.limits_entry_y_min.insert(0, V.limits[Y][MIN])
+        self._frame.limits_settings.limits_entry_y_max.insert(0, V.limits[Y][MAX])
 
-    # CALLING MANUAL UPDATE WITH RIGHT VALUES
-    def __update_limits(self):
-        self.main.update_limits(self.limits_entry_x_min.get(), self.limits_entry_x_max.get(),
-                                    self.limits_entry_y_min.get(), self.limits_entry_y_max.get())
+    def __frame_change(self,*args,**kwargs):
+        self.show_Setup_Frame(*args,**kwargs)
+
+
 
 
     # AUTO UPDATE VARIABLE CONTROLLER
     def __switch_auto_limit_update_value(self):
         V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
         print(V.is_auto_update)
+

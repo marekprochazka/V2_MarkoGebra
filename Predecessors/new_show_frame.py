@@ -9,7 +9,7 @@ class ShowFrame:
     def __init__(self, main):
         self.main = main
 
-    def show_Setup_Frame(self, cont=None, exit=False):
+    def show_Setup_Frame(self, component=None, exit=False):
         # SAVING PREVIOUS
         if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
         if V.to_animate == MATH:
@@ -20,17 +20,15 @@ class ShowFrame:
         V.changes_cache = []
         if not exit:
             # CHANGE to_animate TO ACTUAL FRAME + FRAME DRAWING
-            if cont != None:
-                new_frame = cont(self.main.SetupContainer, self.main)
-                V.to_animate = new_frame.type
+            if component != None:
 
-                # TODO uncomment after GUI connection
 
                 if self.main._frame is not None:
                     for child in self.main._frame.winfo_children():
                         child.destroy()
                     self.main._frame.destroy()
-                self.main._frame = new_frame
+                self.main._frame = component(self.main.SetupContainer, self.main)
+                V.to_animate = self.main._frame.type
                 self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
 
             # LOADING DATA TO CACHE
