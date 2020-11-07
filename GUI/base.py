@@ -15,7 +15,7 @@ from Bases import BaseLabel, BaseEntry
 
 # ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")
 # FRAMES TO DIFFERENT GRAPHING METHODS ARE CONNECTED TO THIS CLASS
-# FRAME CHANGING LOGIC IS MANAGED IN "Utils/new_show_frame.py"
+# FRAME CHANGING LOGIC IS MANAGED IN "Predecessors/new_show_frame.py"
 class Base(Tk):
     def __init__(self, main):
         # INITIAL GUI SETUP
