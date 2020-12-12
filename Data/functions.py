@@ -99,14 +99,13 @@ def update_noise(changes):
     for change in changes:
         if change[ACTION] == CREATE:
             c.execute("""   INSERT INTO noise
-                            VALUES (?,?,?,?,?,?,?,?,?)            
+                            VALUES (?,?,?,?,?,?)            
                         """, change[ID] + change[DATA])
             conn.commit()
 
         elif change[ACTION] == UPDATE:
             c.execute("""   UPDATE noise
-                            SET seed=?,dispersion_x_positive=?,dispersion_y_positive=?,dispersion_x_negative=?,
-                            dispersion_y_negative=?, quantity=?, color=?, marker=?
+                            SET seed=?,dispersion=?, quantity=?, color=?, marker=?
                             WHERE id=? """, change[DATA] + change[ID])
             conn.commit()
 
@@ -140,9 +139,10 @@ UPDATE_FUNCTIONS = {MATH: update_math, BAR: update_bar, PIE: update_pie, NOISE: 
 # print(x)
 
 # noice_test_changes = (
-#     {ACTION:CREATE,DATA:(1231,1,2,3,4,12,"ahoj","nope"),ID:generate_uuid()},
-#     {ACTION: UPDATE, DATA: (1231, 1, 2, 3, 4, 12, "cusak", "aaaaa"), ID: format_existing_uuid("9e871730-86de-4848-b8c3-c54b0e322f5f")},
-#     {ACTION: DELETE, ID: format_existing_uuid("a6ebbbc7-a9a0-4368-af64-b9c4da60e117")},
+#     # {ACTION:CREATE,DATA:(1231,1,12,"ahoj","nope"),ID:generate_uuid()},
+#     # {ACTION:CREATE,DATA:(1231,1,12,"aasdfhoj","nasdfope"),ID:generate_uuid()},
+#     {ACTION: UPDATE, DATA: (1231, 1, 12, "cusak", "aaaaa"), ID: format_existing_uuid("27d5f985-e208-4df6-ae17-b7454ada15f9")},
+#     {ACTION: DELETE, ID: format_existing_uuid("03da18dd-7416-4114-9b05-f0aee5eecaac")},
 #
 # )
 #

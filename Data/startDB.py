@@ -13,10 +13,7 @@ c.execute("CREATE TABLE pie (id TEXT PRIMARY KEY ,slice REAL,activity TEXT,color
 c.execute("""   CREATE TABLE noise 
                 (id TEXT PRIMARY KEY, 
                 seed INTEGER, 
-                dispersion_x_positive INTEGER, 
-                dispersion_y_positive INTEGER, 
-                dispersion_x_negative INTEGER, 
-                dispersion_y_negative INTEGER,
+                dispersion INTEGER, 
                 quantity INTEGER,
                 color TEXT,
                 marker TEXT
