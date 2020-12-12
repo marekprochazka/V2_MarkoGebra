@@ -106,7 +106,7 @@ class Base(Tk):
 
 
     # AUTO UPDATE VARIABLE CONTROLLER
-    def __switch_auto_limit_update_value(self):
+    def switch_auto_limit_update_value(self):
         V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
         print(V.is_auto_update)
 
