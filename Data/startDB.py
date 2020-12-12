@@ -19,7 +19,7 @@ c.execute("""   CREATE TABLE noise
                 dispersion_y_negative INTEGER,
                 quantity INTEGER,
                 color TEXT,
-                market TEXT
+                marker TEXT
                 )""")
 
 

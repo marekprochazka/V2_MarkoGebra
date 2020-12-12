@@ -1,24 +1,26 @@
 import sqlite3
-from Static.constants import DELETE,CREATE,UPDATE,ACTION,DATA,ID,TYPE,FUNCTION,SCATTER, MATH, PIE, BAR
+from Static.constants import DELETE, CREATE, UPDATE, ACTION, DATA, ID, TYPE, FUNCTION, SCATTER, MATH, PIE, BAR, NOISE
 from Data.path import get_path
 
 from Utils.uuid import generate_uuid, format_existing_uuid
 
-
-#THIS FILE IS MANAGING ALL CONTACTS WITH DATABASE
-#IS CALLED IN 'new_show_frame.py' TO SAVE CACHED DATA (UPDATE CHANGES) AND LOAD NEW DATA TO CACHE
-#AS INPUT TO THIS FUNCTIONS IS VARIABLE 'changes_cahce' THAT KEEPS ONLY CHANGES IN RIGHT FORMAT (CREATE,DELETE,UPDATE)
-conn = sqlite3.connect(get_path()+"\data.db")
+# THIS FILE IS MANAGING ALL CONTACTS WITH DATABASE
+# IS CALLED IN 'new_show_frame.py' TO SAVE CACHED DATA (UPDATE CHANGES) AND LOAD NEW DATA TO CACHE
+# AS INPUT TO THIS FUNCTIONS IS VARIABLE 'changes_cahce' THAT KEEPS ONLY CHANGES IN RIGHT FORMAT (CREATE,DELETE,UPDATE)
+conn = sqlite3.connect(get_path() + "\data.db")
 c = conn.cursor()
+
 
 def get_tables(names):
     for name in names:
         c.execute("SELECT * FROM {}".format(name))
         yield c.fetchall()
 
+
 def delete_all_from_table(name):
     c.execute("DELETE FROM {};".format(name))
     conn.commit()
+
 
 def update_math(changes):
     for change in changes:
@@ -26,17 +28,17 @@ def update_math(changes):
             if change[ACTION] == CREATE:
                 c.execute("""   INSERT INTO scatter 
                                 VALUES (?,?,?,?,?,?)"""
-                          ,change[ID] + change[DATA])
+                          , change[ID] + change[DATA])
                 conn.commit()
 
             elif change[ACTION] == UPDATE:
                 c.execute("""   UPDATE scatter 
                                 SET x=?,y=?,marker=?,color=?,size=?
                                 WHERE id=?"""
-                          ,change[DATA] + change[ID])
+                          , change[DATA] + change[ID])
                 conn.commit()
             elif change[ACTION] == DELETE:
-                c.execute("DELETE FROM scatter WHERE id=?",change[ID])
+                c.execute("DELETE FROM scatter WHERE id=?", change[ID])
                 conn.commit()
         elif change[TYPE] == FUNCTION:
             if change[ACTION] == CREATE:
@@ -55,49 +57,68 @@ def update_math(changes):
                 conn.commit()
 
 
-
-
-
 def update_pie(changes):
     for change in changes:
         if change[ACTION] == CREATE:
             c.execute("""   INSERT INTO pie
                             VALUES (?,?,?,?,?)"""
-                      ,change[ID] + change[DATA])
+                      , change[ID] + change[DATA])
             conn.commit()
         elif change[ACTION] == UPDATE:
             c.execute("""   UPDATE pie
                             SET slice=?,activity=?,color=?,explode=?
                             WHERE id=?"""
-                      ,change[DATA] + change[ID])
+                      , change[DATA] + change[ID])
             conn.commit()
         elif change[ACTION] == DELETE:
-            c.execute("DELETE FROM pie WHERE id=?",change[ID])
+            c.execute("DELETE FROM pie WHERE id=?", change[ID])
             conn.commit()
+
 
 def update_bar(changes):
     for change in changes:
         if change[ACTION] == CREATE:
             c.execute("""   INSERT INTO bar
                             VALUES (?,?,?,?,?)"""
-                      ,change[ID] + change[DATA])
+                      , change[ID] + change[DATA])
             conn.commit()
 
         elif change[ACTION] == UPDATE:
             c.execute("""   UPDATE bar
                             SET name=?,value=?,color=?,width=?
                             WHERE id=?"""
-                      ,change[DATA] + change[ID])
+                      , change[DATA] + change[ID])
             conn.commit()
 
         elif change[ACTION] == DELETE:
-            c.execute("DELETE FROM bar WHERE id=?",change[ID])
+            c.execute("DELETE FROM bar WHERE id=?", change[ID])
             conn.commit()
 
-#ALL FUNCTIONS IN RELATIONSHIP WITH 'to_animate'
-UPDATE_FUNCTIONS = {MATH:update_math,BAR:update_bar,PIE:update_pie}
 
-#TESTS
+def update_noise(changes):
+    for change in changes:
+        if change[ACTION] == CREATE:
+            c.execute("""   INSERT INTO noise
+                            VALUES (?,?,?,?,?,?,?,?,?)            
+                        """, change[ID] + change[DATA])
+            conn.commit()
+
+        elif change[ACTION] == UPDATE:
+            c.execute("""   UPDATE noise
+                            SET seed=?,dispersion_x_positive=?,dispersion_y_positive=?,dispersion_x_negative=?,
+                            dispersion_y_negative=?, quantity=?, color=?, marker=?
+                            WHERE id=? """, change[DATA] + change[ID])
+            conn.commit()
+
+        elif change[ACTION] == DELETE:
+            c.execute("DELETE FROM noise WHERE id=?", change[ID])
+            conn.commit()
+
+
+# ALL FUNCTIONS IN RELATIONSHIP WITH 'to_animate'
+UPDATE_FUNCTIONS = {MATH: update_math, BAR: update_bar, PIE: update_pie, NOISE: update_noise}
+
+# TESTS
 # changes = [{ACTION: CREATE,DATA:(3,3,"aa",7,"pink"),ID:(str(uuid.uuid4()),),TYPE:SCATTER},{ACTION:CREATE,DATA:("y**2","- -","red",8),ID:(str(uuid.uuid4()),),TYPE:FUNCTION}]
 # update_math(changes)
 
@@ -117,3 +138,12 @@ UPDATE_FUNCTIONS = {MATH:update_math,BAR:update_bar,PIE:update_pie}
 # x = list(get_tables(("pie",)))
 # print(x[0])
 # print(x)
+
+# noice_test_changes = (
+#     {ACTION:CREATE,DATA:(1231,1,2,3,4,12,"ahoj","nope"),ID:generate_uuid()},
+#     {ACTION: UPDATE, DATA: (1231, 1, 2, 3, 4, 12, "cusak", "aaaaa"), ID: format_existing_uuid("9e871730-86de-4848-b8c3-c54b0e322f5f")},
+#     {ACTION: DELETE, ID: format_existing_uuid("a6ebbbc7-a9a0-4368-af64-b9c4da60e117")},
+#
+# )
+#
+# update_noise(noice_test_changes)
