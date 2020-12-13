@@ -1,13 +1,16 @@
 from Utils.generate_seed import generate_seed
-from random import randint, seed
 import numpy as np
 
-
-def generate_noise(dispersion: int, quantity: int):
+def generate_new_noise(dispersion: float, quantity: int):
     r_seed = generate_seed()
-    seed(r_seed)
-    generation = [[randint(-dispersion, dispersion), randint(-dispersion, dispersion)] for _ in range(quantity)]
-    return np.array(generation), r_seed
+    np.random.seed(r_seed)
+    generation = np.random.random((quantity, 2))
+    generation = np.floor(((generation * 2) - 1) * dispersion)
+    return generation, r_seed
 
 
-# print(generate_noise(50, 150))
+def generate_with_seed():
+    pass
+
+
+print(generate_new_noise(50, 153))

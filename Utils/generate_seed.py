@@ -1,3 +1,3 @@
-import os
+from random import randint
 def generate_seed():
-    return os.urandom(8)
+    return randint(1,2**32-1)
