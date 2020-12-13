@@ -7,6 +7,7 @@ from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT
 from Bases import BaseColorPicker
 
 from Globals.variables import Variables as V
+from Utils.ask_color import ask_color
 from Utils.generate_noise import generate_noise
 
 
@@ -21,7 +22,8 @@ class Noise(Frame):
         self.quantity_variable.set(1)
         self.live_seed = None
 
-        self.generate_button = t.Button(self, text="Generuj", command=self.__create_live_generation)  # TODO make generation
+        self.generate_button = t.Button(self, text="Generuj",
+                                        command=self.__create_live_generation)  # TODO make generation
         self.generate_button.grid(row=0, column=0, sticky="nswe")
         self.lock = t.Button(self, text="Uzamknout",
                              command=lambda: print("todo"))  # TODO lock/save generation
@@ -36,15 +38,15 @@ class Noise(Frame):
                               variable=self.quantity_variable)
         self.quantity.grid(row=2, column=0, sticky="we")
         self.quantity.bind("<ButtonRelease-1>",
-                           lambda event: print(
-                               "TODO"))  # TODO UPDATE QUANTITY (add one to existsing generation will be so cool)
+                           lambda event: self.__do_live_update())  # TODO UPDATE QUANTITY (add one to existsing generation will be so cool)
 
         self.dispersion = Scale(self, activebackground="aqua", bd=0, from_=1, to=100, orient=HORIZONTAL,
                                 variable=self.dispersion_variable)
         self.dispersion.grid(row=2, column=1, sticky="we")
-        self.dispersion.bind("<ButtonRelease-1>", lambda event: print("todo"))  # TODO update dispersion on existing
+        self.dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())  # TODO update dispersion on existing
 
-        self.color = BaseColorPicker(self)
+        self.color = BaseColorPicker(self, special_comamnd=self.noise_update_color)
+        self.color.bind("<ButtonRelease-1>",lambda event: self.__do_live_update())
         self.color.grid(row=3, column=0, columnspan=2, sticky="we", pady=10)
 
         # LIMITS SETTINGS
@@ -60,7 +62,24 @@ class Noise(Frame):
                                  height=MAX_HEIGHT * .8)
 
     def __create_live_generation(self):
-        live_noise, self.live_seed = generate_noise(self.quantity_variable.get(), self.dispersion_variable.get())
-        V.live_noise = [live_noise,"blue","."]
+        live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
+                                                    dispersion=self.dispersion_variable.get())
+        V.live_noise = [live_noise, self.color["bg"], "."]
         print(live_noise)
         print(self.live_seed)
+
+    def __do_live_update(self):
+        if self.live_seed:
+            live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
+                                                        dispersion=self.dispersion_variable.get(),
+                                                        seed=self.live_seed)
+            V.live_noise = [live_noise,self.color["bg"],"."]
+            print(live_noise)
+            print(self.live_seed)
+        else:
+
+            print("pass")
+
+    def noise_update_color(self):
+        self.color.config(bg=ask_color())
+        self.__do_live_update()
