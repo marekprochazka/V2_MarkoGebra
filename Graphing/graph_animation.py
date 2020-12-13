@@ -73,9 +73,9 @@ class GraphAnimation:
     def animate_noise(self):
         a.clear()
         a.axis("equal")
-        for noise in V.noises:
-            for coord in noise:
-                a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
+        # for noise in V.noises:
+        #     for coord in noise:
+        #         a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
 
     def __zero_x(self, fun):
         try:
