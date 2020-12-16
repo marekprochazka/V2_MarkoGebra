@@ -1,4 +1,4 @@
-from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, SCATTER, NAME, INFO
+from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, SCATTER, NAME, INFO, NOISE
 from Globals.variables import Variables as V
 from GUI.error_popup import error_popup
 
@@ -46,3 +46,6 @@ def update_data(data, update_fun=None, limits_fun=None):
                 if V.is_auto_update:
                     if limits_fun:
                         limits_fun(data[CACHE][1], data[CACHE][2])
+
+        if V.to_animate == NOISE:
+            V.live_noise = []

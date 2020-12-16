@@ -1,5 +1,5 @@
 from Globals.variables import Variables as V
-from Static.constants import MAX_WIDTH, MAX_HEIGHT, MATH, TO_ANIMATExTABLES
+from Static.constants import MAX_WIDTH, MAX_HEIGHT, MATH, TO_ANIMATExTABLES, NOISE
 from Data.functions import UPDATE_FUNCTIONS, get_tables
 
 
@@ -32,7 +32,11 @@ class ShowFrame:
                 self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
 
             # LOADING DATA TO CACHE
-            V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+            if V.to_animate != NOISE:
+                V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+            else:
+                V.cache = [[],[]]
+                print("WIP load from database")
 
             # UPDATE LIMITS IF IT'S MATH GRAPHING
             if V.to_animate == MATH and V.is_auto_update:

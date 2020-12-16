@@ -1,15 +1,16 @@
 from tkinter import Frame, HORIZONTAL, Scale, OUTSIDE, IntVar
 from tkinter import ttk as t
 
+from Decorators.input_checkers import check_noise_input
 from GUI.settings_components import LimitsSettings, GridSettings
 from Globals.calculated import fonts
-from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT
+from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT, CREATE
 from Bases import BaseColorPicker
 
 from Globals.variables import Variables as V
 from Utils.ask_color import ask_color
 from Utils.generate_noise import generate_noise
-
+from Utils.uuid import generate_uuid
 
 class Noise(Frame):
     def __init__(self, parent, controller):
@@ -23,10 +24,10 @@ class Noise(Frame):
         self.live_seed = None
 
         self.generate_button = t.Button(self, text="Generuj",
-                                        command=self.__create_live_generation)  # TODO make generation
+                                        command=self.__create_live_generation)
         self.generate_button.grid(row=0, column=0, sticky="nswe")
         self.lock = t.Button(self, text="Uzamknout",
-                             command=lambda: print("todo"))  # TODO lock/save generation
+                             command=self.__update_noise_data)  # TODO lock/save generation
         self.lock.grid(row=0, column=1, sticky="nswe")
 
         self.quantity_label = t.Label(self, text="Množství", font=fonts()["SMALL_FONT"])
@@ -38,12 +39,12 @@ class Noise(Frame):
                               variable=self.quantity_variable)
         self.quantity.grid(row=2, column=0, sticky="we")
         self.quantity.bind("<ButtonRelease-1>",
-                           lambda event: self.__do_live_update())  # TODO UPDATE QUANTITY (add one to existsing generation will be so cool)
+                           lambda event: self.__do_live_update())
 
         self.dispersion = Scale(self, activebackground="aqua", bd=0, from_=1, to=100, orient=HORIZONTAL,
                                 variable=self.dispersion_variable)
         self.dispersion.grid(row=2, column=1, sticky="we")
-        self.dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())  # TODO update dispersion on existing
+        self.dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())
 
         self.color = BaseColorPicker(self, special_comamnd=self.noise_update_color)
         self.color.bind("<ButtonRelease-1>",lambda event: self.__do_live_update())
@@ -65,8 +66,6 @@ class Noise(Frame):
         live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
                                                     dispersion=self.dispersion_variable.get())
         V.live_noise = [live_noise, self.color["bg"], "."]
-        print(live_noise)
-        print(self.live_seed)
 
     def __do_live_update(self):
         if self.live_seed:
@@ -74,11 +73,30 @@ class Noise(Frame):
                                                         dispersion=self.dispersion_variable.get(),
                                                         seed=self.live_seed)
             V.live_noise = [live_noise,self.color["bg"],"."]
-            print(live_noise)
-            print(self.live_seed)
         else:
-
             print("pass")
+
+    @check_noise_input
+    def __collect_data(self):
+        from Utils.make_data_update_dict import make_data_update_dict
+        id = generate_uuid()
+        seed = self.live_seed
+        noise_data = V.live_noise[0]
+        dispersion = self.dispersion_variable.get()
+        quantity = self.quantity_variable.get()
+        color = self.color["bg"]
+        marker = V.live_noise[2]
+        data = make_data_update_dict(noise=True, id=id,values=(seed,dispersion,quantity,color,marker),action=CREATE, noise_data=noise_data)
+        return data
+
+    def __update_noise_data(self):
+        from Utils.update_data import update_data
+        update_data(data=self.__collect_data(), update_fun=self.controller.update_list_view)
+        self.live_seed = None
+        self.quantity_variable.set(1)
+        self.dispersion_variable.set(1)
+        self.quantity.set(1)
+        self.dispersion.set(1)
 
     def noise_update_color(self):
         self.color.config(bg=ask_color())

@@ -43,6 +43,8 @@ class ListView:
                 PieRow(list_elements[i], pie_value, controller=self)
             # PLACING CONTAINERS TO GRID TO GUI
             self.__place_list_elements(list_elements)
+        elif V.to_animate == NOISE:
+            print("WIP list view")
 
     def __place_list_elements(self, list_elements):
         for i, val in enumerate(list_elements):
