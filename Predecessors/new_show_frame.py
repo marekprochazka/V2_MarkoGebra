@@ -1,7 +1,7 @@
 from Globals.variables import Variables as V
 from Static.constants import MAX_WIDTH, MAX_HEIGHT, MATH, TO_ANIMATExTABLES, NOISE
 from Data.functions import UPDATE_FUNCTIONS, get_tables
-
+from Utils.load_noise_data import load_noise_data
 
 # ONE OF THE MOST IMPORTANT FUNCTIONALITIES
 # IS CALLED EVERY TIME A FRAME (GRAPHING METHOD) IS CHANGED
@@ -35,8 +35,7 @@ class ShowFrame:
             if V.to_animate != NOISE:
                 V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
             else:
-                V.cache = [[],[]]
-                print("WIP load from database")
+                V.cache = load_noise_data(list(get_tables(TO_ANIMATExTABLES[V.to_animate])))
 
             # UPDATE LIMITS IF IT'S MATH GRAPHING
             if V.to_animate == MATH and V.is_auto_update:
