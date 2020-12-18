@@ -4,7 +4,7 @@ from tkinter import ttk as t
 from Decorators.input_checkers import check_noise_input
 from GUI.settings_components import LimitsSettings, GridSettings
 from Globals.calculated import fonts
-from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT, CREATE
+from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT, CREATE, MAX_NOISE_QUANTITY, MAX_NOISE_DISPERSION
 from Bases import BaseColorPicker
 
 from Globals.variables import Variables as V
@@ -35,13 +35,13 @@ class Noise(Frame):
         self.dispersion_label = t.Label(self, text="Rozptyl", font=fonts()["SMALL_FONT"])
         self.dispersion_label.grid(row=1, column=1, sticky="nswe", pady=10)
 
-        self.quantity = Scale(self, activebackground="aqua", bd=0, from_=1, to=100, orient=HORIZONTAL,
+        self.quantity = Scale(self, activebackground="aqua", bd=0, from_=1, to=MAX_NOISE_QUANTITY, orient=HORIZONTAL,
                               variable=self.quantity_variable)
         self.quantity.grid(row=2, column=0, sticky="we")
         self.quantity.bind("<ButtonRelease-1>",
                            lambda event: self.__do_live_update())
 
-        self.dispersion = Scale(self, activebackground="aqua", bd=0, from_=1, to=100, orient=HORIZONTAL,
+        self.dispersion = Scale(self, activebackground="aqua", bd=0, from_=1, to=MAX_NOISE_DISPERSION, orient=HORIZONTAL,
                                 variable=self.dispersion_variable)
         self.dispersion.grid(row=2, column=1, sticky="we")
         self.dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())
@@ -76,7 +76,6 @@ class Noise(Frame):
         else:
             print("pass")
 
-    @check_noise_input
     def __collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         id = generate_uuid()
