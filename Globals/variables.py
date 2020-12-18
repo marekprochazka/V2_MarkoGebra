@@ -10,6 +10,7 @@ class Variables:
     history_moves = 0
 
     cache = [[], []]
+    live_noise = []
     changes_cache = []
 
     start_angle = 90

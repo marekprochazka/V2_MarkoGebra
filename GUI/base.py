@@ -25,9 +25,7 @@ class Base(Tk):
         self.main = main
 
         # TUPLE OF ALL GRAPHING METHODS THAT IS REPRESENTED IN FE BY MULTISESECT
-        # TODO ADD NOISE AFTER FINISHING FEATURE
-        self.input_frames = (Mathematical, Pie, Bar)
-        # self.input_frames = (Mathematical, Pie, Bar, Noise)
+        self.input_frames = (Mathematical, Pie, Bar, Noise)
 
         # RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD
         self.SetupContainer = t.Frame(self, width=MAX_WIDTH, height=MAX_HEIGHT)
@@ -44,8 +42,8 @@ class Base(Tk):
 
         # MULTISELECT OF GRAPHING METHODS
         # AFTER SELECTION THE "show_Setup_Frame" FUNCTION FROM "new_show_frame.py" IS CALLED TO MANAGE FRAME CHANGE
-        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový"],
-                               state="readonly") #TODO add noise after implenetation
+        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový","Náhodný šum"],
+                               state="readonly")
         self.CBB2.bind('<<ComboboxSelected>>',
                        lambda event: self.__frame_change(self.input_frames[self.CBB2.current()]))
         self.CBB2.current(0)
@@ -62,7 +60,6 @@ class Base(Tk):
                                     height=MAX_HEIGHT * .04)
 
 
-        #TODO NEW LIST VIEW
         self.list_view_container = t.Frame(self)
         self.list_view_canvas = Canvas(self.list_view_container)
         self.list_view_scrollbar = t.Scrollbar(self.list_view_container, orient="vertical", command=self.list_view_canvas.yview)
@@ -106,7 +103,7 @@ class Base(Tk):
 
 
     # AUTO UPDATE VARIABLE CONTROLLER
-    def __switch_auto_limit_update_value(self):
+    def switch_auto_limit_update_value(self):
         V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
         print(V.is_auto_update)
 

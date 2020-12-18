@@ -73,9 +73,10 @@ class GraphAnimation:
     def animate_noise(self):
         a.clear()
         a.axis("equal")
-        for noise in V.noises:
-            for coord in noise:
-                a.scatter(coord[0], coord[1], marker=coord[2], color=coord[3], linewidths=float(coord[4]))
+        if V.live_noise:
+            a.scatter(V.live_noise[0][:,0],V.live_noise[0][:,1],color=V.live_noise[1], marker=V.live_noise[2])
+        for val in V.cache[0]:
+            a.scatter(val[-1][:,0],val[-1][:,1],color=val[4], marker=val[5])
 
     def __zero_x(self, fun):
         try:

@@ -45,7 +45,7 @@ class LimitsSettings(Frame):
         self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
         self.limits_auto_update_checkbox = t.Checkbutton(self,
                                                          variable=self.limits_auto_update_checkbox_check_var,
-                                                         command=lambda: self.controller.__switch_auto_limit_update_value())
+                                                         command=lambda: self.controller.switch_auto_limit_update_value())
         self.limits_auto_update_checkbox.grid(row=6, column=1, sticky="we")
 
         # UPDATE FE VALUES BY BE VALUES

@@ -4,7 +4,7 @@ from Globals.variables import Variables as V
 
 
 class BaseRow:
-    def __init__(self, parent, scatter_value, controller, *args, **kwargs):
+    def __init__(self, parent, value, controller, *args, **kwargs):
         # LINK TO ListView CLASS BECAUSE IN delete_value IS NECESSARY
         # TO CALL update_list_view
         self.controller = controller
@@ -13,11 +13,14 @@ class BaseRow:
         self.parent = parent
 
         # VALUE FROM CACHE
-        self.value = scatter_value
+        self.value = value
 
         # None if IT'S NOT MATH GRAPHING
         # IN MATH NECESSARY KEY IN changes_cache
         self.type = None
+
+        # TODO long comment
+        self.vcmd_digit = (self.parent.register(self.__is_digit_callback))
 
         # DEFINITIONS OF del_but AND save_but
         self.del_but = t.Button(self.parent, text="SMAZAT",
@@ -62,3 +65,9 @@ class BaseRow:
 
     def data_dict(self):
         return {CACHE: (), CHANGES_CACHE: {ACTION: UPDATE, DATA: [], ID: ""}, ERRORS: []}
+
+    def __is_digit_callback(self, P):
+        if str.isdigit(P) or P == "":
+            return True
+        else:
+            return False

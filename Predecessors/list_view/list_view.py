@@ -1,7 +1,7 @@
 from Globals.variables import Variables as V
 import tkinter.ttk as t
 from Static.constants import MATH, PIE, BAR, NOISE
-from . import ScatterRow, FunctionRow, PieRow, BarRow
+from . import ScatterRow, FunctionRow, PieRow, BarRow, NoiseRow
 
 
 # UPDATER (AND CONSTRUCTOR) OF LIST OF INPUTS IN GUI
@@ -41,6 +41,12 @@ class ListView:
             # MAKING ROW FOR EACH PIE VALUE
             for i, pie_value in enumerate(V.cache[0]):
                 PieRow(list_elements[i], pie_value, controller=self)
+            # PLACING CONTAINERS TO GRID TO GUI
+            self.__place_list_elements(list_elements)
+        elif V.to_animate == NOISE:
+            # MAKING ROW FOR EACH NOISE VALUE
+            for i, noise_value in enumerate(V.cache[0]):
+                NoiseRow(list_elements[i], noise_value, controller=self)
             # PLACING CONTAINERS TO GRID TO GUI
             self.__place_list_elements(list_elements)
 

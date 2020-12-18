@@ -8,8 +8,8 @@ from Bases import BaseColorPicker
 # VALUE IS IN FORM AS IT IS SAVED IN CACHE AND IN DATABASE
 
 class BarRow(BaseRow):
-    def __init__(self, parent, pie_value, controller):
-        super().__init__(parent, pie_value, controller)
+    def __init__(self, parent, bar_value, controller):
+        super().__init__(parent, bar_value, controller)
         # GUI OF A ROW
         # TEXT LABELS
         self.text_name = BaseLabel(self.parent, text="Název:")
