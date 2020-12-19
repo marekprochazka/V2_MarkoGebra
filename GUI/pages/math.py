@@ -75,6 +75,7 @@ class Mathematical(Frame):
                                  width=MAX_WIDTH * .14,
                                  height=MAX_HEIGHT * .8)
 
+    # EXTENDED UPDATE FUNCTIONS FOR SCATTER AND FUNCTION INPUTS
     def __update_data_scatter(self):
         from Utils.update_data import update_data
         update_data(self.__collect_scatter(), update_fun=self.controller.update_list_view,
@@ -87,6 +88,7 @@ class Mathematical(Frame):
         update_data(self.__collect_function(), self.controller.update_list_view)
         self.EntryFun.delete(0, END)
 
+    # COLLECTING FUNCTIONS, FORMATTING TO 'update_data' FRIENDLY DICT
     @check_scatter_input
     def __collect_scatter(self):
         from Utils.make_data_update_dict import make_data_update_dict

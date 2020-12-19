@@ -3,6 +3,9 @@ from Static.constants import UPDATE, DATA, ID, ACTION, CACHE, CHANGES_CACHE, ERR
 from Globals.variables import Variables as V
 
 
+# LIST VIEW OF ELEMENTS HAVE SOME SIMILAR LOGIC AND DEFINITIONS NO MATTER THE GRAPHING STYLE
+# DEFINED HERE
+
 class BaseRow:
     def __init__(self, parent, value, controller, *args, **kwargs):
         # LINK TO ListView CLASS BECAUSE IN delete_value IS NECESSARY
@@ -19,7 +22,8 @@ class BaseRow:
         # IN MATH NECESSARY KEY IN changes_cache
         self.type = None
 
-        # TODO long comment
+        # MAKING OF Tcl WRAPPER AROUND CALLBACK FUNCTION
+        # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/entry-validation.html
         self.vcmd_digit = (self.parent.register(self.__is_digit_callback))
 
         # DEFINITIONS OF del_but AND save_but
@@ -29,7 +33,8 @@ class BaseRow:
         from Utils.update_data import update_data
 
         self.save_but = t.Button(self.parent, text="ULOŽIT",
-                                 command=lambda: update_data(self.collect_data(),limits_fun=self.controller.auto_update_limits_by_scatter_input),
+                                 command=lambda: update_data(self.collect_data(),
+                                                             limits_fun=self.controller.auto_update_limits_by_scatter_input),
                                  width=10)
 
     #   collect_data FUNCTION IS REWRITTEN IN EACH DIFFERENT ROW BUT NEEDS TO ALSO BE DEFINED HERE
@@ -63,9 +68,11 @@ class BaseRow:
     def save_changes(self, collector):
         pass
 
+    # MAKING BASE DICT IN FORMAT FOR 'update_data'
     def data_dict(self):
         return {CACHE: (), CHANGES_CACHE: {ACTION: UPDATE, DATA: [], ID: ""}, ERRORS: []}
 
+    # ENTRY INPUT CONTROL
     def __is_digit_callback(self, P):
         if str.isdigit(P) or P == "":
             return True

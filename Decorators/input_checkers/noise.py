@@ -1,6 +1,7 @@
 from Static.constants import CACHE, CHANGES_CACHE, ERRORS, NAME, INFO, ACTION, DATA, ID
 
-
+# TODO WILL BE DELETED SOON
+# USELESS FUNCTIONALITY
 def check_noise_input(fun):
     def wrapper(*args,**kwargs):
         data = fun(*args,**kwargs)

@@ -42,6 +42,7 @@ class Pie(Frame):
         self.color.grid(row=2, column=1, sticky="we", padx=20)
         self.add_value.grid(row=3, column=1, sticky="we", padx=20)
 
+    # EXTENDED UPDATE DATA FUNCTION
     def __update_data(self):
         from Utils.update_data import update_data
         from Decorators.input_checkers import check_pie_input
@@ -49,6 +50,7 @@ class Pie(Frame):
         self.slice.delete(0, END)
         self.label.delete(0, END)
 
+    # COLLECTING DATA AND PACKING THEM TO DICT FORMATTED FOR 'update_data'
     def __collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
 

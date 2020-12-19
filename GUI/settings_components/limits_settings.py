@@ -6,7 +6,7 @@ from Static.constants import X, MIN, MAX, Y
 from tkinter import ttk as t
 from Globals.variables import Variables as V
 
-
+# COMPONENT OF LIMITS SETTINGS USED IN NOISE AND MATH
 class LimitsSettings(Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)

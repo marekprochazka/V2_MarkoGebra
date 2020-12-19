@@ -14,7 +14,6 @@ class Variables:
     changes_cache = []
 
     start_angle = 90
-    # noises = [[[0, 0, ".", "#fff", 1], [0, 0, ".", "#fff", 1]]]
 
     limits = get_saved_limits_or_empty_limits()
 

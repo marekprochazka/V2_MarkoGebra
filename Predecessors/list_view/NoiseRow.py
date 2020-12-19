@@ -4,6 +4,8 @@ from tkinter import ttk as t
 from Globals.variables import Variables as V
 
 # VALUE [id, seed, dispersion, quantity, color, marker, noise]
+# VALUE IS IN FORM AS IT IS SAVED IN CACHE AND IN DATABASE
+
 from Static.constants import POINT_MARKERS, MAX_NOISE_DISPERSION, MAX_NOISE_QUANTITY, CREATE, UPDATE
 
 
@@ -11,14 +13,17 @@ class NoiseRow(BaseRow):
     def __init__(self, parent, noise_value, controller):
         super().__init__(parent, noise_value, controller)
 
+        # DEFINING VARIABLES
         self.quantity_value = StringVar()
         self.dispersion_value = StringVar()
         self.quantity_value.set(self.value[3])
         self.dispersion_value.set(self.value[2])
 
+        # TRACERS FOR MAXIMUM VALUES DEFINED IN CONSTANTS
         self.quantity_value.trace("w", self.__validate_max_quantity_value)
         self.dispersion_value.trace("w", self.__validate_max_dispersion_value)
 
+        # GUI, *ENTRIES WITH VALIDATE COMMANDS
         self.quantity_label = BaseLabel(self.parent, text="Množství")
         self.quantity_entry = BaseEntry(self.parent, textvariable=self.quantity_value, width=4, validate='all',
                                         validatecommand=(self.vcmd_digit, '%P'))
@@ -44,7 +49,7 @@ class NoiseRow(BaseRow):
         self.del_but.grid(row=0, column=7)
         self.save_but.grid(row=0, column=8)
 
-
+    # VALIDATIONS FOR QUANTITY AND DISPERSION
     def __validate_max_quantity_value(self, *args):
         if len(self.quantity_value.get()) >= len(str(MAX_NOISE_QUANTITY)):
             if int(self.quantity_value.get()) > MAX_NOISE_QUANTITY:
@@ -55,6 +60,7 @@ class NoiseRow(BaseRow):
             if int(self.dispersion_value.get()) > MAX_NOISE_QUANTITY:
                 self.dispersion_value.set(MAX_NOISE_DISPERSION)
 
+    # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
     def collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.uuid import format_existing_uuid

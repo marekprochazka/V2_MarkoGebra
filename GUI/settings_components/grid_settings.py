@@ -4,7 +4,7 @@ from tkinter import ttk as t
 from Bases import BaseLabel
 from Globals.calculated import fonts
 
-
+# COMPONENT OF GRID SETTING USED IN MATH AND NOISE
 class GridSettings(Frame):
     def __init__(self,parent, controller):
         super().__init__(parent)

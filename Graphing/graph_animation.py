@@ -69,7 +69,7 @@ class GraphAnimation:
             a.bar(str(bar[1]), int(bar[2]), color=bar[3], width=float(bar[4]))
 
     # NOISE
-    # TODO
+    # ANIMATING BOTH LIVE NOISE (UNLOCKED) AND REST (LOCKED)
     def animate_noise(self):
         a.clear()
         a.axis("equal")

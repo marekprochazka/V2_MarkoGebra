@@ -4,6 +4,7 @@ from Graphing.setup import a, f
 from tkinter import ttk as t
 import numpy as np
 
+# TODO MAYBE SHOULD BE MOVED TO GUI, OR AT LEAST PART OF IT
 
 # PNG SAVER POPUP GUI AND BACKEND FUNCTIONALITY
 class Saving:

@@ -17,17 +17,24 @@ class Noise(Frame):
         Frame.__init__(self, parent)
         self.controller = controller
         self.type = NOISE
+        # THIS VARIABLE IS USED IN "new_show_frame.py"
+        # AND HAS ONE OF THE VALUES THAT IS CAPABLE
+        # FOR GLOBAL VARIABLE "to_animate" WHICH DEFINES
+        # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
+
+        # DEFINITIONS
         self.dispersion_variable = IntVar()
         self.quantity_variable = IntVar()
         self.dispersion_variable.set(1)
         self.quantity_variable.set(1)
         self.live_seed = None
 
+        # GUI DEFINITION/GRIDING
         self.generate_button = t.Button(self, text="Generuj",
                                         command=self.__create_live_generation)
         self.generate_button.grid(row=0, column=0, sticky="nswe")
         self.lock = t.Button(self, text="Uzamknout",
-                             command=self.__update_noise_data)  # TODO lock/save generation
+                             command=self.__update_noise_data)
         self.lock.grid(row=0, column=1, sticky="nswe")
 
         self.quantity_label = t.Label(self, text="Množství", font=fonts()["SMALL_FONT"])
@@ -62,11 +69,13 @@ class Noise(Frame):
                                  width=MAX_WIDTH * .14,
                                  height=MAX_HEIGHT * .8)
 
+    # MAKING LIVE NOISE
     def __create_live_generation(self):
         live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
                                                     dispersion=self.dispersion_variable.get())
         V.live_noise = [live_noise, self.color["bg"], "."]
 
+    # UPDATING LIVE NOISE
     def __do_live_update(self):
         if self.live_seed:
             live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
@@ -76,6 +85,7 @@ class Noise(Frame):
         else:
             print("pass")
 
+    # COLLECTING DATA AND PACKING THEM TO DICT FORMATTED FOR 'update_data'
     def __collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         id = generate_uuid()
@@ -88,6 +98,7 @@ class Noise(Frame):
         data = make_data_update_dict(noise=True, id=id,values=(seed,dispersion,quantity,color,marker),action=CREATE, noise_data=noise_data)
         return data
 
+    # EXTENDED UPDATE DATA FUNCTION
     def __update_noise_data(self):
         from Utils.update_data import update_data
         update_data(data=self.__collect_data(), update_fun=self.controller.update_list_view)
@@ -97,6 +108,7 @@ class Noise(Frame):
         self.quantity.set(1)
         self.dispersion.set(1)
 
+    # SPECIAL COMMAND FOR 'base color picker'
     def noise_update_color(self):
         self.color.config(bg=ask_color())
         self.__do_live_update()
