@@ -89,12 +89,13 @@ class Mathematical(Frame):
         self.EntryFun.delete(0, END)
 
     # COLLECTING FUNCTIONS, FORMATTING TO 'update_data' FRIENDLY DICT
-    @check_scatter_input
+
     def __collect_scatter(self):
         from Utils.make_data_update_dict import make_data_update_dict
+        from Utils.handle_only_minus_input import handle_only_minus_input
         id = generate_uuid()
-        x = self.EntryX.get()
-        y = self.EntryY.get()
+        x = int(handle_only_minus_input(self.EntryX.get()))
+        y = int(handle_only_minus_input(self.EntryY.get()))
         marker = "."
         color = self.colorButtonScatter["bg"]
         size = 1

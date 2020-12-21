@@ -25,10 +25,10 @@ class NoiseRow(BaseRow):
 
         # GUI, *ENTRIES WITH VALIDATE COMMANDS
         self.quantity_label = BaseLabel(self.parent, text="Množství")
-        self.quantity_entry = BaseEntry(self.parent, textvariable=self.quantity_value, width=4, numbers=True)
+        self.quantity_entry = BaseEntry(self.parent, textvariable=self.quantity_value, width=4, positive=True)
 
         self.dispersion_label = BaseLabel(self.parent, text="Rozptyl")
-        self.dispersion_entry = BaseEntry(self.parent, textvariable=self.dispersion_value, width=4, numbers=True)
+        self.dispersion_entry = BaseEntry(self.parent, textvariable=self.dispersion_value, width=4, positive=True)
 
         self.marker_label = BaseLabel(self.parent, text="Značka")
         self.marker_multiselect = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",

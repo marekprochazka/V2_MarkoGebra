@@ -59,13 +59,14 @@ class ScatterRow(BaseRow):
     # RAW DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
 
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
-    @check_scatter_input
+
     def collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.uuid import format_existing_uuid
+        from Utils.handle_only_minus_input import handle_only_minus_input
         id = format_existing_uuid(self.value[0])
-        x = self.entry_x.get()
-        y = self.entry_y.get()
+        x = int(handle_only_minus_input(self.entry_x.get()))
+        y = int(handle_only_minus_input(self.entry_y.get()))
         marker = self.marker_multiselect.get()
         color = self.col_but["bg"]
         size = self.entry_size.get()
