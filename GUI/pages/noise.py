@@ -58,16 +58,16 @@ class Noise(Frame):
         self.color.grid(row=3, column=0, columnspan=2, sticky="we", pady=10)
 
         # LIMITS SETTINGS
-        self.limits_settings = LimitsSettings(parent=self, controller=controller)
-        self.limits_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .001, y=MAX_HEIGHT * .15,
-                                   width=MAX_WIDTH * .18,
-                                   height=MAX_HEIGHT * .3)
+        # self.limits_settings = LimitsSettings(parent=self, controller=controller)
+        # self.limits_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .001, y=MAX_HEIGHT * .15,
+        #                            width=MAX_WIDTH * .18,
+        #                            height=MAX_HEIGHT * .3)
 
         # GRID SETTINGS
         self.grid_settings = GridSettings(parent=self, controller=controller)
-        self.grid_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .25, y=MAX_HEIGHT * .15,
-                                 width=MAX_WIDTH * .14,
-                                 height=MAX_HEIGHT * .8)
+        self.grid_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .001, y=MAX_HEIGHT * .15,
+                                   width=MAX_WIDTH * .18,
+                                   height=MAX_HEIGHT * .3)
 
     # MAKING LIVE NOISE
     def __create_live_generation(self):
