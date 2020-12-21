@@ -37,7 +37,7 @@ class FunctionRow(BaseRow):
         self.col_but = BaseColorPicker(self.parent,color=self.value[3],width=10)
 
         # ENTRY OF SIZE
-        self.entry_size = BaseEntry(self.parent, width=8)
+        self.entry_size = BaseEntry(self.parent, width=8,floating=True)
         self.entry_size.insert(0, self.value[4])
 
         # PLACING WITH GRID

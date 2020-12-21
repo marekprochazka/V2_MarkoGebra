@@ -20,18 +20,18 @@ class LimitsSettings(Frame):
         self.limits_entry_x_min_title.grid(row=1, column=0, sticky="we")
         self.limits_entry_x_max_title = BaseLabel(self, text="max x", anchor=CENTER)
         self.limits_entry_x_max_title.grid(row=1, column=1, sticky="we")
-        self.limits_entry_x_min = BaseEntry(self)
+        self.limits_entry_x_min = BaseEntry(self, numbers=True)
         self.limits_entry_x_min.grid(row=2, column=0, sticky="we")
-        self.limits_entry_x_max = BaseEntry(self)
+        self.limits_entry_x_max = BaseEntry(self, numbers=True)
         self.limits_entry_x_max.grid(row=2, column=1, sticky="we", padx=15, pady=15)
 
         self.limits_entry_y_min_title = BaseLabel(self, text="min y", anchor=CENTER)
         self.limits_entry_y_min_title.grid(row=3, column=0, sticky="we")
         self.limits_entry_y_max_title = BaseLabel(self, text="max y", anchor=CENTER)
         self.limits_entry_y_max_title.grid(row=3, column=1, sticky="we")
-        self.limits_entry_y_min = BaseEntry(self)
+        self.limits_entry_y_min = BaseEntry(self, numbers=True)
         self.limits_entry_y_min.grid(row=4, column=0, sticky="we", pady=15)
-        self.limits_entry_y_max = BaseEntry(self)
+        self.limits_entry_y_max = BaseEntry(self, numbers=True)
         self.limits_entry_y_max.grid(row=4, column=1, sticky="we", padx=15, pady=15)
 
         # TAKES ENTRY VALUES AND EXECUTES UPDATE FUNCTION

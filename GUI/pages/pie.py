@@ -22,7 +22,7 @@ class Pie(Frame):
         self.txt2 = BaseLabel(self, text="Název:")
         self.txt3 = BaseLabel(self, text="Barva:")
 
-        self.slice = BaseEntry(self, numbers=True)
+        self.slice = BaseEntry(self, floating=True)
         self.label = BaseEntry(self)
         self.color = BaseColorPicker(self)
 

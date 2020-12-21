@@ -19,11 +19,11 @@ class PieRow(BaseRow):
         self.text_explode = BaseLabel(self.parent, text="Výstup:")
 
         # ENTRIES
-        self.entry_slice = BaseEntry(self.parent, width=8, numbers=True)
+        self.entry_slice = BaseEntry(self.parent, width=8, floating=True)
         self.entry_slice.insert(0, self.value[1])
         self.entry_activity = BaseEntry(self.parent, width=12)
         self.entry_activity.insert(0, self.value[2])
-        self.entry_explode = BaseEntry(self.parent, width=8)
+        self.entry_explode = BaseEntry(self.parent, width=8, floating=True)
         self.entry_explode.insert(0, self.value[4])
 
         # COLOR PICKER
