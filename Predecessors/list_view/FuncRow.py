@@ -1,6 +1,6 @@
 from Bases import BaseRow, BaseLabel, BaseEntry
 import tkinter.ttk as t
-from Static.constants import LINE_MARKERS, FUNCTION, CACHE, CHANGES_CACHE, ID, DATA, TYPE
+from Static.constants import LINE_MARKERS, FUNCTION, CACHE, CHANGES_CACHE, ID, DATA, TYPE, UPDATE
 from Decorators.input_checkers import check_function_input
 from Bases import BaseColorPicker
 
@@ -58,14 +58,12 @@ class FunctionRow(BaseRow):
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
     @check_function_input
     def collect_data(self):
-        data = self.data_dict()
-        id = self.value[0]
+        from Utils.make_data_update_dict import make_data_update_dict
+        from Utils.uuid import format_existing_uuid
+        id = format_existing_uuid(self.value[0])
         func = self.entry_fun.get()
         line = self.line_multiselect.get()
         color = self.col_but["bg"]
         size = self.entry_size.get()
-        data[CACHE] = (id, func, line, color, size)
-        data[CHANGES_CACHE][TYPE] = FUNCTION
-        data[CHANGES_CACHE][DATA] = (func, line, color, size)
-        data[CHANGES_CACHE][ID] = id
+        data = make_data_update_dict(type=FUNCTION, values=(func, line, color, size), action=UPDATE, id=id)
         return data

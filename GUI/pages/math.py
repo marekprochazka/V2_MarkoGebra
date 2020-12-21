@@ -5,7 +5,7 @@ from Static.constants import MATH,SCATTER, CREATE, FUNCTION, MAX_WIDTH, MAX_HEIG
 from Bases import BaseEntry, BaseLabel, BaseColorPicker
 
 from Utils.uuid import generate_uuid
-from Decorators.input_checkers import check_function_input, check_scatter_input
+from Decorators.input_checkers import check_function_input
 from GUI.settings_components import LimitsSettings, GridSettings
 
 

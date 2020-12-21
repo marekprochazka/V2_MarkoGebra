@@ -1,6 +1,5 @@
 from Bases import BaseEntry, BaseRow, BaseLabel
-from Decorators.input_checkers import check_bar_input
-from Static.constants import CACHE, CHANGES_CACHE, DATA, ID
+from Static.constants import CACHE, CHANGES_CACHE, DATA, ID, UPDATE
 from Bases import BaseColorPicker
 
 
@@ -46,15 +45,14 @@ class BarRow(BaseRow):
     # RAW DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
 
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
-    @check_bar_input
     def collect_data(self):
-        data = self.data_dict()
-        id = self.value[0]
+        from Utils.make_data_update_dict import make_data_update_dict
+        from Utils.uuid import format_existing_uuid
+        id = format_existing_uuid(self.value[0])
         name = self.entry_name.get()
-        value = self.entry_value.get()
+        value = int(self.entry_value.get())
         color = self.col_but["bg"]
-        width = self.entry_width.get()
-        data[CACHE] = (id, name, value, color, width)
-        data[CHANGES_CACHE][DATA] = (name, value, color, width)
-        data[CHANGES_CACHE][ID] = id
+        width = float(self.entry_width.get())
+        data = make_data_update_dict(values=(name, value, color, width),action=UPDATE,id=id)
+
         return data

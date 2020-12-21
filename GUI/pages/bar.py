@@ -48,8 +48,7 @@ class Bar(Frame):
     # EXTENDED UPDATE DATA FUNCTION
     def __update_data(self):
         from Utils.update_data import update_data
-        from Decorators.input_checkers import check_bar_input
-        update_data(check_bar_input(self.__collect_data)(), self.controller.update_list_view)
+        update_data(self.__collect_data(), self.controller.update_list_view)
         self.name.delete(0, END)
         self.value.delete(0, END)
 

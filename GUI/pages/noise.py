@@ -1,7 +1,6 @@
 from tkinter import Frame, HORIZONTAL, Scale, OUTSIDE, IntVar
 from tkinter import ttk as t
 
-from Decorators.input_checkers import check_noise_input
 from GUI.settings_components import LimitsSettings, GridSettings
 from Globals.calculated import fonts
 from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT, CREATE, MAX_NOISE_QUANTITY, MAX_NOISE_DISPERSION

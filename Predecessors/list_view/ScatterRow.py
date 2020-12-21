@@ -1,7 +1,6 @@
 import tkinter.ttk as t
 from Bases import BaseEntry, BaseRow, BaseLabel
 from Static.constants import SCATTER, POINT_MARKERS, UPDATE
-from Decorators.input_checkers import check_scatter_input
 from Bases import BaseColorPicker
 
 

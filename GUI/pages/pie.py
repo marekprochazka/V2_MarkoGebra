@@ -45,8 +45,8 @@ class Pie(Frame):
     # EXTENDED UPDATE DATA FUNCTION
     def __update_data(self):
         from Utils.update_data import update_data
-        from Decorators.input_checkers import check_pie_input
-        update_data(check_pie_input(self.__collect_data)(), self.controller.update_list_view)
+
+        update_data(self.__collect_data(), self.controller.update_list_view)
         self.slice.delete(0, END)
         self.label.delete(0, END)
 
