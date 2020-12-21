@@ -6,7 +6,6 @@ import webbrowser
 from GUI.base import Base
 from Predecessors import DeleteAll, Saving, ShowFrame, ListView, Grid, Limits
 from Graphing.graph_animation import GraphAnimation
-from Console.console import Console
 
 mp.use("TkAgg")  # backend configuration for tkinter
 
@@ -25,7 +24,7 @@ from Graphing.setup import *
 # MAIN CLASS THAT IS CALLED INTO MAINLOOP
 # BASE = GUI (Frontend)
 # REST ARE FUNCTIONALITIES
-class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, ListView, Grid, Console, Limits):
+class MarkoGebra(Base, DeleteAll, Saving, ShowFrame, ListView, Grid, Limits):
     def __init__(self):
         super().__init__(main=self)
 

@@ -74,11 +74,6 @@ class Base(Tk):
         self.list_view_scrollbar.pack(side="right", fill="y")
         self.main.update_list_view()
 
-        # OPEN CONSOLE BUTTON
-        self.console = t.Button(self, text="Konzole", command=lambda: self.console_controller())
-        self.console.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .95, height=MAX_HEIGHT * .05,
-                           width=MAX_WIDTH * .4)
-
         # RELATIVE FRAMES
 
         self.SetupFrames = {}
