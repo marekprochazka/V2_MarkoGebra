@@ -100,13 +100,14 @@ class Noise(Frame):
 
     # EXTENDED UPDATE DATA FUNCTION
     def __update_noise_data(self):
-        from Utils.update_data import update_data
-        update_data(data=self.__collect_data(), update_fun=self.controller.update_list_view)
-        self.live_seed = None
-        self.quantity_variable.set(1)
-        self.dispersion_variable.set(1)
-        self.quantity.set(1)
-        self.dispersion.set(1)
+        if self.live_seed:
+            from Utils.update_data import update_data
+            update_data(data=self.__collect_data(), update_fun=self.controller.update_list_view)
+            self.live_seed = None
+            self.quantity_variable.set(1)
+            self.dispersion_variable.set(1)
+            self.quantity.set(1)
+            self.dispersion.set(1)
 
     # SPECIAL COMMAND FOR 'base color picker'
     def noise_update_color(self):
