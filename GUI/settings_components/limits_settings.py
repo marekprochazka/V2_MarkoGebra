@@ -41,10 +41,10 @@ class LimitsSettings(Frame):
 
         self.limits_auto_update_checkbox_title = BaseLabel(self, text="Autoupdate")
         # IS AUTO UPDATE ALLOWED CHECKBOX
-        self.limits_auto_update_checkbox_check_var = IntVar(value=1)
+        self.controller.limits_auto_update_checkbox_check_var = IntVar(value=1)
         self.limits_auto_update_checkbox_title.grid(row=6, column=0, sticky="we")
         self.limits_auto_update_checkbox = t.Checkbutton(self,
-                                                         variable=self.limits_auto_update_checkbox_check_var,
+                                                         variable=self.controller.limits_auto_update_checkbox_check_var,
                                                          command=lambda: self.controller.switch_auto_limit_update_value())
         self.limits_auto_update_checkbox.grid(row=6, column=1, sticky="we")
 
