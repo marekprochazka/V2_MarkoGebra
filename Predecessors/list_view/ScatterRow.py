@@ -23,7 +23,7 @@ class ScatterRow(BaseRow):
         self.text_size = BaseLabel(self.parent, text="Vel.:")
 
         # ENTRIES OF COORDINATES
-        self.entry_x, self.entry_y = BaseEntry(self.parent, width=13), BaseEntry(self.parent, width=13)
+        self.entry_x, self.entry_y = BaseEntry(self.parent, width=13, numbers=True), BaseEntry(self.parent, width=13, numbers=True)
         self.entry_x.insert(0, self.value[1])
         self.entry_y.insert(0, self.value[2])
 

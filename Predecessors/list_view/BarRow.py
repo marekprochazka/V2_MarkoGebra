@@ -19,7 +19,7 @@ class BarRow(BaseRow):
         # ENTRIES
         self.entry_name = BaseEntry(self.parent, width=8)
         self.entry_name.insert(0, self.value[1])
-        self.entry_value = BaseEntry(self.parent, width=13)
+        self.entry_value = BaseEntry(self.parent, width=13, numbers=True)
         self.entry_value.insert(0, self.value[2])
         self.entry_width = BaseEntry(self.parent, width=8)
         self.entry_width.insert(0, self.value[4])

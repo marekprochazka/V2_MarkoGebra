@@ -25,7 +25,7 @@ class Bar(Frame):
         self.txt2 = BaseLabel(self, text="Název:")
         self.txt3 = BaseLabel(self, text="Barva:")
 
-        self.value = BaseEntry(self)
+        self.value = BaseEntry(self, numbers=True)
         self.name = BaseEntry(self)
         self.color = BaseColorPicker(self)
         self.go = t.Button(self, text="Zapsat hodnotu",

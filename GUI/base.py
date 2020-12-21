@@ -9,7 +9,7 @@ from .pages import Mathematical, Pie, Bar, Noise
 
 from Globals.variables import Variables as V
 
-
+from Utils.entry_callbacks import is_digit_callback
 
 
 # ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")

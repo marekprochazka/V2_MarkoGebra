@@ -24,7 +24,7 @@ class BaseRow:
 
         # MAKING OF Tcl WRAPPER AROUND CALLBACK FUNCTION
         # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/entry-validation.html
-        self.vcmd_digit = (self.parent.register(self.__is_digit_callback))
+
 
         # DEFINITIONS OF del_but AND save_but
         self.del_but = t.Button(self.parent, text="SMAZAT",

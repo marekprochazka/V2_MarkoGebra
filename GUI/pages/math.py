@@ -27,8 +27,8 @@ class Mathematical(Frame):
         self.labelX.grid(row=0, column=0)
         self.labelY.grid(row=0, column=2)
 
-        self.EntryX = BaseEntry(self)
-        self.EntryY = BaseEntry(self)
+        self.EntryX = BaseEntry(self, numbers=True)
+        self.EntryY = BaseEntry(self, numbers=True)
 
         self.EntryX.grid(row=0, column=1, sticky="we")
         self.EntryY.grid(row=0, column=3, sticky="we")
