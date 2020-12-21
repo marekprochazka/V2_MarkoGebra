@@ -38,7 +38,7 @@ class Base(Tk):
         # MATLOPLIB GRAPH REPESENTATION ON FE
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
-        canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 470, y=MAX_HEIGHT - 470)
+        canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 770, y=MAX_HEIGHT - 770)
 
         # MULTISELECT OF GRAPHING METHODS
         # AFTER SELECTION THE "show_Setup_Frame" FUNCTION FROM "new_show_frame.py" IS CALLED TO MANAGE FRAME CHANGE
