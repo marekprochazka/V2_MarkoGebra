@@ -5,7 +5,7 @@ from Static.constants import MATH,SCATTER, CREATE, FUNCTION, MAX_WIDTH, MAX_HEIG
 from Bases import BaseEntry, BaseLabel, BaseColorPicker
 
 from Utils.uuid import generate_uuid
-from Decorators.input_checkers import check_function_input
+from Decorators.input_checkers import check_function_input, scatter_input_controller
 from GUI.settings_components import LimitsSettings, GridSettings
 
 
@@ -89,13 +89,13 @@ class Mathematical(Frame):
         self.EntryFun.delete(0, END)
 
     # COLLECTING FUNCTIONS, FORMATTING TO 'update_data' FRIENDLY DICT
-
+    @scatter_input_controller
     def __collect_scatter(self):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.handle_only_minus_input import handle_only_minus_input
         id = generate_uuid()
-        x = int(handle_only_minus_input(self.EntryX.get()))
-        y = int(handle_only_minus_input(self.EntryY.get()))
+        x = int(handle_only_minus_input(self.EntryX.get())) if self.EntryX.get() else None
+        y = int(handle_only_minus_input(self.EntryY.get())) if self.EntryY.get() else None
         marker = "."
         color = self.colorButtonScatter["bg"]
         size = 1

@@ -3,6 +3,7 @@ import re
 # ADDITION TO NORMAL TK ENTRY, JUSTIFY CENTER IS USED ON EVERY ENTRY IN CODE
 class BaseEntry(Entry):
     def __init__(self, parent, justify="center", numbers=False,floating=False,positive=False, **kwargs):
+        # TODO do some comments
         if numbers:
             super().__init__(parent, justify=justify, **kwargs)
             self.vcmd_digit = (self.register(self.__is_integer_callback))
@@ -18,6 +19,7 @@ class BaseEntry(Entry):
         else:
             super().__init__(parent, justify=justify, **kwargs)
 
+    # TODO do some comments
     def __is_integer_callback(self, P):
         if P == "":
             return True

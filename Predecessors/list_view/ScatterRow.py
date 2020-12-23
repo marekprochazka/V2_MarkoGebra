@@ -1,5 +1,6 @@
 import tkinter.ttk as t
 from Bases import BaseEntry, BaseRow, BaseLabel
+from Decorators.input_checkers import scatter_input_controller
 from Static.constants import SCATTER, POINT_MARKERS, UPDATE
 from Bases import BaseColorPicker
 
@@ -59,15 +60,16 @@ class ScatterRow(BaseRow):
 
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
 
+    @scatter_input_controller
     def collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.uuid import format_existing_uuid
         from Utils.handle_only_minus_input import handle_only_minus_input
         id = format_existing_uuid(self.value[0])
-        x = int(handle_only_minus_input(self.entry_x.get()))
-        y = int(handle_only_minus_input(self.entry_y.get()))
+        x = int(handle_only_minus_input(self.entry_x.get())) if self.entry_x.get() else None
+        y = int(handle_only_minus_input(self.entry_y.get())) if self.entry_y.get() else None
         marker = self.marker_multiselect.get()
         color = self.col_but["bg"]
-        size = self.entry_size.get()
+        size = self.entry_size.get() if self.entry_size.get() else None
         data = make_data_update_dict(id=id, values=(x, y, marker, color, size), action=UPDATE, type=SCATTER)
         return data

@@ -1,6 +1,8 @@
 from Bases import BaseRow, BaseLabel, BaseColorPicker, BaseEntry
 from tkinter import StringVar, Button
 from tkinter import ttk as t
+
+from Decorators.input_checkers import noise_input_controller
 from Globals.variables import Variables as V
 
 # VALUE [id, seed, dispersion, quantity, color, marker, noise]
@@ -59,6 +61,7 @@ class NoiseRow(BaseRow):
                 self.dispersion_value.set(MAX_NOISE_DISPERSION)
 
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
+    @noise_input_controller
     def collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.uuid import format_existing_uuid
@@ -66,9 +69,9 @@ class NoiseRow(BaseRow):
 
         id = format_existing_uuid(self.value[0])
         seed = self.value[1]
-        dispersion = int(self.dispersion_value.get()) if self.dispersion_value.get() != "" else 1
-        quantity = int(self.quantity_value.get()) if self.quantity_value.get() != "" else 1
-        noise_data, _ = generate_noise(dispersion=dispersion,quantity=quantity,seed=seed)
+        dispersion = int(self.dispersion_value.get()) if self.dispersion_value.get() else None
+        quantity = int(self.quantity_value.get()) if self.quantity_value.get() else None
+        noise_data, _ = generate_noise(dispersion=dispersion,quantity=quantity,seed=seed) if quantity and dispersion else (None, None)
         color = self.col_but["bg"]
         marker = self.marker_multiselect.get()
         data = make_data_update_dict(noise=True, id=id, values=(seed, dispersion, quantity, color, marker),

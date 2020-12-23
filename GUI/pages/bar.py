@@ -1,5 +1,7 @@
 from tkinter import Frame, Label, END
 from tkinter import ttk as t
+
+from Decorators.input_checkers import bar_input_controller
 from Globals.calculated import fonts
 from Static.constants import BAR, CREATE
 from Bases import BaseLabel, BaseEntry, BaseColorPicker
@@ -53,12 +55,13 @@ class Bar(Frame):
         self.value.delete(0, END)
 
     # COLLECTING DATA AND PACKING THEM TO DICT FORMATTED FOR 'update_data'
+    @bar_input_controller
     def __collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
 
         id = generate_uuid()
         name = self.name.get()
-        value = self.value.get()
+        value = int(self.value.get()) if self.value.get() else None
         color = self.color["bg"]
         width = 0.8
         data = make_data_update_dict(id=id, values=(name, value, color, width), action=CREATE)

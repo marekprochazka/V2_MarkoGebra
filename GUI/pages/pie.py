@@ -1,6 +1,7 @@
 from tkinter import Frame, Label, END
 from tkinter import ttk as t
 
+from Decorators.input_checkers import pie_input_controller
 from Static.constants import PIE, CREATE
 from Bases import BaseLabel, BaseEntry, BaseColorPicker
 from Utils.uuid import generate_uuid
@@ -51,13 +52,14 @@ class Pie(Frame):
         self.label.delete(0, END)
 
     # COLLECTING DATA AND PACKING THEM TO DICT FORMATTED FOR 'update_data'
+    @pie_input_controller
     def __collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
 
         id = generate_uuid()
-        slice = self.slice.get()
+        slice = float(self.slice.get()) if self.slice.get() else None
         activity = self.label.get()
         color = self.color["bg"]
-        explode = 0
+        explode = 0.0
         data = make_data_update_dict(id=id, values=(slice, activity, color, explode), action=CREATE)
         return data

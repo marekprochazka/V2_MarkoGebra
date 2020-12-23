@@ -1,5 +1,6 @@
 from tkinter import Button
 from Bases import BaseEntry, BaseRow, BaseLabel
+from Decorators.input_checkers import pie_input_controller
 from Static.constants import CACHE, CHANGES_CACHE, DATA, ID, UPDATE
 from Bases import BaseColorPicker
 from Utils.uuid import format_existing_uuid
@@ -48,13 +49,14 @@ class PieRow(BaseRow):
     # RAW DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
 
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
+    @pie_input_controller
     def collect_data(self):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.uuid import format_existing_uuid
         id = format_existing_uuid(self.value[0])
-        slice = float(self.entry_slice.get())
+        slice = float(self.entry_slice.get()) if self.entry_slice.get() else None
         activity = self.entry_activity.get()
         color = self.col_but["bg"]
-        explode = float(self.entry_explode.get())
+        explode = float(self.entry_explode.get()) if self.entry_explode.get() else None
         data = make_data_update_dict(values=(slice, activity, color, explode), action=UPDATE, id=id)
         return data
