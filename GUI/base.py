@@ -5,7 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from Graphing.setup import f
 from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y
 from .pages import Mathematical, Pie, Bar, Noise
-
+from Static.get_static_path import get_static_path
 
 from Globals.variables import Variables as V
 
@@ -22,6 +22,7 @@ class Base(Tk):
         Tk.wm_title(self, "MarkoGebra")
         Tk.minsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
         Tk.maxsize(self, width=MAX_WIDTH, height=MAX_HEIGHT)
+        self.iconbitmap(get_static_path()+"\\images\\logo.ico")
         self.main = main
 
         # TUPLE OF ALL GRAPHING METHODS THAT IS REPRESENTED IN FE BY MULTISESECT
