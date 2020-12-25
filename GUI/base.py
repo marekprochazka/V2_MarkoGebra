@@ -2,8 +2,11 @@ from tkinter import Tk, OUTSIDE, Canvas, END
 from tkinter import ttk as t
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+from Bases import BaseLabel
+from Data.path import get_path
 from Graphing.setup import f
-from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y
+from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y, AVALIBLE_STYLES, NAME, INFO
 from .pages import Mathematical, Pie, Bar, Noise
 from Static.get_static_path import get_static_path
 
@@ -52,6 +55,12 @@ class Base(Tk):
                         x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
 
         # TOPRIGHT BUTTONS
+        self.graphstyle_label = BaseLabel(self, text="Styl grafu:")
+        self.graphstyle_label.place(bordermode=OUTSIDE, x=MAX_WIDTH * .595, width=MAX_WIDTH * .05, y=0, height=MAX_HEIGHT * .04)
+        self.graphstyle = t.Combobox(self, values=AVALIBLE_STYLES, state="readonly")
+        self.graphstyle.current(AVALIBLE_STYLES.index(self.__get_last_graph_style()))
+        self.graphstyle.place(bordermode=OUTSIDE, x=MAX_WIDTH * .64, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
+        self.graphstyle.bind("<<ComboboxSelected>>", self.__graph_pick_callback)
         self.hint = t.Button(self, command=lambda: self.openHelp(), text="Nápověda")
         self.hint.place(bordermode=OUTSIDE, x=MAX_WIDTH * .94, width=MAX_WIDTH * .06, y=0, height=MAX_HEIGHT * .04)
         self.save_but = t.Button(self, text="uložit jako orázek", command=lambda: self.saver())
@@ -103,3 +112,13 @@ class Base(Tk):
         V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
         print(V.is_auto_update)
 
+    def __get_last_graph_style(self):
+        with open(get_path()+"\\graphstyle.txt") as data:
+            return data.read()
+
+    def __graph_pick_callback(self,*args,**kwargs):
+        from GUI.error_popup import error_popup
+        msg = {NAME:"Upozornění",INFO:"Pro aktualizování stylu je třeba restartovat aplikaci."}
+        error_popup(info=True,error=msg, restart=True)
+        with open(get_path()+"\\graphstyle.txt","w") as data:
+            data.write(self.graphstyle.get())
