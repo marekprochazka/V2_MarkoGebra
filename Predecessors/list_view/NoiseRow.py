@@ -26,13 +26,13 @@ class NoiseRow(BaseRow):
         self.dispersion_value.trace("w", self.__validate_max_dispersion_value)
 
         # GUI, *ENTRIES WITH VALIDATE COMMANDS
-        self.quantity_label = BaseLabel(self.parent, text="Množství")
-        self.quantity_entry = BaseEntry(self.parent, textvariable=self.quantity_value, width=4, positive=True)
+        self.quantity_label = BaseLabel(self.parent, text="Množství:")
+        self.quantity_entry = BaseEntry(self.parent, textvariable=self.quantity_value, width=8, positive=True)
 
-        self.dispersion_label = BaseLabel(self.parent, text="Rozptyl")
-        self.dispersion_entry = BaseEntry(self.parent, textvariable=self.dispersion_value, width=4, positive=True)
+        self.dispersion_label = BaseLabel(self.parent, text="Rozptyl:")
+        self.dispersion_entry = BaseEntry(self.parent, textvariable=self.dispersion_value, width=8, positive=True)
 
-        self.marker_label = BaseLabel(self.parent, text="Značka")
+        self.marker_label = BaseLabel(self.parent, text="Značka:")
         self.marker_multiselect = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",
                                              width=5)
         self.marker_multiselect.current(POINT_MARKERS.index(self.value[5]))
@@ -40,14 +40,14 @@ class NoiseRow(BaseRow):
         self.col_but = BaseColorPicker(self.parent, color=self.value[4], width=10)
 
         self.quantity_label.grid(row=0, column=0)
-        self.quantity_entry.grid(row=0, column=1)
+        self.quantity_entry.grid(row=0, column=1,padx=3)
         self.dispersion_label.grid(row=0, column=2)
-        self.dispersion_entry.grid(row=0, column=3)
+        self.dispersion_entry.grid(row=0, column=3,padx=3)
         self.marker_label.grid(row=0, column=4)
-        self.marker_multiselect.grid(row=0, column=5)
-        self.col_but.grid(row=0, column=6)
-        self.del_but.grid(row=0, column=7)
-        self.save_but.grid(row=0, column=8)
+        self.marker_multiselect.grid(row=0, column=5,padx=3)
+        self.col_but.grid(row=0, column=6,padx=3)
+        self.del_but.grid(row=0, column=7, padx=3)
+        self.save_but.grid(row=0, column=8, padx=3)
 
     # VALIDATIONS FOR QUANTITY AND DISPERSION
     def __validate_max_quantity_value(self, *args):
