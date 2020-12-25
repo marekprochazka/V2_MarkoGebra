@@ -10,9 +10,7 @@ POINT_MARKERS = ['.', ',', 'o', 'v', '^', '<', '>', '1', '2', '3', '4', '8', 's'
 LINE_MARKERS = ['-', '--', '-.', ':', 'None', ' ', '', 'solid', 'dashed', 'dashdot', 'dotted']
 
 AVALIBLE_STYLES = ['Solarize_Light2', '_classic_test_patch', 'classic', 'dark_background',
-                   'fivethirtyeight', 'ggplot', 'seaborn', 'seaborn-bright',
-                   'seaborn-dark','seaborn-poster',
-                   'seaborn-ticks', 'seaborn-whitegrid']
+                   'fivethirtyeight', 'ggplot', 'seaborn','seaborn-poster','seaborn-whitegrid']
 
 
 BASIC_COLORS_VALUES = ["blue", "green", "red", "cyan", "purple", "gold", "black"]
@@ -56,3 +54,4 @@ INFO = "INFO"
 
 MAX_NOISE_DISPERSION = 1000
 MAX_NOISE_QUANTITY = 10000
+

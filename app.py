@@ -9,15 +9,6 @@ from Graphing.graph_animation import GraphAnimation
 
 mp.use("TkAgg")  # backend configuration for tkinter
 
-# SET GRAPH STYLE FROM TXT FILE
-with open("graphstyle.txt", "r") as style:
-    stl = style.readline()
-    st.use(stl.strip("\n"))
-
-# st.use('ggplot')
-
-
-# f = plt.figure(figsize=(4.5, 4.5), dpi=100)
 from Graphing.setup import *
 
 
