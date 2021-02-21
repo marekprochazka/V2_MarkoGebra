@@ -12,7 +12,7 @@ from Static.get_static_path import get_static_path
 
 from Globals.variables import Variables as V
 
-from Utils.entry_callbacks import is_digit_callback
+
 
 
 # ALL GUI WORK IS SOMEHOW CONNECTED TO THIS (EXCEPTION: "new_show_frame.py")

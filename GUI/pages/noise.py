@@ -1,7 +1,7 @@
 from tkinter import Frame, HORIZONTAL, Scale, OUTSIDE, IntVar
 from tkinter import ttk as t
 
-from GUI.settings_components import LimitsSettings, GridSettings
+from GUI.settings_components import GridSettings
 from Globals.calculated import fonts
 from Static.constants import NOISE, MAX_WIDTH, MAX_HEIGHT, CREATE, MAX_NOISE_QUANTITY, MAX_NOISE_DISPERSION
 from Bases import BaseColorPicker
@@ -52,7 +52,7 @@ class Noise(Frame):
         self.dispersion.grid(row=2, column=1, sticky="we")
         self.dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())
 
-        self.color = BaseColorPicker(self, special_comamnd=self.noise_update_color)
+        self.color = BaseColorPicker(self, special_command=self.noise_update_color)
         self.color.bind("<ButtonRelease-1>",lambda event: self.__do_live_update())
         self.color.grid(row=3, column=0, columnspan=2, sticky="we", pady=10)
 

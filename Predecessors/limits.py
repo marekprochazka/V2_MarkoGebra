@@ -2,6 +2,7 @@ from Globals.variables import Variables as V
 from Static.constants import X, Y, MIN, MAX
 from Decorators.input_checkers import check_limits_input
 
+
 # MANUAL AND AUTO LIMIT UPDATES
 class Limits:
     def __init__(self, main):

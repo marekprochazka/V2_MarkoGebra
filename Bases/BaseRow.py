@@ -25,7 +25,6 @@ class BaseRow:
         # MAKING OF Tcl WRAPPER AROUND CALLBACK FUNCTION
         # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/entry-validation.html
 
-
         # DEFINITIONS OF del_but AND save_but
         self.del_but = t.Button(self.parent, text="SMAZAT",
                                 command=lambda id=self.value[0]: self.delete_value(id, type=self.type),
