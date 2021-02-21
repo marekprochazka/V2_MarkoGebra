@@ -1,6 +1,6 @@
 @ECHO off
     ECHO Welcome to Markogebra easy installer.
-    ECHO Note: please make sure you've got installed python and set to path variable
+    ECHO Note: please make sure you've got installed python on version 3.7.9 and set to path variable
     PAUSE
 
     ECHO Starting python virutal environment...
@@ -15,5 +15,5 @@
     call startDB.py
     ECHO {}>math_limits.json
     ECHO Making graphstyle file
-    ECHO seaborn-whitegrid>graphstyle.txt
+    echo|set /p="seaborn-whitegrid">graphstyle.txt
     cd ..

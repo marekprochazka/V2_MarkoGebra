@@ -7,8 +7,6 @@ from Utils.replace_for_math import replace_for_math
 import numpy as np
 
 
-
-
 # CONVERTING DATA TO DATABASE AND GRAPHING FRIENDLY FORMATS
 # IF THERE ARE ANY ERRORS THEY ARE ALSO RETURNED
 def check_function_input(fun):
@@ -20,9 +18,15 @@ def check_function_input(fun):
         checked_data = {ERRORS: errors}
 
         forbidden_characters = has_forbidden_character(cache[1])
-        if forbidden_characters:
-            checked_data[ERRORS].append(
-                {NAME: "CharacterError", INFO: f"Neplatný znak(y): {';'.join(forbidden_characters)}"})
+        has_x = has_x_in(cache[1])
+        if forbidden_characters or not has_x:
+            if forbidden_characters:
+                checked_data[ERRORS].append(
+                    {NAME: "CharacterError", INFO: f"Neplatný znak(y): {';'.join(forbidden_characters)}"})
+            if not has_x:
+                checked_data[ERRORS].append(
+                    {NAME: "InputError", INFO: "Vsup musí obsahovat neznámou 'X'"}
+                )
 
         else:
             replaced_func = replace_for_math(cache[1])
@@ -69,6 +73,12 @@ def has_forbidden_character(fun: str):
     return error_chars
 
 
+def has_x_in(fun: str):
+    if "x" in fun:
+        return True
+    return False
+
+
 def evaluate_function_error(fun):
     try:
         x = 1
@@ -76,5 +86,3 @@ def evaluate_function_error(fun):
         return False
     except SyntaxError:
         return True
-
-

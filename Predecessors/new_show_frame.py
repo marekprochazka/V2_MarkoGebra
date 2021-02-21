@@ -3,6 +3,7 @@ from Static.constants import MAX_WIDTH, MAX_HEIGHT, MATH, TO_ANIMATExTABLES, NOI
 from Data.functions import UPDATE_FUNCTIONS, get_tables
 from Utils.load_noise_data import load_noise_data
 
+
 # ONE OF THE MOST IMPORTANT FUNCTIONALITIES
 # IS CALLED EVERY TIME A FRAME (GRAPHING METHOD) IS CHANGED
 class ShowFrame:
@@ -22,14 +23,12 @@ class ShowFrame:
             # CHANGE to_animate TO ACTUAL FRAME + FRAME DRAWING
             if component != None:
 
-
                 if self.main._frame is not None:
-                    for child in self.main._frame.winfo_children():
-                        child.destroy()
                     self.main._frame.destroy()
                 self.main._frame = component(self.main.SetupContainer, self.main)
                 V.to_animate = self.main._frame.type
-                self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45, width=MAX_WIDTH * .40)
+                self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45,
+                                       width=MAX_WIDTH * .40)
 
             # LOADING DATA TO CACHE
             if V.to_animate != NOISE:
