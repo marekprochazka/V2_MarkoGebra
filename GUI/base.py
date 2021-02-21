@@ -119,6 +119,6 @@ class Base(Tk):
     def __graph_pick_callback(self,*args,**kwargs):
         from GUI.error_popup import error_popup
         msg = {NAME:"Upozornění",INFO:"Pro aktualizování stylu je třeba restartovat aplikaci."}
-        error_popup(info=True,error=msg, restart=True)
+        self.main.restart_popup(info=True,error=msg, restart=True)
         with open(get_path()+"\\graphstyle.txt","w") as data:
             data.write(self.graphstyle.get())
