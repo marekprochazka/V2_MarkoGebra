@@ -12,7 +12,7 @@
     call pip install -r requirements.txt
     ECHO Starting database
     cd Data
-    call startDB.py
+    call python startDB.py
     ECHO {}>math_limits.json
     ECHO Making graphstyle file
     echo|set /p="seaborn-whitegrid">graphstyle.txt
