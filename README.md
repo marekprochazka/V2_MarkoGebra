@@ -13,5 +13,5 @@
 5.  execute _startDB.py_ in Data folder
 6.  create math_limits.json with empty dict '{}' in Data folder
 7.  create graphstyle.txt in Data folder and write name of graph style ('seaborn' for example)
-### Then
-1.  execute app.py with activated venv
+### Any start after installation
+1.  execute app.py with activated venv (or install requirements globally, then you can execute app.py without venv)
