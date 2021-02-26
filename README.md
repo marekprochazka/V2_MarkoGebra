@@ -1,8 +1,9 @@
 # MarkoGebra
 ## How to run:
-### First install with init.bat
+- Please make sure you've got installed python on version 3.7.9. and have it set as PATH variable
+### First install with init.bat (windows only)
 1. clone repository 
-2. execute init.bat in cmd in project folder
+2. execute init.bat with cmd in project folder
 
 ### First install without init.bat
 1.  clone repository
