@@ -33,20 +33,22 @@ class GraphAnimation:
             a.scatter(coord[1], coord[2], marker=coord[3], color=coord[4], linewidths=float(coord[5]))
         for coord in V.cache[1]:
             function = replace_for_math(coord[1])
-            if self.__zero_x(function):
-                x = np.linspace(V.limits[X][MIN], V.limits[X][MAX], 1000)
-                y = eval(function)
-
-                a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
-            else:
-                if V.limits[X][MIN] < 0:
-                    x1 = np.linspace(V.limits[X][MIN], -0.000000001, 500)
-                    y1 = eval(function, {"x": x1})
-                    a.plot(x1, y1, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
-                if V.limits[X][MAX] > 0:
-                    x2 = np.linspace(0.000000001, V.limits[X][MAX], 500)
-                    y2 = eval(function, {"x": x2})
-                    a.plot(x2, y2, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+            # if self.__check_zero_divison(function):
+            x = np.linspace(V.limits[X][MIN], V.limits[X][MAX], 50000)
+            y = eval(function)
+            pos = np.where(np.abs(np.diff(y)) >= 2)[0] + 1
+            x = np.insert(x, pos, np.nan)
+            y = np.insert(y, pos, np.nan)
+            a.plot(x, y, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+            # else:
+            #     if V.limits[X][MIN] < 0:
+            #         x1 = np.linspace(V.limits[X][MIN], -0.000000001, 500)
+            #         y1 = eval(function, {"x": x1})
+            #         a.plot(x1, y1, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
+            #     if V.limits[X][MAX] > 0:
+            #         x2 = np.linspace(0.000000001, V.limits[X][MAX], 500)
+            #         y2 = eval(function, {"x": x2})
+            #         a.plot(x2, y2, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
 
 
 
@@ -78,10 +80,10 @@ class GraphAnimation:
         if V.live_noise:
             a.scatter(V.live_noise[0][:, 0], V.live_noise[0][:, 1], color=V.live_noise[1], marker=V.live_noise[2])
 
-    def __zero_x(self, fun):
-        try:
-            x = 0
-            eval(fun)
-            return True
-        except ZeroDivisionError:
-            return False
+    # def __check_zero_divison(self, fun):
+    #     try:
+    #         x = 0
+    #         eval(fun)
+    #         return True
+    #     except ZeroDivisionError:
+    #         return False
