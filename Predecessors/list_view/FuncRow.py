@@ -23,7 +23,7 @@ class FunctionRow(BaseRow):
         self.text_size = BaseLabel(self.parent, text="Vel.:")
 
         # ENTRY OF FUNCTION
-        self.entry_fun = BaseEntry(self.parent, width=23)
+        self.entry_fun = BaseEntry(self.parent, function=True, width=23)
         self.entry_fun.insert(0, self.value[1])
 
         # LINE PICKER
@@ -34,10 +34,10 @@ class FunctionRow(BaseRow):
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = BaseColorPicker(self.parent,color=self.value[3],width=10)
+        self.col_but = BaseColorPicker(self.parent, color=self.value[3], width=10)
 
         # ENTRY OF SIZE
-        self.entry_size = BaseEntry(self.parent, width=8,floating=True)
+        self.entry_size = BaseEntry(self.parent, width=8, floating=True)
         self.entry_size.insert(0, self.value[4])
 
         # PLACING WITH GRID

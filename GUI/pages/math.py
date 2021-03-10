@@ -44,7 +44,7 @@ class Mathematical(Frame):
         self.labelFun = BaseLabel(self, text="f(x):")
         self.labelFun.grid(row=1, column=0)
 
-        self.EntryFun = BaseEntry(self)
+        self.EntryFun = BaseEntry(self, function=True)
 
         self.EntryFun.grid(row=1, column=1, columnspan=3, sticky="we")
 
