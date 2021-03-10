@@ -4,18 +4,17 @@ from Graphing.setup import a, f
 from tkinter import ttk as t
 import numpy as np
 
+
 # TODO MAYBE SHOULD BE MOVED TO GUI, OR AT LEAST PART OF IT
 # TODO CREATE SAVER COMPONENT THAT WILL BE IMPLEMENTED TO FUNCTION SAVER AS NEW INSTANCE
 # PNG SAVER POPUP GUI AND BACKEND FUNCTIONALITY
-class Saving:
+class SavingAsPNG:
     def __init__(self, main):
         self.main = main
 
-    # POPUP CANT BE CLOSED BY 'X' (WAS CAUSING ERROR)
-    # TODO CAN BE TEORETICALLY UPDATIGN TO AUTOMATICALY SET AXIS VISIBLE SAME AS EXIT_TOP
-    @staticmethod
-    def __callback():
-        return
+    # EDITED EXIT FUNCTION
+    def __callback(self, top):
+        self.exit_top(top)
 
     # ACTUAL EXIT FUNCTION
     def exit_top(self, top):
@@ -31,7 +30,7 @@ class Saving:
         top.minsize(400, 400)
         top.maxsize(400, 400)
 
-        top.protocol("WM_DELETE_WINDOW", self.__callback)
+        top.protocol("WM_DELETE_WINDOW", lambda: self.__callback(top))
 
         name_label = t.Label(top, text="Název souboru:")
         name_label.grid(row=0, column=0, padx=8)
@@ -47,9 +46,9 @@ class Saving:
         is_grid_label.grid(row=2, column=0)
         is_grid = t.Checkbutton(top, command=lambda: self.is_grid_func(is_grid.state()))
         is_grid.grid(row=2, column=1)
-        send = t.Button(top, text="go", command=lambda: self.save_as_img(direct["text"], name.get(), top))
+        send = t.Button(top, text="Uložit", command=lambda: self.save_as_img(direct["text"], name.get(), top))
         send.grid(row=3, column=0, columnspan=2, sticky="we")
-        go_back = t.Button(top, text="zrušit", command=lambda: self.exit_top(top))
+        go_back = t.Button(top, text="Zrušit", command=lambda: self.exit_top(top))
         go_back.grid(row=3, column=2)
 
     # DIRECTORY DIALOG
