@@ -11,7 +11,7 @@
 3.  activate venv
 4.  install requirements
 5.  execute _startDB.py_ in Data folder
-6.  create math_limits.json with empty dict '{}' in Data folder
-7.  create graphstyle.txt in Data folder and write name of graph style ('seaborn' for example)
+6.  copy TEMPLATE_math_limits.json into Data folder and rename it to just math_limits.json
+7.  copy TEMPLATE_graphstyle.txt into Data folder and rename it to just graphstyle.txt
 ### Any start after installation
 1.  execute app.py with activated venv (or install requirements globally, then you can execute app.py without venv)
