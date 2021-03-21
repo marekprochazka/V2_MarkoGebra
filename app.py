@@ -33,7 +33,7 @@ class MarkoGebra(Base, DeleteAll, SavingAsPNG, ShowFrame, ListView, Grid, Limits
         do_restart()
 
     def openHelp(self):
-        webbrowser.open(url="https://gist.github.com/RandomResourceWeb/93e887facdb98937ab5d260d1a0df270", new=1)
+        webbrowser.open(url="http://marekprochazka.pythonanywhere.com/", new=1)
 
 
 
