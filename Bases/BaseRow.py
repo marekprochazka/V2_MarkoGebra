@@ -48,7 +48,7 @@ class BaseRow:
             if value[0] == id:
                 V.cache[0].pop(index)
         # IF IT'S MATH GRAPHING IT SE NECESSARY TO ALSO CHECK SECOND CACHE
-        if V.to_animate == MATH:
+        if V.currentMethod == MATH:
             for index, value in enumerate(V.cache[1]):
                 if value[0] == id:
                     V.cache[1].pop(index)

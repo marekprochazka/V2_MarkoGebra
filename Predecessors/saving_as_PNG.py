@@ -1,6 +1,6 @@
 from tkinter import Toplevel, filedialog
 from PIL import Image
-from Graphing.setup import a, f
+from Graphing.setup import graphSubPlot, graphFigure
 from tkinter import ttk as t
 import numpy as np
 
@@ -18,8 +18,8 @@ class SavingAsPNG:
 
     # ACTUAL EXIT FUNCTION
     def exit_top(self, top):
-        a.axes.get_xaxis().set_visible(True)
-        a.axes.get_yaxis().set_visible(True)
+        graphSubPlot.axes.get_xaxis().set_visible(True)
+        graphSubPlot.axes.get_yaxis().set_visible(True)
         top.destroy()
 
     # POPUP GUI
@@ -61,21 +61,21 @@ class SavingAsPNG:
     # ON/OFF GRID SWITCH
     def is_grid_func(self, state):
         if "selected" in state:
-            a.axes.get_xaxis().set_visible(False)
-            a.axes.get_yaxis().set_visible(False)
+            graphSubPlot.axes.get_xaxis().set_visible(False)
+            graphSubPlot.axes.get_yaxis().set_visible(False)
         else:
-            a.axes.get_xaxis().set_visible(True)
-            a.axes.get_yaxis().set_visible(True)
+            graphSubPlot.axes.get_xaxis().set_visible(True)
+            graphSubPlot.axes.get_yaxis().set_visible(True)
 
     # ACTUAL SAVING
     def save_as_img(self, file, name, top):
-        w, h = f.canvas.get_width_height()
-        buf = np.frombuffer(f.canvas.tostring_argb(), dtype=np.uint8)
+        w, h = graphFigure.canvas.get_width_height()
+        buf = np.frombuffer(graphFigure.canvas.tostring_argb(), dtype=np.uint8)
         buf.shape = (w, h, 4)
         buf = np.roll(buf, 3, axis=2)
         w, h, d = buf.shape
         im = Image.frombytes("RGBA", (w, h), buf.tostring())
         im.save(f"{file}/{name}.png")
         top.destroy()
-        a.axes.get_xaxis().set_visible(True)
-        a.axes.get_yaxis().set_visible(True)
+        graphSubPlot.axes.get_xaxis().set_visible(True)
+        graphSubPlot.axes.get_yaxis().set_visible(True)

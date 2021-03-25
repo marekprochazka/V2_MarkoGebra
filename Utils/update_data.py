@@ -13,7 +13,7 @@ def update_data(data, update_fun=None, limits_fun=None):
                      INFO: "\n".join([error[INFO] for error in data[ERRORS]])})
     else:
         if data[CHANGES_CACHE][ACTION] == CREATE:
-            if V.to_animate == MATH:
+            if V.currentMethod == MATH:
                 if data[CHANGES_CACHE][TYPE] == SCATTER:
                     V.cache[0].append(data[CACHE])
                 else:
@@ -29,7 +29,7 @@ def update_data(data, update_fun=None, limits_fun=None):
                     V.cache[0][index] = data[CACHE]
                     break
             # IF IT'S MATH GRAPHING IT IS NECESSARY TO ALSO CHECK SECOND CACHE
-            if V.to_animate == MATH:
+            if V.currentMethod == MATH:
                 for index, value in enumerate(V.cache[1]):
                     if value[0] == data[CACHE][0]:
                         V.cache[1][index] = data[CACHE]
@@ -41,11 +41,11 @@ def update_data(data, update_fun=None, limits_fun=None):
         if update_fun:
             update_fun()
 
-        if V.to_animate == MATH:
+        if V.currentMethod == MATH:
             if data[CHANGES_CACHE][TYPE] == SCATTER:
                 if V.is_auto_update:
                     if limits_fun:
                         limits_fun(data[CACHE][1], data[CACHE][2])
 
-        if V.to_animate == NOISE:
+        if V.currentMethod == NOISE:
             V.live_noise = []

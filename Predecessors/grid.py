@@ -1,4 +1,4 @@
-from Graphing.setup import a
+from Graphing.setup import graphSubPlot
 from Utils.ask_color import ask_color
 
 # GRID SETTINGS FUNCTIONS THAT ARE CALLED ON FE
@@ -7,10 +7,10 @@ class Grid:
         self.main = main
 
     def colorize_grid(self):
-        a.grid(color=ask_color())
+        graphSubPlot.grid(color=ask_color())
 
     def size_grid(self, size):
-        a.grid(linewidth=size)
+        graphSubPlot.grid(linewidth=size)
 
     def line_grid(self, line):
-        a.grid(linestyle=line)
+        graphSubPlot.grid(linestyle=line)

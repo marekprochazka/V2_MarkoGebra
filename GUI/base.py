@@ -5,7 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from Bases import BaseLabel
 from Data.path import get_path
-from Graphing.setup import f
+from Graphing.setup import graphFigure
 from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y, AVALIBLE_STYLES, NAME, INFO
 from .pages import Mathematical, Pie, Bar, Noise
 from Static.get_static_path import get_static_path
@@ -40,7 +40,7 @@ class Base(Tk):
         self.frame_methodContainer.grid_columnconfigure(0, weight=1)
 
         # MATLOPLIB GRAPH REPESENTATION ON FE
-        canvas_graph = FigureCanvasTkAgg(f, self)
+        canvas_graph = FigureCanvasTkAgg(graphFigure, self)
         canvas_graph.draw()
         canvas_graph.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 770, y=MAX_HEIGHT - 770)
 

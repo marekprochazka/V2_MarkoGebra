@@ -46,6 +46,6 @@ if __name__ == '__main__':
     app = MarkoGebra()
 
     # GRAPH ANIMATION RUN, CHANGED EXIT METHOD, MAINLOOP
-    ani = anim.FuncAnimation(f, aniFun, interval=1000, blit=False)
+    ani = anim.FuncAnimation(graphFigure, aniFun, interval=1000, blit=False)
     app.protocol("WM_DELETE_WINDOW", app.on_exit)
     app.mainloop()

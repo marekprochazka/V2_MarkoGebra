@@ -17,7 +17,7 @@ class ListView:
         # CREATING CONTAINER IN LIST SCROLLABLE FRAME IN GUI FOR EACH VALUE IN CACHE
         list_elements = [t.Label(self.main.frame_scrollable_listView) for _ in range(len(V.cache[0]))]
         # MATH
-        if V.to_animate == MATH:
+        if V.currentMethod == MATH:
             # IF IT'S MATH GRAPHING IT IS NECESSARY TO ALSO TAKE SECOND CACHE FOR FUNCTION INPUTS
             list_elements += [t.Label(self.main.frame_scrollable_listView) for _ in
                               range(len(V.cache[1]))]
@@ -30,20 +30,20 @@ class ListView:
             # PLACING CONTAINERS TO GRID TO GUI
             self.__place_list_elements(list_elements)
         # BAR
-        elif V.to_animate == BAR:
+        elif V.currentMethod == BAR:
             # MAKING ROW FOR EACH BAR VALUE
             for i, bar_value in enumerate(V.cache[0]):
                 BarRow(list_elements[i], bar_value, controller=self)
             # PLACING CONTAINERS TO GRID TO GUI
             self.__place_list_elements(list_elements)
         # PIE
-        elif V.to_animate == PIE:
+        elif V.currentMethod == PIE:
             # MAKING ROW FOR EACH PIE VALUE
             for i, pie_value in enumerate(V.cache[0]):
                 PieRow(list_elements[i], pie_value, controller=self)
             # PLACING CONTAINERS TO GRID TO GUI
             self.__place_list_elements(list_elements)
-        elif V.to_animate == NOISE:
+        elif V.currentMethod == NOISE:
             # MAKING ROW FOR EACH NOISE VALUE
             for i, noise_value in enumerate(V.cache[0]):
                 NoiseRow(list_elements[i], noise_value, controller=self)
