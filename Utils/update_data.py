@@ -1,14 +1,14 @@
 from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, SCATTER, NAME, INFO, NOISE
 from Globals.variables import Variables as V
-from GUI.error_popup import error_popup
+from tkinter import messagebox
 
 
 def update_data(data, update_fun=None, limits_fun=None):
     # ERRORS ARE ADDED TO DATA IN DECORATORS IF THERE
     # WERE ANY WRONG INPUTS
     if data[ERRORS]:
-        error_popup({NAME: ";".join([error[NAME] for error in data[ERRORS]]),
-                     INFO: "\n".join([error[INFO] for error in data[ERRORS]])})
+        messagebox.showerror(title=";".join([error[NAME] for error in data[ERRORS]]),
+                             message="\n".join([error[INFO] for error in data[ERRORS]]))
     else:
         if data[CHANGES_CACHE][ACTION] == CREATE:
             if V.currentMethod == MATH:
