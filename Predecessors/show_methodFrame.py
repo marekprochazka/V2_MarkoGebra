@@ -37,7 +37,7 @@ class ShowFrame:
                 V.cache = load_noise_data(list(get_tables(TO_ANIMATExTABLES[V.currentMethod])))
 
             # UPDATE LIMITS IF IT'S MATH GRAPHING
-            if V.currentMethod == MATH and V.is_auto_update:
+            if V.currentMethod == MATH and V.isAutoUpdate:
                 for value in V.cache[0]:
                     self.main.auto_update_limits_by_scatter_input(value[1], value[2])
 

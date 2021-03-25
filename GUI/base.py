@@ -108,8 +108,8 @@ class Base(Tk):
 
     # AUTO UPDATE VARIABLE CONTROLLER
     def switch_auto_limit_update_value(self):
-        V.is_auto_update = self.limits_auto_update_checkbox_check_var.get() == 1
-        print(V.is_auto_update)
+        V.isAutoUpdate = self.variable_isAutoUpdate.get() == 1
+        print(V.isAutoUpdate)
 
     def __get_last_graph_style(self):
         with open(get_path()+"\\graphstyle.txt") as data:

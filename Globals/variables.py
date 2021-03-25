@@ -13,4 +13,4 @@ class Variables:
 
     limits = get_saved_limits_or_empty_limits()
 
-    is_auto_update = True
+    isAutoUpdate = True
