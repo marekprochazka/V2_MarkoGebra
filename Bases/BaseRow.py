@@ -33,7 +33,7 @@ class BaseRow:
 
         self.button_save = t.Button(self.parent, text="ULOŽIT",
                                     command=lambda: update_data(self.collect_data(),
-                                                             limits_fun=self.controller.auto_update_limits_by_scatter_input),
+                                                                limits_fun=self.controller.auto_update_limits_by_scatter_input),
                                     width=10)
 
     #   collect_data FUNCTION IS REWRITTEN IN EACH DIFFERENT ROW BUT NEEDS TO ALSO BE DEFINED HERE

@@ -50,8 +50,6 @@ class GraphAnimation:
             #         y2 = eval(function, {"x": x2})
             #         a.plot(x2, y2, linestyle=coord[2], color=coord[3], linewidth=float(coord[4]))
 
-
-
     # PIE
     def animate_pie(i):
         graphSubPlot.clear()
@@ -61,7 +59,8 @@ class GraphAnimation:
             activities.append(val[2])
             cols.append(val[3])
             explode.append(val[4])
-        graphSubPlot.pie(slices, labels=activities, colors=cols, explode=explode, startangle=V.start_angle, normalize=True)
+        graphSubPlot.pie(slices, labels=activities, colors=cols, explode=explode, startangle=V.start_angle,
+                         normalize=True)
 
     # BAR
     def animate_bar(self):
@@ -78,7 +77,8 @@ class GraphAnimation:
         for val in V.cache[0]:
             graphSubPlot.scatter(val[-1][:, 0], val[-1][:, 1], color=val[4], marker=val[5])
         if V.live_noise:
-            graphSubPlot.scatter(V.live_noise[0][:, 0], V.live_noise[0][:, 1], color=V.live_noise[1], marker=V.live_noise[2])
+            graphSubPlot.scatter(V.live_noise[0][:, 0], V.live_noise[0][:, 1], color=V.live_noise[1],
+                                 marker=V.live_noise[2])
 
     # def __check_zero_divison(self, fun):
     #     try:

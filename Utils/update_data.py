@@ -4,8 +4,6 @@ from GUI.error_popup import error_popup
 
 
 def update_data(data, update_fun=None, limits_fun=None):
-    data
-
     # ERRORS ARE ADDED TO DATA IN DECORATORS IF THERE
     # WERE ANY WRONG INPUTS
     if data[ERRORS]:
