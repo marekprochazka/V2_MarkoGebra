@@ -26,15 +26,15 @@ class BaseRow:
         # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/entry-validation.html
 
         # DEFINITIONS OF del_but AND save_but
-        self.del_but = t.Button(self.parent, text="SMAZAT",
-                                command=lambda id=self.value[0]: self.delete_value(id, type=self.type),
-                                width=10)
+        self.button_delete = t.Button(self.parent, text="SMAZAT",
+                                      command=lambda id=self.value[0]: self.delete_value(id, type=self.type),
+                                      width=10)
         from Utils.update_data import update_data
 
-        self.save_but = t.Button(self.parent, text="ULOŽIT",
-                                 command=lambda: update_data(self.collect_data(),
+        self.button_save = t.Button(self.parent, text="ULOŽIT",
+                                    command=lambda: update_data(self.collect_data(),
                                                              limits_fun=self.controller.auto_update_limits_by_scatter_input),
-                                 width=10)
+                                    width=10)
 
     #   collect_data FUNCTION IS REWRITTEN IN EACH DIFFERENT ROW BUT NEEDS TO ALSO BE DEFINED HERE
     def collect_data(self):

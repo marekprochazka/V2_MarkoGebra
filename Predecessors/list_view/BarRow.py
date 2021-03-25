@@ -12,9 +12,9 @@ class BarRow(BaseRow):
         super().__init__(parent, bar_value, controller)
         # GUI OF A ROW
         # TEXT LABELS
-        self.text_name = BaseLabel(self.parent, text="Název:")
-        self.text_value = BaseLabel(self.parent, text="Množstvý:")
-        self.text_width = BaseLabel(self.parent, text="Šířka:")
+        self.label_name = BaseLabel(self.parent, text="Název:")
+        self.label_value = BaseLabel(self.parent, text="Množstvý:")
+        self.label_width = BaseLabel(self.parent, text="Šířka:")
 
         # ENTRIES
         self.entry_name = BaseEntry(self.parent, width=8)
@@ -27,19 +27,19 @@ class BarRow(BaseRow):
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = BaseColorPicker(self.parent, color=self.value[3], width=10)
+        self.colorPicker = BaseColorPicker(self.parent, color=self.value[3], width=10)
 
         # PLACING WITH GRID
         # del_but AND save_but ARE DEFINED IN BaseRow
-        self.text_value.grid(row=0, column=0)
+        self.label_value.grid(row=0, column=0)
         self.entry_value.grid(row=0, column=1, padx=2)
-        self.text_name.grid(row=0, column=2)
+        self.label_name.grid(row=0, column=2)
         self.entry_name.grid(row=0, column=3, padx=2)
-        self.text_width.grid(row=0, column=4)
+        self.label_width.grid(row=0, column=4)
         self.entry_width.grid(row=0, column=5, padx=2)
-        self.col_but.grid(row=0, column=6, padx=3)
-        self.del_but.grid(row=0, column=7, padx=3)
-        self.save_but.grid(row=0, column=8, padx=3)
+        self.colorPicker.grid(row=0, column=6, padx=3)
+        self.button_delete.grid(row=0, column=7, padx=3)
+        self.button_save.grid(row=0, column=8, padx=3)
 
     # COLLECTING DATA AND SENDING THEM THROUGH
     # THE CHECKING DECORATOR THAT CONVERTS
@@ -53,7 +53,7 @@ class BarRow(BaseRow):
         id = format_existing_uuid(self.value[0])
         name = self.entry_name.get()
         value = int(self.entry_value.get()) if self.entry_value.get() else None
-        color = self.col_but["bg"]
+        color = self.colorPicker["bg"]
         width = float(self.entry_width.get()) if self.entry_width.get() else None
         data = make_data_update_dict(values=(name, value, color, width),action=UPDATE,id=id)
 

@@ -16,49 +16,49 @@ class NoiseRow(BaseRow):
         super().__init__(parent, noise_value, controller)
 
         # DEFINING VARIABLES
-        self.quantity_value = StringVar()
-        self.dispersion_value = StringVar()
-        self.quantity_value.set(self.value[3])
-        self.dispersion_value.set(self.value[2])
+        self.variable_quantity = StringVar()
+        self.variable_dispersion = StringVar()
+        self.variable_quantity.set(self.value[3])
+        self.variable_dispersion.set(self.value[2])
 
         # TRACERS FOR MAXIMUM VALUES DEFINED IN CONSTANTS
-        self.quantity_value.trace("w", self.__validate_max_quantity_value)
-        self.dispersion_value.trace("w", self.__validate_max_dispersion_value)
+        self.variable_quantity.trace("w", self.__validate_max_quantity_value)
+        self.variable_dispersion.trace("w", self.__validate_max_dispersion_value)
 
         # GUI, *ENTRIES WITH VALIDATE COMMANDS
-        self.quantity_label = BaseLabel(self.parent, text="Množství:")
-        self.quantity_entry = BaseEntry(self.parent, textvariable=self.quantity_value, width=8, positive=True)
+        self.label_quantity = BaseLabel(self.parent, text="Množství:")
+        self.entry_quantity = BaseEntry(self.parent, textvariable=self.variable_quantity, width=8, positive=True)
 
-        self.dispersion_label = BaseLabel(self.parent, text="Rozptyl:")
-        self.dispersion_entry = BaseEntry(self.parent, textvariable=self.dispersion_value, width=8, positive=True)
+        self.label_dispersion = BaseLabel(self.parent, text="Rozptyl:")
+        self.entry_dispersion = BaseEntry(self.parent, textvariable=self.variable_dispersion, width=8, positive=True)
 
-        self.marker_label = BaseLabel(self.parent, text="Značka:")
-        self.marker_multiselect = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",
-                                             width=5)
-        self.marker_multiselect.current(POINT_MARKERS.index(self.value[5]))
+        self.label_marker = BaseLabel(self.parent, text="Značka:")
+        self.combobox_markerType = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",
+                                              width=5)
+        self.combobox_markerType.current(POINT_MARKERS.index(self.value[5]))
 
-        self.col_but = BaseColorPicker(self.parent, color=self.value[4], width=10)
+        self.colorPicker = BaseColorPicker(self.parent, color=self.value[4], width=10)
 
-        self.quantity_label.grid(row=0, column=0)
-        self.quantity_entry.grid(row=0, column=1,padx=3)
-        self.dispersion_label.grid(row=0, column=2)
-        self.dispersion_entry.grid(row=0, column=3,padx=3)
-        self.marker_label.grid(row=0, column=4)
-        self.marker_multiselect.grid(row=0, column=5,padx=3)
-        self.col_but.grid(row=0, column=6,padx=3)
-        self.del_but.grid(row=0, column=7, padx=3)
-        self.save_but.grid(row=0, column=8, padx=3)
+        self.label_quantity.grid(row=0, column=0)
+        self.entry_quantity.grid(row=0, column=1, padx=3)
+        self.label_dispersion.grid(row=0, column=2)
+        self.entry_dispersion.grid(row=0, column=3, padx=3)
+        self.label_marker.grid(row=0, column=4)
+        self.combobox_markerType.grid(row=0, column=5, padx=3)
+        self.colorPicker.grid(row=0, column=6, padx=3)
+        self.button_delete.grid(row=0, column=7, padx=3)
+        self.button_save.grid(row=0, column=8, padx=3)
 
     # VALIDATIONS FOR QUANTITY AND DISPERSION
     def __validate_max_quantity_value(self, *args):
-        if len(self.quantity_value.get()) >= len(str(MAX_NOISE_QUANTITY)):
-            if int(self.quantity_value.get()) > MAX_NOISE_QUANTITY:
-                self.quantity_value.set(MAX_NOISE_QUANTITY)
+        if len(self.variable_quantity.get()) >= len(str(MAX_NOISE_QUANTITY)):
+            if int(self.variable_quantity.get()) > MAX_NOISE_QUANTITY:
+                self.variable_quantity.set(MAX_NOISE_QUANTITY)
 
     def __validate_max_dispersion_value(self, *args):
-        if len(self.dispersion_value.get()) >= len(str(MAX_NOISE_DISPERSION)):
-            if int(self.dispersion_value.get()) > MAX_NOISE_QUANTITY:
-                self.dispersion_value.set(MAX_NOISE_DISPERSION)
+        if len(self.variable_dispersion.get()) >= len(str(MAX_NOISE_DISPERSION)):
+            if int(self.variable_dispersion.get()) > MAX_NOISE_QUANTITY:
+                self.variable_dispersion.set(MAX_NOISE_DISPERSION)
 
     # collect_data FUNCTION IS USED IN BASE AS PARAMETER TO update_data FUNCTION
     @noise_input_controller
@@ -69,11 +69,11 @@ class NoiseRow(BaseRow):
 
         id = format_existing_uuid(self.value[0])
         seed = self.value[1]
-        dispersion = int(self.dispersion_value.get()) if self.dispersion_value.get() else None
-        quantity = int(self.quantity_value.get()) if self.quantity_value.get() else None
+        dispersion = int(self.variable_dispersion.get()) if self.variable_dispersion.get() else None
+        quantity = int(self.variable_quantity.get()) if self.variable_quantity.get() else None
         noise_data, _ = generate_noise(dispersion=dispersion,quantity=quantity,seed=seed) if quantity and dispersion else (None, None)
-        color = self.col_but["bg"]
-        marker = self.marker_multiselect.get()
+        color = self.colorPicker["bg"]
+        marker = self.combobox_markerType.get()
         data = make_data_update_dict(noise=True, id=id, values=(seed, dispersion, quantity, color, marker),
                                      action=UPDATE, noise_data=noise_data)
         return data
