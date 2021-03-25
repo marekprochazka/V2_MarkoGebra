@@ -88,7 +88,7 @@ class Base(Tk):
         self.SetupFrames = {}
 
         self._frame = None
-        self.show_Setup_Frame(component=Mathematical)
+        self.show_methodFrame(component=Mathematical)
 
     def set_limits_entries_values_by_global_variables(self):
 
@@ -101,7 +101,7 @@ class Base(Tk):
         self._frame.limits_settings.limits_entry_y_max.insert(0, V.limits[Y][MAX])
 
     def __frame_change(self,*args,**kwargs):
-        self.show_Setup_Frame(*args,**kwargs)
+        self.show_methodFrame(*args,**kwargs)
 
 
 

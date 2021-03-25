@@ -10,7 +10,7 @@ class ShowFrame:
     def __init__(self, main):
         self.main = main
 
-    def show_Setup_Frame(self, component=None, exit=False):
+    def show_methodFrame(self, component=None, exit=False):
         # SAVING PREVIOUS
         if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
         if V.to_animate == MATH:
