@@ -28,60 +28,59 @@ class Base(Tk):
         self.iconbitmap(get_static_path()+"\\images\\logo.ico")
         self.main = main
 
-        # TUPLE OF ALL GRAPHING METHODS THAT IS REPRESENTED IN FE BY MULTISESECT
+        # TUPLE OF ALL GRAPHING METHOD FRAMES THAT IS REPRESENTED IN FE BY MULTISESECT
         self.input_frames = (Mathematical, Pie, Bar, Noise)
 
-        # RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD
-        self.SetupContainer = t.Frame(self, width=MAX_WIDTH, height=MAX_HEIGHT)
+        # RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD FRAME
+        self.frame_methodContainer = t.Frame(self, width=MAX_WIDTH, height=MAX_HEIGHT)
 
-        self.SetupContainer.pack(side="top", fill="both", expand=True)
+        self.frame_methodContainer.pack(side="top", fill="both", expand=True)
 
-        self.SetupContainer.grid_rowconfigure(0, weight=1)
-        self.SetupContainer.grid_columnconfigure(0, weight=1)
+        self.frame_methodContainer.grid_rowconfigure(0, weight=1)
+        self.frame_methodContainer.grid_columnconfigure(0, weight=1)
 
         # MATLOPLIB GRAPH REPESENTATION ON FE
-        canvas = FigureCanvasTkAgg(f, self)
-        canvas.draw()
-        canvas.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 770, y=MAX_HEIGHT - 770)
+        canvas_graph = FigureCanvasTkAgg(f, self)
+        canvas_graph.draw()
+        canvas_graph.get_tk_widget().place(bordermode=OUTSIDE, x=MAX_WIDTH - 770, y=MAX_HEIGHT - 770)
 
         # MULTISELECT OF GRAPHING METHODS
         # AFTER SELECTION THE "show_Setup_Frame" FUNCTION FROM "new_show_frame.py" IS CALLED TO MANAGE FRAME CHANGE
-        self.CBB2 = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový","Náhodný šum"],
-                               state="readonly")
-        self.CBB2.bind('<<ComboboxSelected>>',
-                       lambda event: self.__frame_change(self.input_frames[self.CBB2.current()]))
-        self.CBB2.current(0)
-        self.CBB2.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
-                        x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
+        self.combobox_FrameSelector = t.Combobox(self, values=["Matematické", "Koláč", "Sloupcový", "Náhodný šum"],
+                                                 state="readonly")
+        self.combobox_FrameSelector.bind('<<ComboboxSelected>>',
+                                         lambda event: self.__frame_change(self.input_frames[self.combobox_FrameSelector.current()]))
+        self.combobox_FrameSelector.current(0)
+        self.combobox_FrameSelector.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
+                                          x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
 
         # TOPRIGHT BUTTONS
-        self.graphstyle_label = BaseLabel(self, text="Styl grafu:")
-        self.graphstyle_label.place(bordermode=OUTSIDE, x=MAX_WIDTH * .595, width=MAX_WIDTH * .05, y=0, height=MAX_HEIGHT * .04)
-        self.graphstyle = t.Combobox(self, values=AVALIBLE_STYLES, state="readonly")
-        self.graphstyle.current(AVALIBLE_STYLES.index(self.__get_last_graph_style()))
-        self.graphstyle.place(bordermode=OUTSIDE, x=MAX_WIDTH * .64, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
-        self.graphstyle.bind("<<ComboboxSelected>>", self.__graph_pick_callback)
+        self.label_graphstyle = BaseLabel(self, text="Styl grafu:")
+        self.label_graphstyle.place(bordermode=OUTSIDE, x=MAX_WIDTH * .595, width=MAX_WIDTH * .05, y=0, height=MAX_HEIGHT * .04)
+        self.combobox_graphstyle = t.Combobox(self, values=AVALIBLE_STYLES, state="readonly")
+        self.combobox_graphstyle.current(AVALIBLE_STYLES.index(self.__get_last_graph_style()))
+        self.combobox_graphstyle.place(bordermode=OUTSIDE, x=MAX_WIDTH * .64, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
+        self.combobox_graphstyle.bind("<<ComboboxSelected>>", self.__graph_pick_callback)
         self.hint = t.Button(self, command=lambda: self.openHelp(), text="Nápověda")
         self.hint.place(bordermode=OUTSIDE, x=MAX_WIDTH * .94, width=MAX_WIDTH * .06, y=0, height=MAX_HEIGHT * .04)
-        self.save_but = t.Button(self, text="uložit jako orázek", command=lambda: self.saver())
-        self.save_but.place(bordermode=OUTSIDE, x=MAX_WIDTH * .84, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
-        self.deleteAll_button = t.Button(self, text="Smazat vše", command=lambda: self.delete_all())
-        self.deleteAll_button.place(bordermode=OUTSIDE, x=MAX_WIDTH * .74, width=MAX_WIDTH * .1, y=0,
+        self.button_saveAsImage = t.Button(self, text="uložit jako orázek", command=lambda: self.saver())
+        self.button_saveAsImage.place(bordermode=OUTSIDE, x=MAX_WIDTH * .84, width=MAX_WIDTH * .1, y=0, height=MAX_HEIGHT * .04)
+        self.button_deleteAll = t.Button(self, text="Smazat vše", command=lambda: self.delete_all())
+        self.button_deleteAll.place(bordermode=OUTSIDE, x=MAX_WIDTH * .74, width=MAX_WIDTH * .1, y=0,
                                     height=MAX_HEIGHT * .04)
 
+        self.container_listView = t.Frame(self)
+        self.canvas_listView = Canvas(self.container_listView)
+        self.scrollbar_listView = t.Scrollbar(self.container_listView, orient="vertical", command=self.canvas_listView.yview)
+        self.frame_scrollable_listView = t.Frame(self.canvas_listView)
+        self.frame_scrollable_listView.bind("<Configure>", lambda e: self.canvas_listView.configure(scrollregion=self.canvas_listView.bbox("all")))
+        self.canvas_listView.create_window((0, 0), window=self.frame_scrollable_listView, anchor="nw")
+        self.canvas_listView.configure(yscrollcommand=self.scrollbar_listView.set)
 
-        self.list_view_container = t.Frame(self)
-        self.list_view_canvas = Canvas(self.list_view_container)
-        self.list_view_scrollbar = t.Scrollbar(self.list_view_container, orient="vertical", command=self.list_view_canvas.yview)
-        self.list_view_scrollable_frame = t.Frame(self.list_view_canvas)
-        self.list_view_scrollable_frame.bind("<Configure>", lambda e: self.list_view_canvas.configure(scrollregion=self.list_view_canvas.bbox("all")))
-        self.list_view_canvas.create_window((0, 0), window=self.list_view_scrollable_frame, anchor="nw")
-        self.list_view_canvas.configure(yscrollcommand=self.list_view_scrollbar.set)
-
-        self.list_view_container.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
-                                       height=MAX_HEIGHT * .3)
-        self.list_view_canvas.pack(side="left", fill="both", expand=True)
-        self.list_view_scrollbar.pack(side="right", fill="y")
+        self.container_listView.place(bordermode=OUTSIDE, x=MAX_WIDTH * .01, y=MAX_HEIGHT * .6, width=MAX_WIDTH * .4,
+                                      height=MAX_HEIGHT * .3)
+        self.canvas_listView.pack(side="left", fill="both", expand=True)
+        self.scrollbar_listView.pack(side="right", fill="y")
         self.main.update_list_view()
 
         # RELATIVE FRAMES
@@ -121,4 +120,4 @@ class Base(Tk):
         msg = {NAME:"Upozornění",INFO:"Pro aktualizování stylu je třeba restartovat aplikaci."}
         self.main.restart_popup(info=True,error=msg, restart=True)
         with open(get_path()+"\\graphstyle.txt","w") as data:
-            data.write(self.graphstyle.get())
+            data.write(self.combobox_graphstyle.get())

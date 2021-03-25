@@ -12,14 +12,14 @@ class ListView:
 
     def update_list_view(self):
         # CLEARING LIST VIEW
-        for child in self.main.list_view_scrollable_frame.winfo_children():
+        for child in self.main.frame_scrollable_listView.winfo_children():
             child.destroy()
         # CREATING CONTAINER IN LIST SCROLLABLE FRAME IN GUI FOR EACH VALUE IN CACHE
-        list_elements = [t.Label(self.main.list_view_scrollable_frame) for _ in range(len(V.cache[0]))]
+        list_elements = [t.Label(self.main.frame_scrollable_listView) for _ in range(len(V.cache[0]))]
         # MATH
         if V.to_animate == MATH:
             # IF IT'S MATH GRAPHING IT IS NECESSARY TO ALSO TAKE SECOND CACHE FOR FUNCTION INPUTS
-            list_elements += [t.Label(self.main.list_view_scrollable_frame) for _ in
+            list_elements += [t.Label(self.main.frame_scrollable_listView) for _ in
                               range(len(V.cache[1]))]
             # MAKING ROW FOR EACH SCATTER VALUE
             for i, scatter_value in enumerate(V.cache[0]):

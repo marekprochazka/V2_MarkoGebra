@@ -25,7 +25,7 @@ class ShowFrame:
 
                 if self.main._frame is not None:
                     self.main._frame.destroy()
-                self.main._frame = component(self.main.SetupContainer, self.main)
+                self.main._frame = component(self.main.frame_methodContainer, self.main)
                 V.to_animate = self.main._frame.type
                 self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45,
                                        width=MAX_WIDTH * .40)
