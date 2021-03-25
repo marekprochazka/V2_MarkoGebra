@@ -21,40 +21,40 @@ class Mathematical(Frame):
         # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
 
         # SCATTER INPUT PART
-        self.labelX = BaseLabel(self, text="X:")
-        self.labelY = BaseLabel(self, text="Y:")
+        self.label_x = BaseLabel(self, text="X:")
+        self.label_y = BaseLabel(self, text="Y:")
 
-        self.labelX.grid(row=0, column=0)
-        self.labelY.grid(row=0, column=2)
+        self.label_x.grid(row=0, column=0)
+        self.label_y.grid(row=0, column=2)
 
-        self.EntryX = BaseEntry(self, numbers=True)
-        self.EntryY = BaseEntry(self, numbers=True)
+        self.entry_x = BaseEntry(self, numbers=True)
+        self.entry_y = BaseEntry(self, numbers=True)
 
-        self.EntryX.grid(row=0, column=1, sticky="we")
-        self.EntryY.grid(row=0, column=3, sticky="we")
+        self.entry_x.grid(row=0, column=1, sticky="we")
+        self.entry_y.grid(row=0, column=3, sticky="we")
 
-        self.colorButtonScatter = BaseColorPicker(self, width=15)
-        self.colorButtonScatter.grid(row=0, column=4, sticky="we", padx=2)
+        self.colorPicker_scatter = BaseColorPicker(self, width=15)
+        self.colorPicker_scatter.grid(row=0, column=4, sticky="we", padx=2)
 
-        self.placeButtonScatter = t.Button(self, text="Vložit",
-                                           command=lambda: self.__update_data_scatter())
-        self.placeButtonScatter.grid(row=0, column=5, sticky="we")
+        self.button_enterValueScatter = t.Button(self, text="Vložit",
+                                                 command=lambda: self.__update_data_scatter())
+        self.button_enterValueScatter.grid(row=0, column=5, sticky="we")
 
         # FUNCTION INPUT PART
-        self.labelFun = BaseLabel(self, text="f(x):")
-        self.labelFun.grid(row=1, column=0)
+        self.label_function = BaseLabel(self, text="f(x):")
+        self.label_function.grid(row=1, column=0)
 
-        self.EntryFun = BaseEntry(self, function=True)
+        self.entry_function = BaseEntry(self, function=True)
 
-        self.EntryFun.grid(row=1, column=1, columnspan=3, sticky="we")
+        self.entry_function.grid(row=1, column=1, columnspan=3, sticky="we")
 
-        self.colorButtonFunc = BaseColorPicker(self, width=15)
-        self.colorButtonFunc.grid(row=1, column=4, sticky="we", padx=2)
+        self.colorPicker_function = BaseColorPicker(self, width=15)
+        self.colorPicker_function.grid(row=1, column=4, sticky="we", padx=2)
 
-        self.placeButtonPlot = t.Button(self, text="Odložit",
-                                        command=lambda: self.__update_data_function())
+        self.button_enterValueFunction = t.Button(self, text="Odložit",
+                                                  command=lambda: self.__update_data_function())
 
-        self.placeButtonPlot.grid(row=1, column=5, sticky="we", pady=20)
+        self.button_enterValueFunction.grid(row=1, column=5, sticky="we", pady=20)
 
         self.ErrorWarning = Label(self, text="", font=fonts()["SMALL_FONT"], fg="red")
         self.ErrorWarning.grid(row=2, column=2)
@@ -80,13 +80,13 @@ class Mathematical(Frame):
         from Utils.update_data import update_data
         update_data(self.__collect_scatter(), update_fun=self.controller.update_list_view,
                     limits_fun=self.controller.auto_update_limits_by_scatter_input)
-        self.EntryX.delete(0, END)
-        self.EntryY.delete(0, END)
+        self.entry_x.delete(0, END)
+        self.entry_y.delete(0, END)
 
     def __update_data_function(self):
         from Utils.update_data import update_data
         update_data(self.__collect_function(), self.controller.update_list_view)
-        self.EntryFun.delete(0, END)
+        self.entry_function.delete(0, END)
 
     # COLLECTING FUNCTIONS, FORMATTING TO 'update_data' FRIENDLY DICT
     @scatter_input_controller
@@ -94,10 +94,10 @@ class Mathematical(Frame):
         from Utils.make_data_update_dict import make_data_update_dict
         from Utils.handle_only_minus_input import handle_only_minus_input
         id = generate_uuid()
-        x = int(handle_only_minus_input(self.EntryX.get())) if self.EntryX.get() else None
-        y = int(handle_only_minus_input(self.EntryY.get())) if self.EntryY.get() else None
+        x = int(handle_only_minus_input(self.entry_x.get())) if self.entry_x.get() else None
+        y = int(handle_only_minus_input(self.entry_y.get())) if self.entry_y.get() else None
         marker = "."
-        color = self.colorButtonScatter["bg"]
+        color = self.colorPicker_scatter["bg"]
         size = 1
         data = make_data_update_dict(id=id, values=(x, y, marker, color, size), action=CREATE, type=SCATTER)
         return data
@@ -106,9 +106,9 @@ class Mathematical(Frame):
     def __collect_function(self):
         from Utils.make_data_update_dict import make_data_update_dict
         id = generate_uuid()
-        func = self.EntryFun.get()
+        func = self.entry_function.get()
         line = "-"
-        color = self.colorButtonFunc["bg"]
+        color = self.colorPicker_function["bg"]
         size = 1
         data = make_data_update_dict(id=id, values=(func, line, color, size), action=CREATE, type=FUNCTION)
         return data
