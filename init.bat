@@ -13,7 +13,7 @@
     ECHO Starting database
     cd Data
     call python startDB.py
-    ECHO {}>math_limits.json
-    ECHO Making graphstyle file
-    echo|set /p="seaborn-whitegrid">graphstyle.txt
     cd ..
+    ECHO F | XCOPY /y TEMPLATE_data.json Data\data.json
+
+    ECHO Initialization finished

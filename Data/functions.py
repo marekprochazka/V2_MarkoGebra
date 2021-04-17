@@ -1,13 +1,13 @@
 import sqlite3
 from Static.constants import DELETE, CREATE, UPDATE, ACTION, DATA, ID, TYPE, FUNCTION, SCATTER, MATH, PIE, BAR, NOISE
-from Data.path import get_path
+from Data.path import get_data_path
 
 from Utils.uuid import generate_uuid, format_existing_uuid
 
 # THIS FILE IS MANAGING ALL CONTACTS WITH DATABASE
 # IS CALLED IN 'new_show_frame.py' TO SAVE CACHED DATA (UPDATE CHANGES) AND LOAD NEW DATA TO CACHE
 # AS INPUT TO THIS FUNCTIONS IS VARIABLE 'changes_cache' THAT KEEPS ONLY CHANGES IN RIGHT FORMAT (CREATE,DELETE,UPDATE)
-conn = sqlite3.connect(get_path() + "\data.db")
+conn = sqlite3.connect(get_data_path() + "\data.db")
 c = conn.cursor()
 
 

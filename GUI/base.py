@@ -2,13 +2,15 @@ from tkinter import Tk, OUTSIDE, Canvas, END
 from tkinter import ttk as t
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import json
 
 from Bases import BaseLabel
-from Data.path import get_path
+from Data.path import get_data_path
 from Graphing.setup import graphFigure
 from Static.constants import MAX_HEIGHT, MAX_WIDTH, MIN, MAX, X, Y, AVALIBLE_STYLES, NAME, INFO
 from .pages import Mathematical, Pie, Bar, Noise
 from Static.get_static_path import get_static_path
+from Static.constants import MATH, PIE, BAR, NOISE
 
 from Globals.variables import Variables as V
 
@@ -27,7 +29,8 @@ class Base(Tk):
         self.main = main
 
         # TUPLE OF ALL GRAPHING METHOD FRAMES THAT IS REPRESENTED IN FE BY MULTISESECT
-        self.input_frames = (Mathematical, Pie, Bar, Noise)
+        self.method_components = (Mathematical, Pie, Bar, Noise)
+        self.CONSTANTS_TO_METHOD_COMPONENTS = {MATH: Mathematical, PIE: Pie, BAR: Bar, NOISE: Noise}
 
         # RELATIVE CONTAINER TO WHICH IS WRITTEN PARTICULAR GRAPHING METHOD FRAME
         self.frame_methodContainer = t.Frame(self, width=MAX_WIDTH, height=MAX_HEIGHT)
@@ -48,8 +51,8 @@ class Base(Tk):
                                                  state="readonly")
         self.combobox_FrameSelector.bind('<<ComboboxSelected>>',
                                          lambda event: self.__frame_change(
-                                             self.input_frames[self.combobox_FrameSelector.current()]))
-        self.combobox_FrameSelector.current(0)
+                                             self.method_components[self.combobox_FrameSelector.current()]))
+        self.combobox_FrameSelector.current(list(self.CONSTANTS_TO_METHOD_COMPONENTS.keys()).index(V.currentMethod))
         self.combobox_FrameSelector.place(bordermode=OUTSIDE, width=MAX_WIDTH * .15, height=MAX_HEIGHT * .05,
                                           x=MAX_WIDTH * .01, y=MAX_HEIGHT * .05)
 
@@ -92,7 +95,7 @@ class Base(Tk):
         self.SetupFrames = {}
 
         self._frame = None
-        self.show_methodFrame(component=Mathematical)
+        self.show_methodFrame(component=self.CONSTANTS_TO_METHOD_COMPONENTS[V.currentMethod])
 
     def set_limits_entries_values_by_global_variables(self):
         for e in (self._frame.limits_settings.entry_minXLimit, self._frame.limits_settings.entry_maxXLimit,
@@ -113,11 +116,17 @@ class Base(Tk):
         print(V.isAutoUpdate)
 
     def __get_last_graph_style(self):
-        with open(get_path() + "\\graphstyle.txt") as data:
-            return data.read()
+        with open(get_data_path() + "\\data.json") as f:
+            data = json.load(f)
+            return data["graphstyle"]
 
     def __graph_pick_callback(self, *args, **kwargs):
         msg = {NAME: "Upozornění", INFO: "Pro aktualizování stylu je třeba restartovat aplikaci."}
         self.main.restart_popup(info=True, error=msg, restart=True)
-        with open(get_path() + "\\graphstyle.txt", "w") as data:
-            data.write(self.combobox_graphstyle.get())
+        with open(get_data_path() + "\\data.json", "r+") as f:
+            data = json.load(f)
+            data["graphstyle"] = self.combobox_graphstyle.get()
+            f.seek(0)
+            json.dump(data, f)
+            f.truncate()
+
