@@ -11,7 +11,7 @@ class DeleteAll:
     # FUNCTION IS CALLED BY BUTTON ON FE
     def delete_all(self):
         # MAKING CACHED CHANGE FOR EACH VALUE IN GRAPH
-        if V.to_animate == MATH:
+        if V.currentMethod == MATH:
             for scatter in V.cache[0]:
                 V.changes_cache.append({ACTION: DELETE, ID: format_existing_uuid(scatter[0]), TYPE: SCATTER})
             for func in V.cache[1]:
@@ -21,5 +21,5 @@ class DeleteAll:
                 V.changes_cache.append({ACTION: DELETE, ID: format_existing_uuid(value[0])})
         # EMPTYING GRAPH CACHE (MATH GRAPHING NEEDS SPECIAL FORMAT
         # THAT IS NORMALLY MADE AUTOMATICALLY BY DATA LOADING BUT HERE IT'S REQUIRED TO BE HARD CODED)
-        V.cache = [[], []] if V.to_animate == MATH else [[]]
+        V.cache = [[], []] if V.currentMethod == MATH else [[]]
         self.main.update_list_view()

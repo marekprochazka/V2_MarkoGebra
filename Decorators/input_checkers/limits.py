@@ -1,7 +1,6 @@
-from Static.constants import X, Y, MIN, MAX, NAME, INFO
+from Static.constants import X, Y, MIN, MAX
 from Globals.variables import Variables as V
-from GUI.error_popup import error_popup
-
+from tkinter import messagebox
 
 def check_limits_input(fun):
     def wrapper(*args, **kwargs):
@@ -23,11 +22,11 @@ def check_value(axis, min, max):
         int(min)
     except ValueError:
         is_ok = False
-        error_popup({NAME: "Value error", INFO: f"Chybný vstup na ose {axis} hodnota {min} je neplatná"})
+        messagebox.showerror(title="Value error", message=f"Chybný vstup na ose {axis} hodnota {min} je neplatná")
     try:
         int(max)
     except ValueError:
         is_ok = False
-        error_popup({NAME: "Value error", INFO: f"Chybný vstup na ose {axis} hodnota {min} je neplatná"})
+        messagebox.showerror(title="Value error", message=f"Chybný vstup na ose {axis} hodnota {min} je neplatná")
 
     return is_ok

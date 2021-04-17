@@ -2,6 +2,7 @@ from tkinter import Button
 
 from Utils.ask_color import ask_color
 
+
 # BUTTON THAT IS CHANGING IT'S BG COLOR AFTER CLICKING USED AS COLOR PICKER
 class BaseColorPicker(Button):
     def __init__(self, parent, color="blue", special_command=None, *args, **kwargs):

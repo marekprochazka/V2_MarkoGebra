@@ -22,39 +22,39 @@ class Noise(Frame):
         # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
 
         # DEFINITIONS
-        self.dispersion_variable = IntVar()
-        self.quantity_variable = IntVar()
-        self.dispersion_variable.set(1)
-        self.quantity_variable.set(1)
+        self.variable_dispersion = IntVar()
+        self.variable_quantity = IntVar()
+        self.variable_dispersion.set(1)
+        self.variable_quantity.set(1)
         self.live_seed = None
 
         # GUI DEFINITION/GRIDING
-        self.generate_button = t.Button(self, text="Generuj",
-                                        command=self.__create_live_generation)
-        self.generate_button.grid(row=0, column=0, sticky="nswe")
-        self.lock = t.Button(self, text="Uzamknout",
-                             command=self.__update_noise_data)
-        self.lock.grid(row=0, column=1, sticky="nswe")
+        self.button_generateLiveSeed = t.Button(self, text="Generuj",
+                                                command=self.__create_live_generation)
+        self.button_generateLiveSeed.grid(row=3, column=0, sticky="nswe")
+        self.button_lockLiveSeed = t.Button(self, text="Uzamknout",
+                                            command=self.__update_noise_data)
+        self.button_lockLiveSeed.grid(row=3, column=1, sticky="nswe")
 
-        self.quantity_label = t.Label(self, text="Množství", font=fonts()["SMALL_FONT"])
-        self.quantity_label.grid(row=1, column=0, sticky="nswe", pady=10)
-        self.dispersion_label = t.Label(self, text="Rozptyl", font=fonts()["SMALL_FONT"])
-        self.dispersion_label.grid(row=1, column=1, sticky="nswe", pady=10)
+        self.label_quantity = t.Label(self, text="Množství", font=fonts()["SMALL_FONT"])
+        self.label_quantity.grid(row=0, column=0, sticky="nswe", pady=10)
+        self.label_dispersion = t.Label(self, text="Rozptyl", font=fonts()["SMALL_FONT"])
+        self.label_dispersion.grid(row=0, column=1, sticky="nswe", pady=10)
 
-        self.quantity = Scale(self, activebackground="aqua", bd=0, from_=1, to=MAX_NOISE_QUANTITY, orient=HORIZONTAL,
-                              variable=self.quantity_variable)
-        self.quantity.grid(row=2, column=0, sticky="we")
-        self.quantity.bind("<ButtonRelease-1>",
-                           lambda event: self.__do_live_update())
+        self.scale_quantity = Scale(self, activebackground="aqua", bd=0, from_=1, to=MAX_NOISE_QUANTITY, orient=HORIZONTAL,
+                                    variable=self.variable_quantity)
+        self.scale_quantity.grid(row=1, column=0, sticky="we")
+        self.scale_quantity.bind("<ButtonRelease-1>",
+                                 lambda event: self.__do_live_update())
 
-        self.dispersion = Scale(self, activebackground="aqua", bd=0, from_=1, to=MAX_NOISE_DISPERSION, orient=HORIZONTAL,
-                                variable=self.dispersion_variable)
-        self.dispersion.grid(row=2, column=1, sticky="we")
-        self.dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())
+        self.scale_dispersion = Scale(self, activebackground="aqua", bd=0, from_=1, to=MAX_NOISE_DISPERSION, orient=HORIZONTAL,
+                                      variable=self.variable_dispersion)
+        self.scale_dispersion.grid(row=1, column=1, sticky="we")
+        self.scale_dispersion.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())
 
-        self.color = BaseColorPicker(self, special_command=self.noise_update_color)
-        self.color.bind("<ButtonRelease-1>",lambda event: self.__do_live_update())
-        self.color.grid(row=3, column=0, columnspan=2, sticky="we", pady=10)
+        self.colorPicker = BaseColorPicker(self, special_command=self.noise_update_color)
+        self.colorPicker.bind("<ButtonRelease-1>", lambda event: self.__do_live_update())
+        self.colorPicker.grid(row=2, column=0, columnspan=2, sticky="we", pady=10)
 
         # LIMITS SETTINGS
         # self.limits_settings = LimitsSettings(parent=self, controller=controller)
@@ -64,23 +64,23 @@ class Noise(Frame):
 
         # GRID SETTINGS
         self.grid_settings = GridSettings(parent=self, controller=controller)
-        self.grid_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .001, y=MAX_HEIGHT * .15,
+        self.grid_settings.place(bordermode=OUTSIDE, x=MAX_WIDTH * .001, y=MAX_HEIGHT * .17,
                                    width=MAX_WIDTH * .18,
                                    height=MAX_HEIGHT * .3)
 
     # MAKING LIVE NOISE
     def __create_live_generation(self):
-        live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
-                                                    dispersion=self.dispersion_variable.get())
-        V.live_noise = [live_noise, self.color["bg"], "."]
+        live_noise, self.live_seed = generate_noise(quantity=self.variable_quantity.get(),
+                                                    dispersion=self.variable_dispersion.get())
+        V.live_noise = [live_noise, self.colorPicker["bg"], "."]
 
     # UPDATING LIVE NOISE
     def __do_live_update(self):
         if self.live_seed:
-            live_noise, self.live_seed = generate_noise(quantity=self.quantity_variable.get(),
-                                                        dispersion=self.dispersion_variable.get(),
+            live_noise, self.live_seed = generate_noise(quantity=self.variable_quantity.get(),
+                                                        dispersion=self.variable_dispersion.get(),
                                                         seed=self.live_seed)
-            V.live_noise = [live_noise,self.color["bg"],"."]
+            V.live_noise = [live_noise, self.colorPicker["bg"], "."]
         else:
             print("pass")
 
@@ -90,9 +90,9 @@ class Noise(Frame):
         id = generate_uuid()
         seed = self.live_seed
         noise_data = V.live_noise[0]
-        dispersion = self.dispersion_variable.get()
-        quantity = self.quantity_variable.get()
-        color = self.color["bg"]
+        dispersion = self.variable_dispersion.get()
+        quantity = self.variable_quantity.get()
+        color = self.colorPicker["bg"]
         marker = V.live_noise[2]
         data = make_data_update_dict(noise=True, id=id,values=(seed,dispersion,quantity,color,marker),action=CREATE, noise_data=noise_data)
         return data
@@ -103,12 +103,12 @@ class Noise(Frame):
             from Utils.update_data import update_data
             update_data(data=self.__collect_data(), update_fun=self.controller.update_list_view)
             self.live_seed = None
-            self.quantity_variable.set(1)
-            self.dispersion_variable.set(1)
-            self.quantity.set(1)
-            self.dispersion.set(1)
+            self.variable_quantity.set(1)
+            self.variable_dispersion.set(1)
+            self.scale_quantity.set(1)
+            self.scale_dispersion.set(1)
 
     # SPECIAL COMMAND FOR 'base color picker'
     def noise_update_color(self):
-        self.color.config(bg=ask_color())
+        self.colorPicker.config(bg=ask_color())
         self.__do_live_update()

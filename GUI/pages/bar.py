@@ -23,36 +23,36 @@ class Bar(Frame):
         # WHAT GRAPHING METHOD IS CURRENTLY DRAWING
 
         # DEFINIG TK OBJECTS
-        self.txt1 = BaseLabel(self, text="Množství:")
-        self.txt2 = BaseLabel(self, text="Název:")
-        self.txt3 = BaseLabel(self, text="Barva:")
+        self.label_value = BaseLabel(self, text="Množství:")
+        self.label_name = BaseLabel(self, text="Název:")
+        self.label_color = BaseLabel(self, text="Barva:")
 
-        self.value = BaseEntry(self, positive=True)
-        self.name = BaseEntry(self)
-        self.color = BaseColorPicker(self)
-        self.go = t.Button(self, text="Zapsat hodnotu",
-                           command=self.__update_data)
+        self.entry_value = BaseEntry(self, positive=True)
+        self.entry_name = BaseEntry(self)
+        self.colorPicker = BaseColorPicker(self)
+        self.button_enterValue = t.Button(self, text="Zapsat hodnotu",
+                                          command=self.__update_data)
 
         # ERROR MESSAGES IF THERE ARE ANY
-        self.errorText = Label(self, text="", fg="red")
-        self.errorText.grid(row=4, column=0)
+        self.label_errorText = Label(self, text="", fg="red")
+        self.label_errorText.grid(row=4, column=0)
 
         # PLACING TO GRID
-        self.txt1.grid(row=0, column=0, sticky="we")
-        self.txt2.grid(row=1, column=0, sticky="we")
-        self.txt3.grid(row=2, column=0, sticky="we")
+        self.label_value.grid(row=0, column=0, sticky="we")
+        self.label_name.grid(row=1, column=0, sticky="we")
+        self.label_color.grid(row=2, column=0, sticky="we")
 
-        self.value.grid(row=0, column=1, sticky="we", padx=20)
-        self.name.grid(row=1, column=1, sticky="we", padx=20)
-        self.color.grid(row=2, column=1, sticky="we", padx=20)
-        self.go.grid(row=3, column=1, sticky="we", padx=20)
+        self.entry_value.grid(row=0, column=1, sticky="we", padx=20)
+        self.entry_name.grid(row=1, column=1, sticky="we", padx=20)
+        self.colorPicker.grid(row=2, column=1, sticky="we", padx=20)
+        self.button_enterValue.grid(row=3, column=1, sticky="we", padx=20)
 
     # EXTENDED UPDATE DATA FUNCTION
     def __update_data(self):
         from Utils.update_data import update_data
         update_data(self.__collect_data(), self.controller.update_list_view)
-        self.name.delete(0, END)
-        self.value.delete(0, END)
+        self.entry_name.delete(0, END)
+        self.entry_value.delete(0, END)
 
     # COLLECTING DATA AND PACKING THEM TO DICT FORMATTED FOR 'update_data'
     @bar_input_controller
@@ -60,9 +60,9 @@ class Bar(Frame):
         from Utils.make_data_update_dict import make_data_update_dict
 
         id = generate_uuid()
-        name = self.name.get()
-        value = int(self.value.get()) if self.value.get() else None
-        color = self.color["bg"]
+        name = self.entry_name.get()
+        value = int(self.entry_value.get()) if self.entry_value.get() else None
+        color = self.colorPicker["bg"]
         width = 0.8
         data = make_data_update_dict(id=id, values=(name, value, color, width), action=CREATE)
         return data

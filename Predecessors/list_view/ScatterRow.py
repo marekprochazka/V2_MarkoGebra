@@ -18,9 +18,9 @@ class ScatterRow(BaseRow):
 
         # GUI OF A ROW
         # TEXT LABELS
-        self.text_x = BaseLabel(self.parent, text="X:")
-        self.text_y = BaseLabel(self.parent, text="Y:")
-        self.text_size = BaseLabel(self.parent, text="Vel.:")
+        self.label_x = BaseLabel(self.parent, text="X:")
+        self.label_y = BaseLabel(self.parent, text="Y:")
+        self.label_size = BaseLabel(self.parent, text="Vel.:")
 
         # ENTRIES OF COORDINATES
         self.entry_x, self.entry_y = BaseEntry(self.parent, width=13, numbers=True), BaseEntry(self.parent, width=13, numbers=True)
@@ -28,14 +28,14 @@ class ScatterRow(BaseRow):
         self.entry_y.insert(0, self.value[2])
 
         # MARKER PICKER
-        self.marker_multiselect = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",
-                                             width=5)
-        self.marker_multiselect.current(POINT_MARKERS.index(self.value[3]))
+        self.combobox_markerType = t.Combobox(self.parent, values=POINT_MARKERS, state="readonly",
+                                              width=5)
+        self.combobox_markerType.current(POINT_MARKERS.index(self.value[3]))
 
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = BaseColorPicker(self.parent, color=self.value[4], width=10)
+        self.colorPicker = BaseColorPicker(self.parent, color=self.value[4], width=10)
 
         # ENTRY OF SIZE
         self.entry_size = BaseEntry(self.parent, width=8, floating=True)
@@ -43,16 +43,16 @@ class ScatterRow(BaseRow):
 
         # PLACING WITH GRID
         # del_but AND save_but ARE DEFINED IN BaseRow
-        self.text_x.grid(row=0, column=0)
+        self.label_x.grid(row=0, column=0)
         self.entry_x.grid(row=0, column=1)
-        self.text_y.grid(row=0, column=2)
+        self.label_y.grid(row=0, column=2)
         self.entry_y.grid(row=0, column=3)
-        self.marker_multiselect.grid(row=0, column=4, padx=8)
-        self.text_size.grid(row=0, column=5)
+        self.combobox_markerType.grid(row=0, column=4, padx=8)
+        self.label_size.grid(row=0, column=5)
         self.entry_size.grid(row=0, column=6, padx=4)
-        self.col_but.grid(row=0, column=7, padx=4)
-        self.del_but.grid(row=0, column=8, padx=4)
-        self.save_but.grid(row=0, column=9, padx=4)
+        self.colorPicker.grid(row=0, column=7, padx=4)
+        self.button_delete.grid(row=0, column=8, padx=4)
+        self.button_save.grid(row=0, column=9, padx=4)
 
     # COLLECTING DATA AND SENDING THEM THROUGH
     # THE CHECKING DECORATOR THAT CONVERTS
@@ -68,8 +68,8 @@ class ScatterRow(BaseRow):
         id = format_existing_uuid(self.value[0])
         x = int(handle_only_minus_input(self.entry_x.get())) if self.entry_x.get() else None
         y = int(handle_only_minus_input(self.entry_y.get())) if self.entry_y.get() else None
-        marker = self.marker_multiselect.get()
-        color = self.col_but["bg"]
+        marker = self.combobox_markerType.get()
+        color = self.colorPicker["bg"]
         size = self.entry_size.get() if self.entry_size.get() else None
         data = make_data_update_dict(id=id, values=(x, y, marker, color, size), action=UPDATE, type=SCATTER)
         return data

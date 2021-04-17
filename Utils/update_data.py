@@ -1,19 +1,17 @@
 from Static.constants import ERRORS, CACHE, MATH, CHANGES_CACHE, ACTION, CREATE, TYPE, SCATTER, NAME, INFO, NOISE
 from Globals.variables import Variables as V
-from GUI.error_popup import error_popup
+from tkinter import messagebox
 
 
 def update_data(data, update_fun=None, limits_fun=None):
-    data
-
     # ERRORS ARE ADDED TO DATA IN DECORATORS IF THERE
     # WERE ANY WRONG INPUTS
     if data[ERRORS]:
-        error_popup({NAME: ";".join([error[NAME] for error in data[ERRORS]]),
-                     INFO: "\n".join([error[INFO] for error in data[ERRORS]])})
+        messagebox.showerror(title=";".join([error[NAME] for error in data[ERRORS]]),
+                             message="\n".join([error[INFO] for error in data[ERRORS]]))
     else:
         if data[CHANGES_CACHE][ACTION] == CREATE:
-            if V.to_animate == MATH:
+            if V.currentMethod == MATH:
                 if data[CHANGES_CACHE][TYPE] == SCATTER:
                     V.cache[0].append(data[CACHE])
                 else:
@@ -29,7 +27,7 @@ def update_data(data, update_fun=None, limits_fun=None):
                     V.cache[0][index] = data[CACHE]
                     break
             # IF IT'S MATH GRAPHING IT IS NECESSARY TO ALSO CHECK SECOND CACHE
-            if V.to_animate == MATH:
+            if V.currentMethod == MATH:
                 for index, value in enumerate(V.cache[1]):
                     if value[0] == data[CACHE][0]:
                         V.cache[1][index] = data[CACHE]
@@ -41,11 +39,11 @@ def update_data(data, update_fun=None, limits_fun=None):
         if update_fun:
             update_fun()
 
-        if V.to_animate == MATH:
+        if V.currentMethod == MATH:
             if data[CHANGES_CACHE][TYPE] == SCATTER:
-                if V.is_auto_update:
+                if V.isAutoUpdate:
                     if limits_fun:
                         limits_fun(data[CACHE][1], data[CACHE][2])
 
-        if V.to_animate == NOISE:
+        if V.currentMethod == NOISE:
             V.live_noise = []

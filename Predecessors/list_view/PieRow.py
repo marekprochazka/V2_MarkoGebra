@@ -15,9 +15,9 @@ class PieRow(BaseRow):
 
         # GUI OF A ROW
         # TEXT LABELS
-        self.text_slice = BaseLabel(self.parent, text="Množství:")
-        self.text_activity = BaseLabel(self.parent, text="Název:")
-        self.text_explode = BaseLabel(self.parent, text="Výstup:")
+        self.label_slice = BaseLabel(self.parent, text="Množství:")
+        self.label_activity = BaseLabel(self.parent, text="Název:")
+        self.label_explode = BaseLabel(self.parent, text="Výstup:")
 
         # ENTRIES
         self.entry_slice = BaseEntry(self.parent, width=8, floating=True)
@@ -30,19 +30,19 @@ class PieRow(BaseRow):
         # COLOR PICKER
         # COLOR PICKER COULDN'T BE WRITTEN IN BaseRow, BECAUSE EACH
         # METHOD HAS COLOR SAVED ON DIFFERENT POSITION (DIFFERENT DATABASE FIELD)
-        self.col_but = BaseColorPicker(self.parent, color=self.value[3], width=10)
+        self.colorPicker = BaseColorPicker(self.parent, color=self.value[3], width=10)
 
         # PLACING WITH GRID
         # del_but AND save_but ARE DEFINED IN BaseRow
-        self.text_slice.grid(row=0, column=0)
+        self.label_slice.grid(row=0, column=0)
         self.entry_slice.grid(row=0, column=1, padx=2)
-        self.text_activity.grid(row=0, column=2)
+        self.label_activity.grid(row=0, column=2)
         self.entry_activity.grid(row=0, column=3, padx=2)
-        self.text_explode.grid(row=0, column=4)
+        self.label_explode.grid(row=0, column=4)
         self.entry_explode.grid(row=0, column=5, padx=2)
-        self.col_but.grid(row=0, column=6, padx=3)
-        self.del_but.grid(row=0, column=7, padx=3)
-        self.save_but.grid(row=0, column=8, padx=3)
+        self.colorPicker.grid(row=0, column=6, padx=3)
+        self.button_delete.grid(row=0, column=7, padx=3)
+        self.button_save.grid(row=0, column=8, padx=3)
 
     # COLLECTING DATA AND SENDING THEM THROUGH
     # THE CHECKING DECORATOR THAT CONVERTS
@@ -56,7 +56,7 @@ class PieRow(BaseRow):
         id = format_existing_uuid(self.value[0])
         slice = float(self.entry_slice.get()) if self.entry_slice.get() else None
         activity = self.entry_activity.get()
-        color = self.col_but["bg"]
+        color = self.colorPicker["bg"]
         explode = float(self.entry_explode.get()) if self.entry_explode.get() else None
         data = make_data_update_dict(values=(slice, activity, color, explode), action=UPDATE, id=id)
         return data

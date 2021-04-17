@@ -10,10 +10,10 @@ class ShowFrame:
     def __init__(self, main):
         self.main = main
 
-    def show_Setup_Frame(self, component=None, exit=False):
+    def show_methodFrame(self, component=None, exit=False):
         # SAVING PREVIOUS
-        if V.to_animate != None: UPDATE_FUNCTIONS[V.to_animate](V.changes_cache)
-        if V.to_animate == MATH:
+        if V.currentMethod != None: UPDATE_FUNCTIONS[V.currentMethod](V.changes_cache)
+        if V.currentMethod == MATH:
             from Utils.limits import save_limits_JSON_memory
             save_limits_JSON_memory(V.limits)
 
@@ -25,19 +25,19 @@ class ShowFrame:
 
                 if self.main._frame is not None:
                     self.main._frame.destroy()
-                self.main._frame = component(self.main.SetupContainer, self.main)
-                V.to_animate = self.main._frame.type
+                self.main._frame = component(self.main.frame_methodContainer, self.main)
+                V.currentMethod = self.main._frame.type
                 self.main._frame.place(x=MAX_WIDTH * .01, y=MAX_HEIGHT * .15, height=MAX_HEIGHT * 45,
                                        width=MAX_WIDTH * .40)
 
             # LOADING DATA TO CACHE
-            if V.to_animate != NOISE:
-                V.cache = list(get_tables(TO_ANIMATExTABLES[V.to_animate]))
+            if V.currentMethod != NOISE:
+                V.cache = list(get_tables(TO_ANIMATExTABLES[V.currentMethod]))
             else:
-                V.cache = load_noise_data(list(get_tables(TO_ANIMATExTABLES[V.to_animate])))
+                V.cache = load_noise_data(list(get_tables(TO_ANIMATExTABLES[V.currentMethod])))
 
             # UPDATE LIMITS IF IT'S MATH GRAPHING
-            if V.to_animate == MATH and V.is_auto_update:
+            if V.currentMethod == MATH and V.isAutoUpdate:
                 for value in V.cache[0]:
                     self.main.auto_update_limits_by_scatter_input(value[1], value[2])
 
