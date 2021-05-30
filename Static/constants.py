@@ -1,5 +1,5 @@
-MAX_WIDTH = 1600
-MAX_HEIGHT = 900
+MAX_WIDTH = 1500
+MAX_HEIGHT = 800
 
 FUNCTION_ALLOWED_MARKS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "x", "+", "-", "*", "/", "(", ")", "s", "c",
                           "t", "p"]
