@@ -31,6 +31,6 @@
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
-CALL venv\ven\Scripts\activate.bat
+CALL venv\Scripts\activate.bat
 
 CALL python app.py
